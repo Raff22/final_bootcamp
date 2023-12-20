@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -21,11 +22,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      home: LogoView(),
     );
   }
 }
