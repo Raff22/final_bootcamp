@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fazzah_user/bloc/visible_password/visible_password_cubit.dart';
 import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,9 +23,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LogoView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<VisiblePasswordCubit>(
+          create: (context) => VisiblePasswordCubit(),
+        ),
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: LogoView(),
+      ),
     );
   }
 }
