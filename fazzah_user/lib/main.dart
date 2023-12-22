@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
+import 'package:fazzah_user/views/booking_views/providers_view.dart';
 import 'package:fazzah_user/views/user_main_views/home_view.dart';
+import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -21,8 +22,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainView(),
-    );
+        theme: ThemeData(fontFamily: 'SF-Arabic'),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        home: NavBar());
   }
 }
