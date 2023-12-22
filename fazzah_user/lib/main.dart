@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fazzah_user/views/booking_views/booking_details_view.dart';
-import 'package:fazzah_user/views/booking_views/provider_view_screen.dart';
-import 'package:fazzah_user/views/booking_views/providers_view.dart';
+import 'package:fazzah_user/views/booking_views/change_location_view.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -29,6 +27,6 @@ class MainApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        home: const ProviderScreen());
+        home: const ChangeLocationView());
   }
 }
