@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fazzah_user/bloc/is_provider/is_provider_cubit.dart';
 import 'package:fazzah_user/bloc/visible_password/visible_password_cubit.dart';
 import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +29,17 @@ class MainApp extends StatelessWidget {
         BlocProvider<VisiblePasswordCubit>(
           create: (context) => VisiblePasswordCubit(),
         ),
+        BlocProvider<IsProviderCubit>(
+          create: (context) => IsProviderCubit(),
+        ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: ThemeData(fontFamily: 'SF-Arabic'),
         debugShowCheckedModeBanner: false,
-        home: LogoView(),
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        home: const LogoView(),
       ),
     );
   }

@@ -23,4 +23,8 @@ flutter:
   assets:
     - assets/translations/
     - assets/images/
+  fonts:
+    - family: SF-Arabic
+      fonts:
+        - asset: assets/fonts/SF-Arabic.ttf
 

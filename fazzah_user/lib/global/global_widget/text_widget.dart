@@ -7,7 +7,9 @@ class TextWidget extends StatelessWidget {
       this.textColor,
       this.textSize,
       this.textFontFamily,
-      this.textFontWeight, this.textAlign});
+      this.textFontWeight,
+      this.textAlign,
+      this.textDecoration});
 
   final String text;
   final Color? textColor;
@@ -15,12 +17,14 @@ class TextWidget extends StatelessWidget {
   final String? textFontFamily;
   final FontWeight? textFontWeight;
   final TextAlign? textAlign;
+  final TextDecoration? textDecoration;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       style: TextStyle(
+        decoration: textDecoration,
         fontFamily: textFontFamily,
         fontSize: textSize,
         fontWeight: textFontWeight,
