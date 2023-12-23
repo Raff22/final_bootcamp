@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fazzah_user/utils/helpers/supabase_initilizer.dart';
-import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
-import 'package:fazzah_user/views/chat_views/chat_with_provider_view.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
+import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
@@ -11,14 +12,12 @@ void main() async {
   supaInitializer();
   await EasyLocalization.ensureInitialized();
 
-  runApp(
-    EasyLocalization(
-        supportedLocales: const [Locale('en', 'US'), Locale('ar', 'SA')],
-        path:
-            'assets/translations', // <-- change the path of the translation files
-        fallbackLocale: const Locale('ar', 'SA'),
-        child: const MainApp()),
-  );
+  runApp(EasyLocalization(
+      supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
+      path:
+          'assets/translations', // <-- change the path of the translation files
+      fallbackLocale: const Locale('ar', 'SA'),
+      child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -26,12 +25,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(fontFamily: 'SF-Arabic'),
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        home: const LoginView());
+    return BlocProvider(
+      create: (context) => FavBloc(),
+      child: MaterialApp(
+          theme: ThemeData(fontFamily: 'SF-Arabic'),
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          home: NavBar()),
+    );
   }
 }
