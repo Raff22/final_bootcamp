@@ -24,7 +24,6 @@ flutter:
   assets:
     - assets/translations/
     - assets/images/
-    - .env
   fonts:
     - family: SF-Arabic
       fonts:
