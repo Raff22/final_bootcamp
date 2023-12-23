@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -6,8 +5,6 @@ import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
-=======
->>>>>>> main
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,12 +21,11 @@ class MainView extends StatelessWidget {
     ];
     return Scaffold(
       body: Column(
-<<<<<<< HEAD
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 250, top: 50),
             child: Text(" اهلا ,نوره",
                 style: TextStyle(
@@ -46,12 +42,12 @@ class MainView extends StatelessWidget {
             ),
             items: list
                 .map((item) => Container(
-                      child: Center(child: Image.asset(item.toString())),
                       color: Colors.white,
+                      child: Center(child: Image.asset(item.toString())),
                     ))
                 .toList(),
           )),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 300),
             child: Text("خدماتنا",
                 style: TextStyle(
@@ -59,10 +55,10 @@ class MainView extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.black)),
           ),
-          SingleChildScrollView(
+          const SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
               child: Row(
                 children: [
                   kdmatWedget(img: "assets/images/imgg1.png", text: "سباكة"),
@@ -75,7 +71,7 @@ class MainView extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(
               right: 10,
               left: 10,
@@ -96,7 +92,7 @@ class MainView extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           WorkerCard(
             name: " نور احمد",
             rate: "4.5",
@@ -105,9 +101,6 @@ class MainView extends StatelessWidget {
             peice: "100-150",
           ),
         ],
-=======
-        children: [],
->>>>>>> main
       ),
     );
   }
