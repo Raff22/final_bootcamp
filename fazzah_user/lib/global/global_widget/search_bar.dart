@@ -5,8 +5,10 @@ class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({
     super.key,
     required this.hint,
+    this.controller,
   });
   final String hint;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +16,7 @@ class SearchBarWidget extends StatelessWidget {
       height: 48,
       width: 364,
       child: TextField(
+        controller: controller,
         style: const TextStyle(
           color: black,
           fontSize: 20,
