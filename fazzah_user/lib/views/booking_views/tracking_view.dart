@@ -7,8 +7,8 @@ import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:flutter/material.dart';
 
-class ChangeLocationView extends StatelessWidget {
-  const ChangeLocationView({super.key});
+class TrackingView extends StatelessWidget {
+  const TrackingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,26 +25,35 @@ class ChangeLocationView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const TextWidget(
-                        text: "Riyadh",
-                        textSize: 22,
-                        textFontWeight: FontWeight.w500,
+                      ListTile(
+                        leading: SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: Image.asset('assets/images/Logo.png')),
+                        title: const TextWidget(
+                          text: "أحمد نور",
+                          textSize: 22,
+                        ),
+                        subtitle: const Text("الوقت المتوقع للوصول : ٣ دقائق"),
+                        trailing: Wrap(
+                          spacing: 10,
+                          children: [
+                            ContactWidget(icon: Icons.chat, onpressed: () {}),
+                            ContactWidget(icon: Icons.phone, onpressed: () {}),
+                          ],
+                        ),
                       ),
-                      const TextWidget(
-                          text:
-                              "RAYA6774, 4422 Al Qadisiyah, 7535, An Narjis, Riyadh 13326,حي الياسمين, Saudi Arabia",
-                          textSize: 14),
                       height20,
                       Center(
                         child: ContainerWidget(
                             contanierBorderRadius: 10,
                             containerWidth: 366,
                             containerHeight: 48,
-                            containerColor: green,
+                            containerColor: grey,
                             onPressed: () {},
                             child: const Center(
                                 child: TextWidget(
-                              text: "تغيير الموقع",
+                              text: "الدفع الآن",
                               textSize: 25,
                               textColor: lightGrey,
                             ))),
@@ -55,7 +64,7 @@ class ChangeLocationView extends StatelessWidget {
               );
             }),
         appBar: createAppBar(
-            title: "تغيير الموقع",
+            title: "تتبع الحجز",
             context: context,
             leading: IconButton(
                 onPressed: () {
@@ -66,5 +75,25 @@ class ChangeLocationView extends StatelessWidget {
         body: Image.asset('assets/images/map_placeholder.png'));
   }
 }
- //Icons.chrome_reader_mode_outlined)
-//Icons.contact_phone_rounded)
+
+class ContactWidget extends StatelessWidget {
+  const ContactWidget({
+    super.key,
+    required this.icon,
+    required this.onpressed,
+  });
+  final IconData icon;
+  final Function() onpressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        color: lightGreen,
+        child: IconButton(
+            color: green, onPressed: onpressed, icon: Icon(icon, size: 20)),
+      ),
+    );
+  }
+}
