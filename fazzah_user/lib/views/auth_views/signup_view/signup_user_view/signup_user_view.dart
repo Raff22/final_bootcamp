@@ -1,4 +1,4 @@
-import 'package:fazzah_user/bloc/visible_password/visible_password_cubit.dart';
+import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
@@ -48,14 +48,14 @@ class SignupUserView extends StatelessWidget {
                     ),
                     height20,
 
-                    //--------------------- Login Title  ------------------------
+                    //--------------------- Login Title  -----------------------
                     const TitleView(
                       title: 'إنشاء حساب',
                       supTitle: 'خطوات بسيطة ويكون حسابك جاهز',
                     ),
                     height20,
 
-                    // ----------------- Text Filed Full Name ----------------------
+                    // ----------------- Text Field Full Name ------------------
                     TextFormFieldWidget(
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -77,7 +77,7 @@ class SignupUserView extends StatelessWidget {
                     ),
                     height20,
 
-                    // ----------------- Text Filed Email ----------------------
+                    // ----------------- Text Field Email ----------------------
                     TextFormFieldWidget(
                       validator: (value) {
                         bool emailValid =
@@ -103,7 +103,7 @@ class SignupUserView extends StatelessWidget {
                     ),
                     height20,
 
-                    // ----------------- Text Filed Password -------------------
+                    // ----------------- Text Field Password -------------------
 
                     BlocBuilder<VisiblePasswordCubit, bool>(
                       builder: (context, statePassword) {
@@ -143,7 +143,7 @@ class SignupUserView extends StatelessWidget {
                     ),
                     height20,
 
-                    // ----------------- Text Filed Pnone Number ----------------------
+                    // ----------------- Text Field Pnone Number ---------------
 
                     TextFormFieldWidget(
                       validator: (value) {
@@ -151,7 +151,7 @@ class SignupUserView extends StatelessWidget {
                         if (value.isEmpty) {
                           return 'رجاءََ أدخل رقم الهاتف';
                         } else if (!phoneValid) {
-                          return '05xxxxxxxxx يجب ان يكون رقم الهاتف عشر خانات ويبدا ب';
+                          return '05xxxxxxxxx يجب ان يكون رقم الهاتف عشر أرقام ويبدا ب';
                         }
                         return '';
                       },

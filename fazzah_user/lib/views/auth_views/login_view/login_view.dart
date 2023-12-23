@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:fazzah_user/bloc/is_provider/is_provider_cubit.dart';
-import 'package:fazzah_user/bloc/visible_password/visible_password_cubit.dart';
+import 'package:fazzah_user/bloc/is_provider_cubit/is_provider_cubit.dart';
+import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
@@ -138,7 +138,10 @@ class LoginView extends StatelessWidget {
                         ContainerWidget(
                           containerHeight: 48,
                           containerWidth: context.getWidth(),
-                          containerColor: grey,
+                          containerColor: emailController.text.isNotEmpty ||
+                                  passwordController.text.isNotEmpty
+                              ? green
+                              : grey,
                           contanierBorderRadius: 10,
                           onPressed: () {
                             if (_formField.currentState!.validate()) {
@@ -147,10 +150,14 @@ class LoginView extends StatelessWidget {
                               passwordController.clear();
                             }
                           },
-                          child: const Center(
+                          child: Center(
                             child: TextWidget(
                               text: 'تسجيل دخول',
                               textSize: 20,
+                              textColor: emailController.text.isNotEmpty ||
+                                      passwordController.text.isNotEmpty
+                                  ? white
+                                  : black,
                             ),
                           ),
                         ),

@@ -3,7 +3,7 @@ import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:flutter/material.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
- const TextFormFieldWidget(
+  const TextFormFieldWidget(
       {super.key,
       this.validator,
       required this.keyboardType,
@@ -12,7 +12,8 @@ class TextFormFieldWidget extends StatelessWidget {
       required this.labelTextColor,
       required this.cursorColor,
       required this.controllerTextColor,
-      this.prefixIcon, required this.obscureText});
+      this.prefixIcon,
+      required this.obscureText});
 
   final String Function(String?)? validator;
   final TextInputType keyboardType;
@@ -27,6 +28,7 @@ class TextFormFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlign: TextAlign.center,
       validator: validator,
       style: TextStyle(color: controllerTextColor),
       cursorColor: cursorColor,
@@ -34,6 +36,8 @@ class TextFormFieldWidget extends StatelessWidget {
       keyboardType: keyboardType,
       controller: controller,
       decoration: InputDecoration(
+          floatingLabelAlignment: FloatingLabelAlignment.start
+          ,
           contentPadding: const EdgeInsets.all(10),
           label: TextWidget(
             text: labelText,
