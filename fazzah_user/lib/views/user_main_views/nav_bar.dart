@@ -1,4 +1,7 @@
+import 'package:fazzah_user/views/user_main_views/Favorate_screen.dart';
 import 'package:fazzah_user/views/user_main_views/home_view.dart';
+import 'package:fazzah_user/views/user_main_views/more_screen.dart';
+import 'package:fazzah_user/views/user_main_views/order_cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -13,18 +16,9 @@ class _NavBarState extends State<NavBar> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
     MainView(),
-    Text(
-      'Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
+    FavorateScreen(),
+    OrderCartScreen(),
+    MoreScreen()
   ];
 
   @override
@@ -60,19 +54,19 @@ class _NavBarState extends State<NavBar> {
               tabs: [
                 GButton(
                   icon: Icons.home,
-                  text: 'Home',
+                  text: 'الرئيسية',
                 ),
                 GButton(
-                  icon: Icons.ac_unit,
-                  text: 'Likes',
+                  icon: Icons.favorite,
+                  text: 'المفضلة',
                 ),
                 GButton(
-                  icon: Icons.search,
-                  text: 'Search',
+                  icon: Icons.shopping_cart,
+                  text: 'الطلبات',
                 ),
                 GButton(
-                  icon: Icons.person,
-                  text: 'Profile',
+                  icon: Icons.more_horiz,
+                  text: 'المزيد',
                 ),
               ],
               selectedIndex: _selectedIndex,
