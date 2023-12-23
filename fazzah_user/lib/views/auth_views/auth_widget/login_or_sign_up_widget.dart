@@ -20,6 +20,10 @@ class LoginOrSignupWidget extends StatelessWidget {
       children: [
         // -------------------------------------------------
 
+        TextWidget(text: askText),
+        width4,
+        // -------------------------------------------------
+
         InkWell(
           onTap: navigatorTo,
           child: TextWidget(
@@ -27,11 +31,6 @@ class LoginOrSignupWidget extends StatelessWidget {
             textDecoration: TextDecoration.underline,
           ),
         ),
-        width2,
-
-        // -------------------------------------------------
-
-        TextWidget(text: askText),
       ],
     );
   }

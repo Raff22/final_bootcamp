@@ -70,7 +70,7 @@ class SignupUserView extends StatelessWidget {
                       labelText: 'الإسم الثلاثي',
                       labelTextColor: grey,
                       controllerTextColor: dark1Green,
-                      prefixIcon: const Icon(
+                      suffixIcon: const Icon(
                         Icons.person_rounded,
                         color: grey,
                       ),
@@ -96,7 +96,7 @@ class SignupUserView extends StatelessWidget {
                       labelText: 'البريد الإلكتروني',
                       labelTextColor: grey,
                       controllerTextColor: dark1Green,
-                      prefixIcon: const Icon(
+                      suffixIcon: const Icon(
                         Icons.email,
                         color: grey,
                       ),
@@ -125,7 +125,7 @@ class SignupUserView extends StatelessWidget {
                           labelText: 'الرقم السري',
                           labelTextColor: grey,
                           controllerTextColor: dark1Green,
-                          prefixIcon: IconButton(
+                          suffixIcon: IconButton(
                             icon: Icon(
                               !statePassword
                                   ? Icons.lock_outline_rounded
@@ -162,7 +162,7 @@ class SignupUserView extends StatelessWidget {
                       labelText: 'رقم الهاتف',
                       labelTextColor: grey,
                       controllerTextColor: dark1Green,
-                      prefixIcon: const Icon(
+                      suffixIcon: const Icon(
                         Icons.phone,
                         color: grey,
                       ),

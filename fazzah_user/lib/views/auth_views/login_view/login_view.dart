@@ -90,7 +90,7 @@ class LoginView extends StatelessWidget {
                           labelText: 'البريد الإلكتروني',
                           labelTextColor: grey,
                           controllerTextColor: dark1Green,
-                          prefixIcon: const Icon(
+                          suffixIcon: const Icon(
                             Icons.email,
                             color: grey,
                           ),
@@ -115,7 +115,7 @@ class LoginView extends StatelessWidget {
                               labelText: 'الرقم السري',
                               labelTextColor: grey,
                               controllerTextColor: dark1Green,
-                              prefixIcon: IconButton(
+                              suffixIcon: IconButton(
                                 icon: Icon(
                                   !statePassword
                                       ? Icons.lock_outline_rounded

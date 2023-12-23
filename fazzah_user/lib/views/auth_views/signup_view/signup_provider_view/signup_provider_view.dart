@@ -72,7 +72,7 @@ class SignupProviderView extends StatelessWidget {
                       labelText: 'الإسم الثلاثي',
                       labelTextColor: grey,
                       controllerTextColor: dark1Green,
-                      prefixIcon: const Icon(
+                      suffixIcon: const Icon(
                         Icons.person_rounded,
                         color: grey,
                       ),
@@ -98,7 +98,7 @@ class SignupProviderView extends StatelessWidget {
                       labelText: 'البريد الإلكتروني',
                       labelTextColor: grey,
                       controllerTextColor: dark1Green,
-                      prefixIcon: const Icon(
+                      suffixIcon: const Icon(
                         Icons.email,
                         color: grey,
                       ),
@@ -127,7 +127,7 @@ class SignupProviderView extends StatelessWidget {
                           labelText: 'الرقم السري',
                           labelTextColor: grey,
                           controllerTextColor: dark1Green,
-                          prefixIcon: IconButton(
+                          suffixIcon: IconButton(
                             icon: Icon(
                               !statePassword
                                   ? Icons.lock_outline_rounded
@@ -164,7 +164,7 @@ class SignupProviderView extends StatelessWidget {
                       labelText: 'رقم الهاتف',
                       labelTextColor: grey,
                       controllerTextColor: dark1Green,
-                      prefixIcon: const Icon(
+                      suffixIcon: const Icon(
                         Icons.phone,
                         color: grey,
                       ),
@@ -192,7 +192,7 @@ class SignupProviderView extends StatelessWidget {
                       labelText: 'الهوية الوطنية أو رقم الإقامة',
                       labelTextColor: grey,
                       controllerTextColor: dark1Green,
-                      prefixIcon: Image.asset('assets/images/national_id.png'),
+                      suffixIcon: Image.asset('assets/images/national_id.png'),
                     ),
                     height20,
 

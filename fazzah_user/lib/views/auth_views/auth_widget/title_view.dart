@@ -13,7 +13,7 @@ class TitleView extends StatelessWidget {
     return SizedBox(
       width: context.getWidth(),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextWidget(
             text: title,
