@@ -1,3 +1,6 @@
+import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
+import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
+import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
@@ -7,6 +10,8 @@ import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/format_checkers/format_checks.dart';
+import 'package:fazzah_user/utils/helpers/loading_func.dart';
+import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/login_or_sign_up_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
@@ -170,49 +175,82 @@ class SignupUserView extends StatelessWidget {
                     ),
                     height20,
 
-
                     // --------------  Container (تسجيل دخول)  ---------------
 
-                    ContainerWidget(
-                      containerHeight: 48,
-                      containerWidth: context.getWidth(),
-                      containerColor: emailController.text.isNotEmpty ||
-                              passwordController.text.isNotEmpty ||
-                              fullNameController.text.isNotEmpty ||
-                              phoneNumberController.text.isNotEmpty
-                          ? green
-                          : grey,
-                      contanierBorderRadius: 10,
-                      onPressed: () {
-                        //----------------------------------------------
-                        if (_formField.currentState!.validate()) {
-                          print('Succecc Sign');
-                          print(fullNameController.text);
-                          print(emailController.text);
-                          print(passwordController.text);
-                          print(phoneNumberController.text);
+                    BlocListener<AuthBloc, AuthStatee>(
+                      //--------------- listener function ----------------------
+                      listener: (context, state) {
+                        // ------------- Loading State --------------
+                        if (state is LoadingAuthState) {
+                          showLoadingDialog(context: context);
+                        }
+
+                        // -------- Sign Up Successed State ---------
+                        else if (state is SignUpSuccessedState) {
+                          context.removeUnitl(
+                              screen: OtpView(
+                            password: passwordController.text,
+                            email: emailController.text,
+                          ));
+
                           fullNameController.clear();
                           emailController.clear();
                           passwordController.clear();
                           phoneNumberController.clear();
                         }
-                        //------------------- Send data to database using bloc ---------------------
-                        context.pushScreen(
-                            screen: OtpView(
-                          password: passwordController.text,
-                          email: emailController.text,
-                        ));
+
+                        // -------- Sign Up Error State ---------
+                        else if (state is ErrorAuthState) {
+                          snackBarMassage(
+                              context: context, errorText: state.message);
+                        }
                       },
-                      child: Center(
-                        child: TextWidget(
-                          text: 'إنشاء حساب',
-                          textSize: 20,
-                          textColor: emailController.text.isNotEmpty ||
-                                  passwordController.text.isNotEmpty ||
-                                  fullNameController.text.isNotEmpty ||
-                                  phoneNumberController.text.isNotEmpty
-                              ? white
-                              : black,
+
+                      //------------------ listener widget ---------------------
+                      child: ContainerWidget(
+                        containerHeight: 48,
+                        containerWidth: context.getWidth(),
+                        containerColor: emailController.text.isNotEmpty ||
+                                passwordController.text.isNotEmpty ||
+                                fullNameController.text.isNotEmpty ||
+                                phoneNumberController.text.isNotEmpty
+                            ? green
+                            : grey,
+                        contanierBorderRadius: 10,
+
+                        // ------------- on press 'إنشاء حساب' event -----------
+                        onPressed: () {
+                          // ------ 1) check if all field is empty or not ------
+                          if (fullNameController.text.isEmpty ||
+                              emailController.text.isEmpty ||
+                              passwordController.text.isEmpty ||
+                              phoneNumberController.text.isEmpty) {
+                            snackBarMassage(
+                                context: context,
+                                errorText: 'رجاءََ قم بتعبئة جميع الخانات');
+                          }
+
+                          // ------ 2) check if validate is all good ------
+                          // ---------  send the event to Auth Bloc  -------
+                          if (_formField.currentState!.validate()) {
+                            context.read<AuthBloc>().add(SignUpUserEvent(
+                                fullName: fullNameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                phoneNumber: phoneNumberController.text));
+                          }
+                        },
+                        child: Center(
+                          child: TextWidget(
+                            text: 'إنشاء حساب',
+                            textSize: 20,
+                            textColor: emailController.text.isNotEmpty ||
+                                    passwordController.text.isNotEmpty ||
+                                    fullNameController.text.isNotEmpty ||
+                                    phoneNumberController.text.isNotEmpty
+                                ? white
+                                : black,
+                          ),
                         ),
                       ),
                     ),

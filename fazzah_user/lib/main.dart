@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
 import 'package:fazzah_user/bloc/is_provider_cubit/is_provider_cubit.dart';
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
@@ -32,13 +33,16 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(),
+        ),
         BlocProvider<VisiblePasswordCubit>(
           create: (context) => VisiblePasswordCubit(),
         ),
         BlocProvider<IsProviderCubit>(
           create: (context) => IsProviderCubit(),
         ),
-          BlocProvider<FavBloc>(
+        BlocProvider<FavBloc>(
           create: (context) => FavBloc(),
         ),
       ],

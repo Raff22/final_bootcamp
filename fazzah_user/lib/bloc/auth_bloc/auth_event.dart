@@ -6,7 +6,11 @@ class SignUpUserEvent extends AuthEvent {
   final String password;
   final String phoneNumber;
 
-  SignUpUserEvent(this.fullName, this.email, this.password, this.phoneNumber);
+  SignUpUserEvent(
+      {required this.fullName,
+      required this.email,
+      required this.password,
+      required this.phoneNumber});
 }
 
 class OTPEvent extends AuthEvent {

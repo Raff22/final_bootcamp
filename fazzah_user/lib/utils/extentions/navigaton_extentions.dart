@@ -22,7 +22,7 @@ extension NavigatorExtension on BuildContext {
     Navigator.pop(this, "back");
   }
 
-  removeUnitl(Widget screen) {
+  removeUnitl({required Widget screen}) {
     Navigator.pushAndRemoveUntil(
         this,
         MaterialPageRoute(builder: (context) => screen),

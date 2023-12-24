@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class OtpTextField extends StatelessWidget {
-  const OtpTextField({super.key});
+   OtpTextField({super.key , required this.pin});
+
+  TextEditingController pin;
 
   @override
   Widget build(BuildContext context) {
@@ -9,6 +11,7 @@ class OtpTextField extends StatelessWidget {
       height: 60,
       width: 60,
       child: TextFormField(
+        controller:pin,
         cursorColor: Colors.white,
         autofocus: true, //keyboard will shown
         keyboardType: TextInputType.number,

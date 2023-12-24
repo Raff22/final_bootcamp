@@ -13,6 +13,12 @@ class OtpView extends StatelessWidget {
   final _formField = GlobalKey<FormState>();
   final String email;
   final String password;
+  TextEditingController pin1 = TextEditingController();
+  TextEditingController pin2 = TextEditingController();
+  TextEditingController pin3 = TextEditingController();
+  TextEditingController pin4 = TextEditingController();
+  TextEditingController pin5 = TextEditingController();
+  TextEditingController pin6 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,46 +54,79 @@ class OtpView extends StatelessWidget {
 
                     // ------------------  OTP Text Field  ---------------------
 
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        OtpTextField(),
-                        OtpTextField(),
-                        OtpTextField(),
-                        OtpTextField(),
+                        OtpTextField(
+                          pin: pin1,
+                        ),
+                        OtpTextField(
+                          pin: pin2,
+                        ),
+                        OtpTextField(
+                          pin: pin3,
+                        ),
+                        OtpTextField(
+                          pin: pin4,
+                        ),
+                        OtpTextField(
+                          pin: pin5,
+                        ),
+                        OtpTextField(
+                          pin: pin6,
+                        ),
                       ],
                     ),
                     height20,
+
                     // --------------  Container (تسجيل دخول)  ---------------
 
                     ContainerWidget(
                       containerHeight: 48,
                       containerWidth: context.getWidth(),
-                      containerColor: grey,
-                      //  emailController.text.isNotEmpty ||
-                      //         passwordController.text.isNotEmpty ||
-                      //         fullNameController.text.isNotEmpty ||
-                      //         phoneNumberController.text.isNotEmpty
-                      //     ? green
-                      //     : grey,
+                      containerColor: pin1.text.isNotEmpty ||
+                              pin2.text.isNotEmpty ||
+                              pin3.text.isNotEmpty ||
+                              pin4.text.isNotEmpty ||
+                              pin5.text.isNotEmpty ||
+                              pin6.text.isNotEmpty
+                          ? green
+                          : grey,
                       contanierBorderRadius: 10,
                       onPressed: () {
+
+                        //------------------------------------------------------
+                        if (pin1.text.isEmpty ||
+                            pin2.text.isEmpty ||
+                            pin3.text.isEmpty ||
+                            pin4.text.isEmpty ||
+                            pin5.text.isEmpty ||
+                            pin6.text.isEmpty) {
+
+                            }
+                        final String otp =
+                            '${pin1.text + pin2.text + pin3.text + pin4.text + pin5.text + pin6.text}';
+                        print(otp);
+
                         //----------------------------------------------
                         if (_formField.currentState!.validate()) {
                           print('Succecc Otp');
                         }
                         //------------------- Send data to database using bloc ---------------------
                       },
-                      child: const Center(
+                      child: Center(
                         child: TextWidget(
-                            text: 'إنشاء حساب', textSize: 20, textColor: black
-                            //  emailController.text.isNotEmpty ||
-                            //         passwordController.text.isNotEmpty ||
-                            //         fullNameController.text.isNotEmpty ||
-                            //         phoneNumberController.text.isNotEmpty
-                            //     ? white
-                            //     : black,
-                            ),
+                          text: 'إنشاء حساب',
+                          textSize: 20,
+                          textColor: pin1.text.isNotEmpty ||
+                                  pin2.text.isNotEmpty ||
+                                  pin3.text.isNotEmpty ||
+                                  pin4.text.isNotEmpty ||
+                                  pin5.text.isNotEmpty ||
+                                  pin6.text.isNotEmpty
+                              ? white
+                              : black,
+                        ),
                       ),
                     ),
                     height10,
