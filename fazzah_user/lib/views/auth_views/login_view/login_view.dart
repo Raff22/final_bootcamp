@@ -185,7 +185,8 @@ class LoginView extends StatelessWidget {
 
                             //------------------ Create Account ------------------
 
-                            LoginOrSignupWidget(
+                            RowTowTextWidget(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               askText: 'لا تمتلك حساب ؟',
                               textButtom: 'إنشاء حساب',
                               navigatorTo: () {

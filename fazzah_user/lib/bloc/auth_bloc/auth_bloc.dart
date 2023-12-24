@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
   AuthBloc() : super(InitialState()) {
+    //--------------------------------------------------
     on<SignUpUserEvent>((event, emit) async {
       try {
         emit(LoadingAuthState());
@@ -18,5 +19,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         emit(ErrorAuthState(message: error.toString()));
       }
     });
+
+    //---------------------------------------------------
+
+    //---------------------------------------------------
+    on<OTPEvent>((event, emit) async {
+      try {
+        emit(LoadingAuthState());
+        await AuthSupabase().otp(otp: event.otp, email: event.email);
+        emit(LoadingAuthState());
+        emit(OTPSuccessedState());
+      } catch (error) {
+        emit(ErrorAuthState(message: error.toString()));
+      }
+    });
+    //---------------------------------------------------
   }
 }

@@ -14,17 +14,10 @@ class SignUpUserEvent extends AuthEvent {
 }
 
 class OTPEvent extends AuthEvent {
-  final String pin1;
-  final String pin2;
-  final String pin3;
-  final String pin4;
+  final String otp;
+  final String email;
 
-  OTPEvent(
-    this.pin1,
-    this.pin2,
-    this.pin3,
-    this.pin4,
-  );
+  OTPEvent({required this.otp, required this.email});
 }
 
 class LoginEvent extends AuthEvent {

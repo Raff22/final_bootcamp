@@ -231,7 +231,7 @@ class SignupUserView extends StatelessWidget {
                           }
 
                           // ------ 2) check if validate is all good ------
-                          // ---------  send the event to Auth Bloc  -------
+                          // ------- and send the event with data to Auth Bloc -------
                           if (_formField.currentState!.validate()) {
                             context.read<AuthBloc>().add(SignUpUserEvent(
                                 fullName: fullNameController.text,
@@ -258,7 +258,8 @@ class SignupUserView extends StatelessWidget {
 
                     //--------------------- Have Account -----------------------
 
-                    LoginOrSignupWidget(
+                    RowTowTextWidget(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       askText: 'لديك حساب ؟',
                       textButtom: 'تسجيل دخول',
                       navigatorTo: () {

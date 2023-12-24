@@ -6,6 +6,8 @@ class LoadingAuthState extends AuthStatee {}
 
 class SignUpSuccessedState extends AuthStatee {}
 
+class OTPSuccessedState extends AuthStatee {}
+
 class LoginSuccessedState extends AuthStatee {}
 
 class ErrorAuthState extends AuthStatee {

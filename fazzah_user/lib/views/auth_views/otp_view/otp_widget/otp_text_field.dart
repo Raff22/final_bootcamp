@@ -1,18 +1,21 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:fazzah_user/constant/color.dart';
 import 'package:flutter/material.dart';
 
 class OtpTextField extends StatelessWidget {
-   OtpTextField({super.key , required this.pin});
+  OtpTextField({super.key, required this.pin});
 
   TextEditingController pin;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60,
-      width: 60,
+      height: 55,
+      width: 50,
       child: TextFormField(
-        controller:pin,
-        cursorColor: Colors.white,
+        controller: pin,
+        cursorColor: dark1Green,
         autofocus: true, //keyboard will shown
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
@@ -26,16 +29,14 @@ class OtpTextField extends StatelessWidget {
         },
         decoration: InputDecoration(
           counterText: "",
-          filled: true,
-          fillColor: const Color.fromARGB(173, 198, 197, 197),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(
-                  width: 0, color: Color.fromARGB(173, 198, 197, 197))),
+                  width: 1, color: Color.fromARGB(173, 198, 197, 197))),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(
-                  width: 0, color: Color.fromARGB(173, 198, 197, 197))),
+                  width: 1, color: Color.fromARGB(173, 198, 197, 197))),
         ),
       ),
     );
