@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -6,8 +5,6 @@ import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
-=======
->>>>>>> main
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,7 +21,6 @@ class MainView extends StatelessWidget {
     ];
     return Scaffold(
       body: Column(
-<<<<<<< HEAD
         children: [
           SizedBox(
             height: 50,
@@ -105,9 +101,6 @@ class MainView extends StatelessWidget {
             peice: "100-150",
           ),
         ],
-=======
-        children: [],
->>>>>>> main
       ),
     );
   }
