@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
@@ -197,46 +196,6 @@ class SignupProviderView extends StatelessWidget {
                     height20,
 
                     //---------------- Text Field occupation -------------------
-                    // MultiSelectDropDown(
-                    //   suffixIcon: const Icon(
-                    //     Icons.card_travel,
-                    //     color: grey,
-                    //   ),
-                    //   borderColor: grey,
-                    //   borderRadius: 10,
-                    //   borderWidth: 0.95,
-                    //   backgroundColor: noColor,
-                    //   hintFontSize: 20,
-                    //   hintColor: grey,
-                    //   hint: 'المهنة',
-                    //   dropdownBorderRadius: 10,
-                    //   showClearIcon: true,
-                    //   controller: occupationController,
-                    //   onOptionSelected: (options) {
-                    //     debugPrint(options.toString());
-                    //     print(options);
-                    //   },
-                    //   options: const <ValueItem>[
-                    //     ValueItem(label: 'سباك', value: 'سباك'),
-                    //     ValueItem(label: 'دهان', value: 'دهان'),
-                    //     ValueItem(label: 'كهربائي', value: 'كهربائي'),
-                    //     ValueItem(label: 'تركيب', value: 'تركيب'),
-                    //   ],
-                    //   maxItems: 4,
-                    //   disabledOptions: const [
-                    //     ValueItem(label: 'Option 1', value: '1')
-                    //   ],
-                    //   selectionType: SelectionType.multi,
-                    //   chipConfig: const ChipConfig(wrapType: WrapType.wrap),
-                    //   optionTextStyle:
-                    //       const TextStyle(fontSize: 17, color: dark1Green),
-                    //   selectedOptionIcon: const Icon(
-                    //     Icons.check_circle,
-                    //     color: green,
-                    //   ),
-                    // ),
-                    height20,
-
                     //----------------- Years Of Experience --------------------
                   ],
                 ),

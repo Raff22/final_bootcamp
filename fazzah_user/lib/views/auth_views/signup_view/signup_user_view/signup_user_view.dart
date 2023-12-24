@@ -11,6 +11,7 @@ import 'package:fazzah_user/views/auth_views/auth_widget/login_or_sign_up_widget
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
 import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
+import 'package:fazzah_user/views/auth_views/otp_view/otp_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,7 +62,7 @@ class SignupUserView extends StatelessWidget {
                         if (value!.isEmpty) {
                           return 'رجاءََ أدخل اسمك الثلاثي';
                         }
-                        return '';
+                        return null;
                       },
                       obscureText: false,
                       keyboardType: TextInputType.name,
@@ -87,7 +88,7 @@ class SignupUserView extends StatelessWidget {
                         } else if (!emailValid) {
                           return 'رجاءََ أدخل بريدك الإلكتروني بشكل صحيح';
                         }
-                        return '';
+                        return null;
                       },
                       obscureText: false,
                       keyboardType: TextInputType.emailAddress,
@@ -116,7 +117,7 @@ class SignupUserView extends StatelessWidget {
                             } else if (!passwordValid) {
                               return 'يجب ان يكون الرقم السري أكثر من 6 خانات';
                             }
-                            return '';
+                            return null;
                           },
                           obscureText: !statePassword ? true : false,
                           keyboardType: TextInputType.visiblePassword,
@@ -153,7 +154,7 @@ class SignupUserView extends StatelessWidget {
                         } else if (!phoneValid) {
                           return '05xxxxxxxxx يجب ان يكون رقم الهاتف عشر أرقام ويبدا ب';
                         }
-                        return '';
+                        return null;
                       },
                       obscureText: false,
                       keyboardType: TextInputType.phone,
@@ -169,6 +170,7 @@ class SignupUserView extends StatelessWidget {
                     ),
                     height20,
 
+
                     // --------------  Container (تسجيل دخول)  ---------------
 
                     ContainerWidget(
@@ -182,13 +184,24 @@ class SignupUserView extends StatelessWidget {
                           : grey,
                       contanierBorderRadius: 10,
                       onPressed: () {
+                        //----------------------------------------------
                         if (_formField.currentState!.validate()) {
                           print('Succecc Sign');
+                          print(fullNameController.text);
+                          print(emailController.text);
+                          print(passwordController.text);
+                          print(phoneNumberController.text);
                           fullNameController.clear();
                           emailController.clear();
                           passwordController.clear();
                           phoneNumberController.clear();
                         }
+                        //------------------- Send data to database using bloc ---------------------
+                        context.pushScreen(
+                            screen: OtpView(
+                          password: passwordController.text,
+                          email: emailController.text,
+                        ));
                       },
                       child: Center(
                         child: TextWidget(

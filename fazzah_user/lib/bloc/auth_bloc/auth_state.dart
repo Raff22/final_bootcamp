@@ -1,5 +1,5 @@
-// abstract class AuthState {}
+abstract class AuthState {}
 
-// class InitialState extends AuthState {}
+class InitialState extends AuthState {}
 
-// class UpdateAuthState extends AuthState {}
+class UpdateAuthState extends AuthState {}

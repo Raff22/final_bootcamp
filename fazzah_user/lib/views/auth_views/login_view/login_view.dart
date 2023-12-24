@@ -163,12 +163,12 @@ class LoginView extends StatelessWidget {
                         ),
                         height10,
 
-                        // --------------------  Row Text  ----------------------
+                        // --------------------  Row Text  ---------------------
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            //------------------ Provider or User ------------------
+                            //------------------ Provider or User --------------
 
                             InkWell(
                               onTap: () {

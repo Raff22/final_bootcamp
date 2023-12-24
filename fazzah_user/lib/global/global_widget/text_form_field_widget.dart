@@ -15,7 +15,7 @@ class TextFormFieldWidget extends StatelessWidget {
       this.suffixIcon,
       required this.obscureText});
 
-  final String Function(String?)? validator;
+  final String? Function(String?)? validator;
   final TextInputType keyboardType;
   final TextEditingController controller;
   final String labelText;
