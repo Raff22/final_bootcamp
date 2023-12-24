@@ -22,10 +22,10 @@ class MainView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 250, top: 50),
             child: Text(" اهلا ,نوره",
                 style: TextStyle(
@@ -42,12 +42,12 @@ class MainView extends StatelessWidget {
             ),
             items: list
                 .map((item) => Container(
-                      child: Center(child: Image.asset(item.toString())),
                       color: Colors.white,
+                      child: Center(child: Image.asset(item.toString())),
                     ))
                 .toList(),
           )),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 300),
             child: Text("خدماتنا",
                 style: TextStyle(
@@ -55,10 +55,10 @@ class MainView extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.black)),
           ),
-          SingleChildScrollView(
+          const SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
               child: Row(
                 children: [
                   kdmatWedget(img: "assets/images/imgg1.png", text: "سباكة"),
@@ -71,7 +71,7 @@ class MainView extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(
               right: 10,
               left: 10,
@@ -92,7 +92,7 @@ class MainView extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           WorkerCard(
             name: " نور احمد",
             rate: "4.5",
