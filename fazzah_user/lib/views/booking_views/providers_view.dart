@@ -19,6 +19,7 @@ class ProviderScreen extends StatelessWidget {
         body: const Center(
           child: Column(
             children: [
+              
               height20,
               SearchBarWidget(hint: "ابحث عن فني"),
             ],

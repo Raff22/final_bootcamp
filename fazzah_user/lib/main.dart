@@ -4,20 +4,25 @@ import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.d
 import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/helpers/supabase_initilizer.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
+import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+  supaInitializer();
   await EasyLocalization.ensureInitialized();
 
-  runApp(
-    EasyLocalization(
-        supportedLocales: const [Locale('en', 'US'), Locale('ar', 'SA')],
-        path:
-            'assets/translations', // <-- change the path of the translation files
-        fallbackLocale: const Locale('ar', 'SA'),
-        
-        child: const MainApp()),
-  );
+  runApp(EasyLocalization(
+      supportedLocales: const [Locale('ar', 'SA'), Locale('en', 'US')],
+      path:
+          'assets/translations', // <-- change the path of the translation files
+      fallbackLocale: const Locale('ar', 'SA'),
+      child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -32,6 +37,9 @@ class MainApp extends StatelessWidget {
         ),
         BlocProvider<IsProviderCubit>(
           create: (context) => IsProviderCubit(),
+        ),
+          BlocProvider<FavBloc>(
+          create: (context) => FavBloc(),
         ),
       ],
       child: MaterialApp(
