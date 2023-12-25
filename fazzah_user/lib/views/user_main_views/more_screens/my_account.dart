@@ -40,19 +40,10 @@ class MyAccountScreen extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10)))),
             ),
           ),
-          Container(
-            width: context.getWidth(divide: 1.2),
-            height: context.getHeight(divide: 16),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.all(Radius.circular(11)),
-            ),
-            child: Center(
-              child: Text(
-                "تحديث الحساب",
-                style: TextStyle(fontSize: 20, color: Colors.grey),
-              ),
-            ),
+          HomeScreenBotton(
+            text: "تحديث الحساب",
+            textcolor: Colors.white,
+            color: Colors.grey,
           )
         ],
       ),
