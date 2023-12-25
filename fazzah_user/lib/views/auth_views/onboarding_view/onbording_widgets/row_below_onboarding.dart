@@ -16,34 +16,10 @@ class RowBelowOnboardingWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // --------------  Green Container (التالي)  ---------------
-        ContainerWidget(
-          onPressed: nextPage,
-          containerHeight: 48,
-          containerWidth: 100,
-          contanierBorderRadius: 10,
-          containerColor: green,
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.arrow_back_ios_new,
-                color: lightGrey,
-              ),
-              width6,
-              TextWidget(
-                text: 'التالي',
-                textSize: 20,
-                textColor: lightGrey,
-              ),
-            ],
-          ),
-        ),
-
         // --------------  Container (تخطي)  ---------------
         ContainerWidget(
           onPressed: () {
-            context.pushScreen(screen: const LoginView());
+            context.pushScreen(screen: LoginView());
           },
           containerHeight: 48,
           containerWidth: 100,
@@ -55,6 +31,30 @@ class RowBelowOnboardingWidget extends StatelessWidget {
               textSize: 20,
               textColor: dark1Green,
             ),
+          ),
+        ),
+
+        // --------------  Green Container (التالي)  ---------------
+        ContainerWidget(
+          onPressed: nextPage,
+          containerHeight: 48,
+          containerWidth: 100,
+          contanierBorderRadius: 10,
+          containerColor: green,
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextWidget(
+                text: 'التالي',
+                textSize: 20,
+                textColor: lightGrey,
+              ),
+              width6,
+              Icon(
+                Icons.keyboard_arrow_left_rounded,
+                color: lightGrey,
+              ),
+            ],
           ),
         ),
       ],

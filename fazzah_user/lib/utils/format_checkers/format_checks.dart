@@ -12,4 +12,8 @@ class FormatCheck {
   bool checkPhone(String phone) {
     return phone.length == 10 && phone.substring(0, 2) == "05";
   }
+
+  bool checkNationalId(String nationalId) {
+    return nationalId.length == 10;
+  }
 }

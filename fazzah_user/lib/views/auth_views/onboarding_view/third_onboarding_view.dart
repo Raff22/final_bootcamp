@@ -31,7 +31,7 @@ class ThirdOnboardingView extends StatelessWidget {
           containerHeight: 48,
           containerColor: green,
           onPressed: () {
-            context.pushScreen(screen: const LoginView());
+            context.pushScreen(screen:  LoginView());
           },
           child: const Center(
               child: TextWidget(
