@@ -2,10 +2,10 @@ import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
 import 'package:fazzah_user/database/auth_supabase/aurth_supabase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
   AuthBloc() : super(InitialState()) {
-
     //--------------------- Sign Up User Event ----------------------------
     on<SignUpUserEvent>((event, emit) async {
       try {
@@ -21,17 +21,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
       }
     });
 
-
     //------------------ OTP Event ----------------------
     on<OTPEvent>((event, emit) async {
       try {
         emit(LoadingAuthState());
-        await AuthSupabase().otp(
+        final AuthResponse currentUser = await AuthSupabase().otp(
           otp: event.otp,
           email: event.email,
         );
 
-        emit(OTPSuccessedState());
+        emit(OTPSuccessedState(currentUser));
       } catch (error) {
         emit(ErrorAuthState(message: error.toString()));
       }
@@ -52,7 +51,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
     on<LoginEvent>((event, emit) async {
       try {
         emit(LoadingAuthState());
-        final currentUser = await AuthSupabase().login(
+        final AuthResponse currentUser = await AuthSupabase().login(
           email: event.email,
           password: event.password,
         );

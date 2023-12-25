@@ -8,7 +8,11 @@ class LoadingAuthState extends AuthStatee {}
 
 class SignUpSuccessedState extends AuthStatee {}
 
-class OTPSuccessedState extends AuthStatee {}
+class OTPSuccessedState extends AuthStatee {
+  final AuthResponse currentUser;
+
+  OTPSuccessedState(this.currentUser);
+}
 
 class LoginSuccessedState extends AuthStatee {
   final AuthResponse currentUser;

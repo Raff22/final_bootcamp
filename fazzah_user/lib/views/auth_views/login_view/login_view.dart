@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
@@ -7,9 +7,11 @@ import 'package:fazzah_user/bloc/is_provider_cubit/is_provider_cubit.dart';
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
+import 'package:fazzah_user/database/auth_supabase/aurth_supabase.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_form_field_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/format_checkers/format_checks.dart';
@@ -142,11 +144,15 @@ class LoginView extends StatelessWidget {
                         // --------------  Container (تسجيل دخول)  ---------------
 
                         BlocListener<AuthBloc, AuthStatee>(
-                          listener: (context, state) {
+                          listener: (context, state) async {
                             if (state is LoadingAuthState) {
                               showLoadingDialog(context: context);
                             } else if (state is LoginSuccessedState) {
-                              context.pushScreen(screen: const UserHomePage());
+                              final UserModel? userModel = await AuthSupabase()
+                                  .getUser(userId: state.currentUser.user!.id);
+
+                              context.pushScreen(
+                                  screen: UserHomePage(userModel: userModel));
 
                               emailController.clear();
                               passwordController.clear();
