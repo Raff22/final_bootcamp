@@ -187,9 +187,8 @@ class SignupUserView extends StatelessWidget {
 
                         // -------- Sign Up Successed State ---------
                         else if (state is SignUpSuccessedState) {
-                          context.removeUnitl(
+                          context.pushScreen(
                               screen: OtpView(
-                            password: passwordController.text,
                             email: emailController.text,
                           ));
 
@@ -201,8 +200,9 @@ class SignupUserView extends StatelessWidget {
 
                         // -------- Sign Up Error State ---------
                         else if (state is ErrorAuthState) {
+                          context.popScreen();
                           snackBarMassage(
-                              context: context, errorText: state.message);
+                              context: context, snackBarText: state.message);
                         }
                       },
 
@@ -227,7 +227,7 @@ class SignupUserView extends StatelessWidget {
                               phoneNumberController.text.isEmpty) {
                             snackBarMassage(
                                 context: context,
-                                errorText: 'رجاءََ قم بتعبئة جميع الخانات');
+                                snackBarText: 'رجاءََ قم بتعبئة جميع الخانات');
                           }
 
                           // ------ 2) check if validate is all good ------

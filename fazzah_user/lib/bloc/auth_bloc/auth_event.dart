@@ -17,12 +17,23 @@ class OTPEvent extends AuthEvent {
   final String otp;
   final String email;
 
-  OTPEvent({required this.otp, required this.email});
+  OTPEvent({
+    required this.otp,
+    required this.email,
+  });
+}
+
+class ResendOTPEvent extends AuthEvent {
+  final String email;
+
+  ResendOTPEvent({
+    required this.email,
+  });
 }
 
 class LoginEvent extends AuthEvent {
   final String email;
   final String password;
 
-  LoginEvent(this.email, this.password);
+  LoginEvent({required this.email, required this.password});
 }

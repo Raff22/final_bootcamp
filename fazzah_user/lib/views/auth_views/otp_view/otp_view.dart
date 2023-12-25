@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:async';
+
 import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
@@ -11,33 +13,61 @@ import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/loading_func.dart';
 import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
-import 'package:fazzah_user/views/auth_views/auth_widget/login_or_sign_up_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
-import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/auth_views/otp_view/otp_widget/otp_text_field.dart';
+import 'package:fazzah_user/views/auth_views/user_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:otp_timer_button/otp_timer_button.dart';
 
-class OtpView extends StatelessWidget {
-  OtpView({super.key, required this.email, required this.password});
-  final _formField = GlobalKey<FormState>();
+class OtpView extends StatefulWidget {
+  OtpView({
+    super.key,
+    required this.email,
+  });
   final String email;
-  final String password;
+
+  @override
+  State<OtpView> createState() => _OtpViewState();
+}
+
+class _OtpViewState extends State<OtpView> {
+  final _formField = GlobalKey<FormState>();
   TextEditingController pin1 = TextEditingController();
   TextEditingController pin2 = TextEditingController();
   TextEditingController pin3 = TextEditingController();
   TextEditingController pin4 = TextEditingController();
   TextEditingController pin5 = TextEditingController();
   TextEditingController pin6 = TextEditingController();
-
+  int secondsRemaining = 30;
+  bool enableResend = false;
+  late Timer timer;
   @override
+  initState() {
+    super.initState();
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (secondsRemaining != 0) {
+        setState(() {
+          secondsRemaining--;
+        });
+      } else {
+        setState(() {
+          enableResend = true;
+        });
+      }
+    });
+  }
+
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
+        appBar: AppBar(
+          leading: const Icon(Icons.arrow_back_ios_rounded),
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -59,7 +89,7 @@ class OtpView extends StatelessWidget {
                     //--------------------- Login Title  -----------------------
                     TitleView(
                       title: 'إنشاء حساب',
-                      supTitle: 'تم إرسال رمز التحقق إلى $email',
+                      supTitle: 'تم إرسال رمز التحقق إلى ${widget.email}',
                     ),
                     height20,
 
@@ -89,14 +119,38 @@ class OtpView extends StatelessWidget {
                       ],
                     ),
                     height10,
+
                     //--------------------- Resend OTP -----------------------
-                    RowTowTextWidget(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      askText: 'لم يصلك الرمز ؟',
-                      textButtom: 'إعادة الإرسال',
-                      navigatorTo: () {},
-                    ),
+                    // RowTowTextWidget(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   askText: 'لم يصلك الرمز ؟',
+                    //   textButtom: 'ddd',
+                    //   navigatorTo: () {
+                    //     snackBarMassage(
+                    //         context: context,
+                    //         snackBarText:
+                    //             'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني ${widget.email}');
+
+                    //     context.read<AuthBloc>().add(ResendOTPEvent(
+                    //           email: widget.email,
+                    //         ));
+                    //   },
+                    // ),
                     height20,
+                    OtpTimerButton(
+                      onPressed: () {
+                        snackBarMassage(
+                            context: context,
+                            snackBarText:
+                                'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني ${widget.email}');
+
+                        context.read<AuthBloc>().add(ResendOTPEvent(
+                              email: widget.email,
+                            ));
+                      },
+                      text: Text('Resend OTP'),
+                      duration: 30,
+                    ),
 
                     // --------------  Container (تسجيل دخول)  ---------------
 
@@ -110,7 +164,7 @@ class OtpView extends StatelessWidget {
 
                         // ------------ OTP Successed State -----------
                         else if (state is OTPSuccessedState) {
-                          context.removeUnitl(screen: LoginView());
+                          context.removeUnitl(screen: const UserHomePage());
 
                           pin1.clear();
                           pin2.clear();
@@ -124,7 +178,7 @@ class OtpView extends StatelessWidget {
                         else if (state is ErrorAuthState) {
                           context.popScreen();
                           snackBarMassage(
-                              context: context, errorText: state.message);
+                              context: context, snackBarText: state.message);
                         }
                       },
 
@@ -151,21 +205,25 @@ class OtpView extends StatelessWidget {
                               pin6.text.isEmpty) {
                             snackBarMassage(
                                 context: context,
-                                errorText: 'رجاءََ قم بتعبئة جميع الخانات');
+                                snackBarText: 'رجاءََ قم بتعبئة جميع الخانات');
                           }
 
                           // ------ 2) check if validate is all good ------
                           // ------- and send the event otp to Auth Bloc -------
-                          if (_formField.currentState!.validate()) {
-                            final String otp =
-                                '${pin1.text + pin2.text + pin3.text + pin4.text + pin5.text + pin6.text}';
+                          else if (_formField.currentState!.validate()) {
+                            final String otp = pin1.text +
+                                pin2.text +
+                                pin3.text +
+                                pin4.text +
+                                pin5.text +
+                                pin6.text;
                             print(otp);
                             print('Succecc Otp');
-                            context
-                                .read<AuthBloc>()
-                                .add(OTPEvent(otp: otp, email: email));
+                            context.read<AuthBloc>().add(OTPEvent(
+                                  otp: otp,
+                                  email: widget.email,
+                                ));
                           }
-                          //------------------- Send data to database using bloc ---------------------
                         },
                         child: Center(
                           child: TextWidget(
@@ -192,5 +250,19 @@ class OtpView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _resendCode() {
+    //other code here
+    setState(() {
+      secondsRemaining = 30;
+      enableResend = false;
+    });
+  }
+
+  @override
+  dispose() {
+    timer.cancel();
+    super.dispose();
   }
 }

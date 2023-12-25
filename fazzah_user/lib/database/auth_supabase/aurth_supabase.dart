@@ -12,12 +12,20 @@ class AuthSupabase {
     try {
       final response =
           await supabase.auth.signUp(password: password, email: email);
-
-      await supabase.from('users').insert(
-          {'name': fullName, 'phone_number': phoneNumber, 'email': email});
-
+      await supabase.from('users').insert({
+        'id': response.user!.id,
+        'name': fullName,
+        'phone_number': phoneNumber,
+        'email': email
+      });
       print("------- response sign up from supabase function --------");
-      print(response);
+      print(response.user!.id);
+    } on PostgrestException catch (error) {
+      print("signup Error catch : ${error.toString()}");
+      throw 'البريد الإلكتروني مستخدم';
+    } on AuthException catch (error) {
+      print("signup Error catch : ${error.toString()}");
+      throw 'الرجاء المحاولة بعد ساعة';
     } catch (error) {
       print("Signup Error catch : ${error.toString()}");
     }
@@ -35,10 +43,50 @@ class AuthSupabase {
 
       print(
           "------- response OTP after sign up from supabase function --------");
-      print(response);
+      print(response.session);
     } on AuthException catch (error) {
       print("OTP Error catch : ${error.toString()}");
       throw 'رمز التحقق غير صحيح او منتهي صلاحيته';
     }
   }
+
+  //---------------------------------------------------
+
+  //---------------------------------------------------
+  Future<ResendResponse> resendOTP({
+    required String email,
+  }) async {
+    try {
+      final response =
+          await supabase.auth.resend(type: OtpType.signup, email: email);
+
+      print(
+          "------- response resend OTP after sign up from supabase function --------");
+      print(response.messageId);
+      return response;
+    } on AuthException catch (error) {
+      print("Resend OTP Error catch : ${error.toString()}");
+      throw 'قم بتسجيل دخول';
+    }
+  }
+  //---------------------------------------------------
+
+  //---------------------------------------------------
+  Future<AuthResponse> login({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await supabase.auth
+          .signInWithPassword(password: password, email: email);
+
+      print("------- response login in from supabase function --------");
+      print(response);
+      return response;
+    } on AuthException catch (error) {
+      print("Login Error catch : ${error.toString()}");
+      throw 'البريد الإلكتروني او الرقم السري غير صحيح';
+    }
+  }
+  //---------------------------------------------------
 }

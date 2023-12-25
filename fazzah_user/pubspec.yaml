@@ -18,6 +18,7 @@ dependencies:
   supabase_flutter: ^2.0.1
   multi_dropdown: ^2.1.2
   flutter_dotenv: ^5.1.0
+  otp_timer_button: ^1.1.0
 
 dev_dependencies:
   flutter_test:
