@@ -1,32 +1,32 @@
 import 'dart:convert';
 
 class ProviderModel {
-  final String id;
-  final String name;
-  final String phoneNumber;
-  final String email;
-  final String idNumber;
-  final String nationality;
-  final int age;
-  final String certificate;
-  final String job;
-  final double wallet;
-  final String priceRange;
-  final String experience;
+  String? id;
+  String? name;
+  String? phoneNumber;
+  String? email;
+  String? idNumber;
+  String? nationality;
+  int? age;
+  String? certificate;
+  String? job;
+  double? wallet;
+  String? priceRange;
+  String? experience;
 
   ProviderModel({
-    required this.id,
-    required this.name,
-    required this.phoneNumber,
-    required this.email,
-    required this.idNumber,
-    required this.nationality,
-    required this.age,
-    required this.certificate,
-    required this.job,
-    required this.wallet,
-    required this.priceRange,
-    required this.experience,
+    this.id,
+    this.name,
+    this.phoneNumber,
+    this.email,
+    this.idNumber,
+    this.nationality,
+    this.age,
+    this.certificate,
+    this.job,
+    this.wallet,
+    this.priceRange,
+    this.experience,
   });
 
   factory ProviderModel.fromJson(Map<String, dynamic> jsonData) {

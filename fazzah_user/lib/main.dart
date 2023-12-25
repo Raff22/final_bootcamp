@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fazzah_user/utils/helpers/supabase_initilizer.dart';
 import 'package:fazzah_user/views/booking_views/booking_details_view.dart';
+import 'package:fazzah_user/views/chat_views/chat_with_provider_view.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
+import 'package:fazzah_user/views/user_main_views/home_view.dart';
+import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -33,7 +36,7 @@ class MainApp extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          home: const BookingDetailsView()),
+          home: NavBar()),
     );
   }
 }
