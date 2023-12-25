@@ -1,4 +1,4 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:fazzah_user/models/user_model.dart';
 
 abstract class AuthStatee {}
 
@@ -9,13 +9,13 @@ class LoadingAuthState extends AuthStatee {}
 class SignUpSuccessedState extends AuthStatee {}
 
 class OTPSuccessedState extends AuthStatee {
-  final AuthResponse currentUser;
+  final UserModel currentUser;
 
-  OTPSuccessedState(this.currentUser);
+  OTPSuccessedState({required this.currentUser});
 }
 
 class LoginSuccessedState extends AuthStatee {
-  final AuthResponse currentUser;
+  final UserModel currentUser;
 
   LoginSuccessedState({required this.currentUser});
 }

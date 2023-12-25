@@ -7,10 +7,8 @@ import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/database/auth_supabase/aurth_supabase.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/loading_func.dart';
@@ -150,11 +148,9 @@ class _OtpViewState extends State<OtpView> {
 
                         // ------------ OTP Successed State -----------
                         else if (state is OTPSuccessedState) {
-                          final UserModel? userModel = await AuthSupabase()
-                              .getUser(userId: state.currentUser.user!.id);
-
                           context.removeUnitl(
-                              screen: UserHomePage(userModel: userModel));
+                              screen:
+                                  UserHomePage(userModel: state.currentUser));
 
                           pin1.clear();
                           pin2.clear();

@@ -1,6 +1,8 @@
 import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
 import 'package:fazzah_user/database/auth_supabase/aurth_supabase.dart';
+import 'package:fazzah_user/database/get_data.dart';
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -29,8 +31,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
           otp: event.otp,
           email: event.email,
         );
+        final UserModel? userModel =
+            await SupaGetAndDelete().getUser(userId: currentUser.user!.id);
 
-        emit(OTPSuccessedState(currentUser));
+        emit(OTPSuccessedState(currentUser: userModel!));
       } catch (error) {
         emit(ErrorAuthState(message: error.toString()));
       }
@@ -55,7 +59,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
           email: event.email,
           password: event.password,
         );
-        emit(LoginSuccessedState(currentUser: currentUser));
+        final UserModel? userModel =
+            await SupaGetAndDelete().getUser(userId: currentUser.user!.id);
+
+        emit(LoginSuccessedState(currentUser: userModel!));
       } catch (error) {
         emit(ErrorAuthState(message: error.toString()));
       }

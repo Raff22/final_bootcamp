@@ -1,4 +1,3 @@
-import 'package:fazzah_user/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthSupabase {
@@ -86,18 +85,5 @@ class AuthSupabase {
     }
   }
 
-  //----------------- get User ------------------------
-  Future<UserModel?> getUser({required String userId}) async {
-    try {
-      final response = await supabase.from('users').select().eq('id', userId);
-      if (response.isEmpty) {
-        return null;
-      } else {
-        return UserModel.fromJson(response[0]);
-      }
-    } catch (error) {
-      print("------- error in Supabase function getUser --------");
-      print(error);
-    }
-  }
+ 
 }

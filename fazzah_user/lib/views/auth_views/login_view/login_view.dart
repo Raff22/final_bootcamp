@@ -7,11 +7,9 @@ import 'package:fazzah_user/bloc/is_provider_cubit/is_provider_cubit.dart';
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/database/auth_supabase/aurth_supabase.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_form_field_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/format_checkers/format_checks.dart';
@@ -148,11 +146,9 @@ class LoginView extends StatelessWidget {
                             if (state is LoadingAuthState) {
                               showLoadingDialog(context: context);
                             } else if (state is LoginSuccessedState) {
-                              final UserModel? userModel = await AuthSupabase()
-                                  .getUser(userId: state.currentUser.user!.id);
-
-                              context.pushScreen(
-                                  screen: UserHomePage(userModel: userModel));
+                              context.removeUnitl(
+                                  screen: UserHomePage(
+                                      userModel: state.currentUser));
 
                               emailController.clear();
                               passwordController.clear();
@@ -184,6 +180,7 @@ class LoginView extends StatelessWidget {
                               // ------ 2) check if validate is all good ------
                               // ------- and send the event with data to Auth Bloc -------
                               else if (_formField.currentState!.validate()) {
+                                print(stateUser);
                                 context.read<AuthBloc>().add(LoginEvent(
                                     email: emailController.text,
                                     password: passwordController.text));
