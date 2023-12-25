@@ -84,14 +84,14 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
                     height: context.getHeight(divide: 3),
                     child: TabBarView(
                       controller: tabsController,
-                      children: const [
-                        Center(
+                      children: [
+                        const Center(
                           child: Text("المعلومات"),
                         ),
                         Center(
-                          child: Text("الخدمات"),
+                          child: Text(widget.providerInfo.services ?? ""),
                         ),
-                        Center(
+                        const Center(
                           child: Text("آراء العملاء"),
                         ),
                       ],

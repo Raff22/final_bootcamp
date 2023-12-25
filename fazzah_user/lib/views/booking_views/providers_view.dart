@@ -40,7 +40,6 @@ class ProvidersScreen extends StatelessWidget {
                     return const Center(
                         child: CircularProgressIndicator(color: green));
                   } else if (state is ShowAllProvidersState) {
-                    print("4");
                     return SizedBox(
                       width: context.getWidth(),
                       height: context.getHeight(),
