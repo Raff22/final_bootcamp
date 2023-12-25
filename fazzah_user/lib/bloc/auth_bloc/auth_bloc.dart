@@ -5,11 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
   AuthBloc() : super(InitialState()) {
-    //--------------------------------------------------
+
+    //--------------------- Sign Up User Event ----------------------------
     on<SignUpUserEvent>((event, emit) async {
       try {
         emit(LoadingAuthState());
-        await AuthSupabase().signup(
+        await AuthSupabase().signupUser(
             fullName: event.fullName,
             email: event.email,
             password: event.password,
@@ -20,9 +21,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
       }
     });
 
-    //---------------------------------------------------
 
-    //---------------------------------------------------
+    //------------------ OTP Event ----------------------
     on<OTPEvent>((event, emit) async {
       try {
         emit(LoadingAuthState());
@@ -36,9 +36,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         emit(ErrorAuthState(message: error.toString()));
       }
     });
-    //---------------------------------------------------
 
-    //---------------------------------------------------
+    //--------------- Resend OTP Event ------------------
     on<ResendOTPEvent>((event, emit) async {
       try {
         await AuthSupabase().resendOTP(
@@ -48,9 +47,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         emit(ErrorAuthState(message: error.toString()));
       }
     });
-    //---------------------------------------------------
 
-    //--------------------------------------------------
+    //-----------------  Login Event --------------------
     on<LoginEvent>((event, emit) async {
       try {
         emit(LoadingAuthState());
@@ -63,7 +61,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         emit(ErrorAuthState(message: error.toString()));
       }
     });
-
-    //---------------------------------------------------
   }
 }

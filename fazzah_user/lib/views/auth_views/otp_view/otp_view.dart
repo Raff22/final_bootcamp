@@ -121,22 +121,6 @@ class _OtpViewState extends State<OtpView> {
                     height10,
 
                     //--------------------- Resend OTP -----------------------
-                    // RowTowTextWidget(
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   askText: 'لم يصلك الرمز ؟',
-                    //   textButtom: 'ddd',
-                    //   navigatorTo: () {
-                    //     snackBarMassage(
-                    //         context: context,
-                    //         snackBarText:
-                    //             'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني ${widget.email}');
-
-                    //     context.read<AuthBloc>().add(ResendOTPEvent(
-                    //           email: widget.email,
-                    //         ));
-                    //   },
-                    // ),
-                    height20,
                     OtpTimerButton(
                       onPressed: () {
                         snackBarMassage(
@@ -148,7 +132,7 @@ class _OtpViewState extends State<OtpView> {
                               email: widget.email,
                             ));
                       },
-                      text: Text('Resend OTP'),
+                      text: const Text('Resend OTP'),
                       duration: 30,
                     ),
 

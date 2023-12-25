@@ -3,8 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AuthSupabase {
   final supabase = Supabase.instance.client;
 
-  //---------------------------------------------------
-  signup(
+  //------------------- Sign Up Supabase User -----------------------------
+  signupUser(
       {required String fullName,
       required String email,
       required String password,
@@ -30,9 +30,8 @@ class AuthSupabase {
       print("Signup Error catch : ${error.toString()}");
     }
   }
-  //---------------------------------------------------
 
-  //---------------------------------------------------
+  //------------------- OTP Supabase ------------------
   otp({
     required String otp,
     required String email,
@@ -50,9 +49,7 @@ class AuthSupabase {
     }
   }
 
-  //---------------------------------------------------
-
-  //---------------------------------------------------
+  //-------------- Resend OTP Supabase ----------------
   Future<ResendResponse> resendOTP({
     required String email,
   }) async {
@@ -69,9 +66,8 @@ class AuthSupabase {
       throw 'قم بتسجيل دخول';
     }
   }
-  //---------------------------------------------------
 
-  //---------------------------------------------------
+  //-------------- Login Supabase ----------------
   Future<AuthResponse> login({
     required String email,
     required String password,
@@ -88,5 +84,4 @@ class AuthSupabase {
       throw 'البريد الإلكتروني او الرقم السري غير صحيح';
     }
   }
-  //---------------------------------------------------
 }
