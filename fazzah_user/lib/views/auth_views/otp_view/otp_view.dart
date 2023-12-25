@@ -22,7 +22,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
 
 class OtpView extends StatefulWidget {
-  OtpView({
+  const OtpView({
     super.key,
     required this.email,
   });
@@ -46,7 +46,7 @@ class _OtpViewState extends State<OtpView> {
   @override
   initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 10), (_) {
       if (secondsRemaining != 0) {
         setState(() {
           secondsRemaining--;
@@ -59,6 +59,7 @@ class _OtpViewState extends State<OtpView> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {

@@ -10,40 +10,47 @@ class ProviderModel {
   int? age;
   String? certificate;
   String? job;
-  double? wallet;
+  num? wallet;
   String? priceRange;
   String? experience;
+  String? providerImage;
+  num? rateAverage;
+  int? ratesNumber;
 
-  ProviderModel({
-    this.id,
-    this.name,
-    this.phoneNumber,
-    this.email,
-    this.idNumber,
-    this.nationality,
-    this.age,
-    this.certificate,
-    this.job,
-    this.wallet,
-    this.priceRange,
-    this.experience,
-  });
+  ProviderModel(
+      {this.id,
+      this.name,
+      this.phoneNumber,
+      this.email,
+      this.idNumber,
+      this.nationality,
+      this.age,
+      this.certificate,
+      this.job,
+      this.wallet,
+      this.priceRange,
+      this.experience,
+      this.providerImage,
+      this.rateAverage,
+      this.ratesNumber});
 
   factory ProviderModel.fromJson(Map<String, dynamic> jsonData) {
     return ProviderModel(
-      id: jsonData['id'],
-      name: jsonData['name'],
-      phoneNumber: jsonData['phone_number'],
-      email: jsonData['email'],
-      idNumber: jsonData['id_number'],
-      nationality: jsonData['nationality'],
-      age: jsonData['age'],
-      certificate: jsonData['certificate'],
-      job: jsonData['job'],
-      wallet: jsonData['wallet'].toDouble(),
-      priceRange: jsonData['price_range'],
-      experience: jsonData['experience'],
-    );
+        id: jsonData['id'],
+        name: jsonData['name'],
+        phoneNumber: jsonData['phone_number'],
+        email: jsonData['email'],
+        idNumber: jsonData['id_number'],
+        nationality: jsonData['nationality'],
+        age: jsonData['age'],
+        certificate: jsonData['certificate'],
+        job: jsonData['job'],
+        wallet: jsonData['wallet'],
+        priceRange: jsonData['price_range'],
+        experience: jsonData['experience'],
+        providerImage: jsonData['profile_image'],
+        rateAverage: jsonData['rating_average'],
+        ratesNumber: jsonData['rate_number']);
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +67,9 @@ class ProviderModel {
       'wallet': wallet,
       'price_range': priceRange,
       'experience': experience,
+      'profile_image': providerImage,
+      'rating_average': rateAverage,
+      'rate_number': ratesNumber
     };
   }
 

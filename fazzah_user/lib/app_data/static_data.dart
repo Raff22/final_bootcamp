@@ -23,11 +23,11 @@ List<String> hours = [
 ];
 
 List workerslist = [
-  WorkerCard(
-    name: " نور احمد",
-    rate: "4.5",
-    ratenum: "(100 تقييم)",
-    profileimg: "assets/images/personimg.png",
-    peice: "100-150",
-  ),
+  // WorkerCard(
+  //   name: " نور احمد",
+  //   rate: "4.5",
+  //   ratenum: "(100 تقييم)",
+  //   profileimg: "assets/images/personimg.png",
+  //   peice: "100-150",
+  // ),
 ];

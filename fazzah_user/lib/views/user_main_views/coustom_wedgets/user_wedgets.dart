@@ -1,3 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fazzah_user/constant/color.dart';
+import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_event.dart';
@@ -9,17 +12,9 @@ class WorkerCard extends StatelessWidget {
   bool isFav = false;
   WorkerCard({
     super.key,
-    required this.name,
-    required this.rate,
-    required this.ratenum,
-    required this.profileimg,
-    required this.peice,
+    required this.providerInfo,
   });
-  final String name;
-  final String rate;
-  final String ratenum;
-  final String profileimg;
-  final String peice;
+  final ProviderModel providerInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +23,27 @@ class WorkerCard extends StatelessWidget {
         width: context.getWidth(divide: 1.1),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Color(0xffeff0eb),
+          color: const Color(0xffeff0eb),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Container(
+              child: SizedBox(
                   height: context.getHeight(divide: 8.5),
                   width: context.getWidth(divide: 4),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      "${profileimg}",
-                      fit: BoxFit.fill,
-                    ),
+                    child: (providerInfo.providerImage == null ||
+                            providerInfo.providerImage!.isEmpty)
+                        ? Image.asset('assets/images/Logo_provider.png',
+                            fit: BoxFit.fill)
+                        : CachedNetworkImage(
+                            imageUrl: providerInfo.providerImage!,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(color: green),
+                            fit: BoxFit.fill),
                   )),
             ),
             Padding(
@@ -51,17 +51,17 @@ class WorkerCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(name,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  Text("السعر التقريبي $peiceرس"),
+                  Text(providerInfo.name ?? "",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text("السعر التقريبي ${providerInfo.priceRange ?? ""} رس"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.star, color: Colors.green[300]),
-                      Text(rate),
+                      Text("${providerInfo.rateAverage ?? ""} "),
                       Text(
-                        ratenum,
+                        "(تقييم ${providerInfo.ratesNumber ?? ""})",
                         style: TextStyle(
                             fontWeight: FontWeight.w300,
                             color: Colors.grey[500]),
@@ -81,7 +81,7 @@ class WorkerCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 90),
+              padding: const EdgeInsets.only(bottom: 90),
               child: BlocBuilder<FavBloc, FavState>(builder: (context, state) {
                 bool isFav = false;
                 if (state is FavSelected) {
@@ -119,7 +119,7 @@ class kdmatWedget extends StatelessWidget {
       child: Container(
         height: context.getHeight(divide: 5.4),
         width: context.getWidth(divide: 2.5),
-        color: Color(0xffeff0eb),
+        color: const Color(0xffeff0eb),
         child: Column(
           children: [
             Padding(
@@ -130,7 +130,7 @@ class kdmatWedget extends StatelessWidget {
             ),
             Text(
               text,
-              style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
             )
           ],
         ),
@@ -155,7 +155,7 @@ class mainScreenAppbar extends StatelessWidget {
     return Container(
         height: context.getHeight(divide: 7),
         width: context.getWidth(divide: 1),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30),
               bottomRight: Radius.circular(30)),
@@ -169,7 +169,7 @@ class mainScreenAppbar extends StatelessWidget {
               Icon(iconrisht),
               Text(
                 title,
-                style: TextStyle(fontSize: 29),
+                style: const TextStyle(fontSize: 29),
               ),
               Icon(iconleft)
             ],
@@ -196,7 +196,7 @@ class HomeScreenBotton extends StatelessWidget {
       height: context.getHeight(divide: 16),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.all(Radius.circular(11)),
+        borderRadius: const BorderRadius.all(Radius.circular(11)),
       ),
       child: Center(
         child: Text(

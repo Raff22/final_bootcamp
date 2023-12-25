@@ -3,7 +3,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
+import 'package:fazzah_user/views/booking_views/providers_view.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,35 +74,40 @@ class MainView extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               right: 10,
               left: 10,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("اقرب الفنيين لك",
+                const Text("اقرب الفنيين لك",
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w300,
                         color: Colors.black)),
-                Text("عرض الكل",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black)),
+                InkWell(
+                  onTap: () {
+                    context.pushScreen(screen: const ProvidersScreen());
+                  },
+                  child: const Text("عرض الكل",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black)),
+                ),
               ],
             ),
           ),
           const SizedBox(height: 10),
           WorkerCard(
+              providerInfo: ProviderModel(
             name: " نور احمد",
-            rate: "4.5",
-            ratenum: "(100 تقييم)",
-            profileimg: "assets/images/personimg.png",
-            peice: "100-150",
-          ),
+            rateAverage: 4.5,
+            ratesNumber: 100,
+            priceRange: "100-150",
+          )),
         ],
       ),
     );
