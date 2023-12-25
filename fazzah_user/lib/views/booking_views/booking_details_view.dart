@@ -74,19 +74,36 @@ class BookingDetailsView extends StatelessWidget {
               ),
             ),
             height20,
-            const TextWidget(
-              text: "تحديد الموقع",
-              textSize: 22,
-              textFontWeight: FontWeight.w500,
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextWidget(
+                  text: "قيمة اليد العاملة",
+                  textSize: 22,
+                  textFontWeight: FontWeight.w500,
+                ),
+                TextWidget(
+                  text: "١٢٥ رس",
+                  textSize: 22,
+                  textFontWeight: FontWeight.bold,
+                  textColor: green,
+                ),
+              ],
             ),
-            Image.asset('assets/images/empty_image.png'),
             height20,
             const TextWidget(
-              text: "قيمة اليد العاملة",
+              text: "طريقة الدفع",
               textSize: 22,
               textFontWeight: FontWeight.w500,
             ),
-            Image.asset('assets/images/empty_image.png'),
+            height20,
+            const PaymentMethodWidget(),
+            height20,
+            const TextWidget(
+              text: "ملاحظة : هذه القيمة لا تشمل قيمة الادوات المطلوبة",
+              textSize: 14,
+              textColor: red,
+            ),
             height20,
             ContainerWidget(
                 contanierBorderRadius: 10,
@@ -104,6 +121,71 @@ class BookingDetailsView extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class PaymentMethodWidget extends StatelessWidget {
+  const PaymentMethodWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.all(8),
+        height: 58,
+        decoration: BoxDecoration(
+            border: Border.all(color: grey),
+            borderRadius: BorderRadius.circular(10)),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          //HERE PAYMENT METHOD OBJECT
+          Image.asset('assets/images/applepay.png'),
+          InkWell(
+            onTap: () {
+              print("here");
+              showBottomSheet(
+                  context: context,
+                  backgroundColor: white,
+                  builder: (context) {
+                    return SizedBox(
+                      height: context.getHeight(divide: 3),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            height20,
+                            Center(
+                              child: ContainerWidget(
+                                  contanierBorderRadius: 10,
+                                  containerWidth: 366,
+                                  containerHeight: 48,
+                                  containerColor: green,
+                                  onPressed: () {},
+                                  child: const Center(
+                                      child: TextWidget(
+                                    text: "تغيير",
+                                    textSize: 25,
+                                    textColor: lightGrey,
+                                  ))),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+            },
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              width: 49,
+              height: 36,
+              decoration: BoxDecoration(
+                  color: green, borderRadius: BorderRadius.circular(10)),
+              child: const TextWidget(text: "تغيير", textColor: white),
+            ),
+          )
+        ]));
   }
 }
 

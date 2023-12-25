@@ -1,6 +1,10 @@
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
+import 'package:fazzah_user/views/user_main_views/more_screens/about_Fazaah.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/my_account.dart';
+import 'package:fazzah_user/views/user_main_views/more_screens/my_places.dart';
+import 'package:fazzah_user/views/user_main_views/more_screens/pay_ways.dart';
+import 'package:fazzah_user/views/user_main_views/more_screens/polcies.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,27 +21,48 @@ class MoreScreen extends StatelessWidget {
             height: 20,
           ),
           moreSelector(
+            fun: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MyAccountScreen();
+              }));
+            },
+            icon: Icons.person,
+            text: "حسابي",
+            icon2: Icons.keyboard_arrow_left_sharp,
+          ),
+          moreSelector(
               fun: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return MyAccountScreen();
+                  return MyPlacesScreen();
                 }));
               },
-              icon: Icons.person,
-              text: "حسابي",
-              icon2: Icons.keyboard_arrow_left_sharp),
-          moreSelector(
               icon: Icons.location_pin,
               text: "عناويني المحفوظه",
               icon2: Icons.keyboard_arrow_left_sharp),
           moreSelector(
+              fun: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PayWaysScreen();
+                }));
+              },
               icon: Icons.add_card_outlined,
               text: " طرق الدفع",
               icon2: Icons.keyboard_arrow_left_sharp),
           moreSelector(
+              fun: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return AboutFazzahScreen();
+                }));
+              },
               icon: Icons.warning_amber_rounded,
               text: " عن فزعة",
               icon2: Icons.keyboard_arrow_left_sharp),
           moreSelector(
+              fun: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PoliciesScreen();
+                }));
+              },
               icon: Icons.warning,
               text: " سياسة الخصوصية",
               icon2: Icons.keyboard_arrow_left_sharp),

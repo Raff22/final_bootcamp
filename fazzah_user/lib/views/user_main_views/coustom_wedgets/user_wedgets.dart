@@ -177,3 +177,33 @@ class mainScreenAppbar extends StatelessWidget {
         ));
   }
 }
+
+class HomeScreenBotton extends StatelessWidget {
+  const HomeScreenBotton({
+    super.key,
+    required this.text,
+    required this.color,
+    required this.textcolor,
+  });
+  final String text;
+  final Color color;
+  final Color textcolor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: context.getWidth(divide: 1.2),
+      height: context.getHeight(divide: 16),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.all(Radius.circular(11)),
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 20, color: textcolor),
+        ),
+      ),
+    );
+  }
+}

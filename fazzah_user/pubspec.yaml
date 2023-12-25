@@ -19,6 +19,7 @@ dependencies:
   multi_dropdown: ^2.1.2
   flutter_dotenv: ^5.1.0
   otp_timer_button: ^1.1.0
+  image_picker: ^1.0.5
 
 dev_dependencies:
   flutter_test:
