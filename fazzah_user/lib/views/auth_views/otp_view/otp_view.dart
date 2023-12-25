@@ -39,6 +39,7 @@ class OtpView extends StatelessWidget {
 
   TextEditingController pin6 = TextEditingController();
 
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
