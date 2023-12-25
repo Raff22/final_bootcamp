@@ -1,7 +1,4 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
-
-import 'dart:async';
-
 import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
@@ -21,43 +18,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
 
-class OtpView extends StatefulWidget {
+class OtpView extends StatelessWidget {
   OtpView({
     super.key,
     required this.email,
   });
   final String email;
 
-  @override
-  State<OtpView> createState() => _OtpViewState();
-}
-
-class _OtpViewState extends State<OtpView> {
   final _formField = GlobalKey<FormState>();
+
   TextEditingController pin1 = TextEditingController();
+
   TextEditingController pin2 = TextEditingController();
+
   TextEditingController pin3 = TextEditingController();
+
   TextEditingController pin4 = TextEditingController();
+
   TextEditingController pin5 = TextEditingController();
+
   TextEditingController pin6 = TextEditingController();
-  int secondsRemaining = 30;
-  bool enableResend = false;
-  late Timer timer;
-  @override
-  initState() {
-    super.initState();
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (secondsRemaining != 0) {
-        setState(() {
-          secondsRemaining--;
-        });
-      } else {
-        setState(() {
-          enableResend = true;
-        });
-      }
-    });
-  }
 
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -89,7 +69,7 @@ class _OtpViewState extends State<OtpView> {
                     //--------------------- Login Title  -----------------------
                     TitleView(
                       title: 'إنشاء حساب',
-                      supTitle: 'تم إرسال رمز التحقق إلى ${widget.email}',
+                      supTitle: 'تم إرسال رمز التحقق إلى $email',
                     ),
                     height20,
 
@@ -126,10 +106,10 @@ class _OtpViewState extends State<OtpView> {
                         snackBarMassage(
                             context: context,
                             snackBarText:
-                                'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني ${widget.email}');
+                                'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني $email');
 
                         context.read<AuthBloc>().add(ResendOTPEvent(
-                              email: widget.email,
+                              email: email,
                             ));
                       },
                       text: const Text('Resend OTP'),
@@ -207,7 +187,7 @@ class _OtpViewState extends State<OtpView> {
                             print('Succecc Otp');
                             context.read<AuthBloc>().add(OTPEvent(
                                   otp: otp,
-                                  email: widget.email,
+                                  email: email,
                                 ));
                           }
                         },
@@ -236,19 +216,5 @@ class _OtpViewState extends State<OtpView> {
         ),
       ),
     );
-  }
-
-  void _resendCode() {
-    //other code here
-    setState(() {
-      secondsRemaining = 30;
-      enableResend = false;
-    });
-  }
-
-  @override
-  dispose() {
-    timer.cancel();
-    super.dispose();
   }
 }
