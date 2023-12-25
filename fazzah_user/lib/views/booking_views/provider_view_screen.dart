@@ -2,8 +2,10 @@ import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
+import 'package:fazzah_user/views/booking_views/booking_details_view.dart';
 import 'package:flutter/material.dart';
 
 class ProviderViewScreen extends StatefulWidget {
@@ -81,7 +83,9 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
                       containerWidth: context.getWidth(),
                       containerHeight: 48,
                       containerColor: green,
-                      onPressed: () {},
+                      onPressed: () {
+                        context.pushScreen(screen: const BookingDetailsView());
+                      },
                       child: const Center(
                           child: TextWidget(
                         text: "احجز الآن",
