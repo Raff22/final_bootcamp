@@ -103,11 +103,12 @@ class MainView extends StatelessWidget {
           const SizedBox(height: 10),
           WorkerCard(
               providerInfo: ProviderModel(
-            name: " نور احمد",
-            rateAverage: 4.5,
-            ratesNumber: 100,
-            priceRange: "100-150",
-          )),
+                  name: " نور احمد",
+                  rateAverage: 4.5,
+                  ratesNumber: 100,
+                  priceRange: "100-150",
+                  providerImage:
+                      'https://freepngimg.com/thumb/industrial_worker/168550-worker-png-file-hd.png')),
         ],
       ),
     );

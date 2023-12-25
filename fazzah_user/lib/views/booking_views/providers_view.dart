@@ -46,16 +46,8 @@ class ProvidersScreen extends StatelessWidget {
                       height: context.getHeight(),
                       child: ListView.separated(
                           itemCount: state.providersList.length,
-                          itemBuilder: (context, index) => InkWell(
-                                onTap: () {
-                                  context.pushScreen(
-                                      screen: ProviderViewScreen(
-                                          providerInfo:
-                                              state.providersList[index]));
-                                },
-                                child: WorkerCard(
-                                    providerInfo: state.providersList[index]),
-                              ),
+                          itemBuilder: (context, index) => WorkerCard(
+                              providerInfo: state.providersList[index]),
                           separatorBuilder: (BuildContext context, int index) {
                             return height20;
                           }),
