@@ -55,4 +55,26 @@ class SupaGetAndDelete {
     }
     return null;
   }
+
+  //---------------- get Provider -----------------------------
+
+  Future<ProviderModel?> getProviderRahaf({required String userId}) async {
+    try {
+      final response =
+          await supabase.from('providers').select().eq('id', userId);
+
+      if (response.isEmpty) {
+        return null;
+      } else {
+        print('8888888888888888888888888888888');
+        print(response[0]);
+        print('8888888888888888888888888888888');
+        return ProviderModel.fromJson(response[0]);
+      }
+    } catch (error) {
+      print("------- error in Supabase function getUser --------");
+      print(error);
+    }
+    return null;
+  }
 }

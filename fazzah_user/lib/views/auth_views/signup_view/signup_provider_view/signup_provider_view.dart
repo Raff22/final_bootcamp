@@ -1,38 +1,46 @@
 // ignore_for_file: must_be_immutable
+import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
+import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
+import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_form_field_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/format_checkers/format_checks.dart';
+import 'package:fazzah_user/utils/helpers/loading_func.dart';
 import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
+import 'package:fazzah_user/views/auth_views/otp_view/otp_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignupProviderView extends StatelessWidget {
-  SignupProviderView({super.key});
+  SignupProviderView({super.key, required this.isProvider});
 
-  final _formField = GlobalKey<FormState>();
+  final _formFieldProvider = GlobalKey<FormState>();
+  final TextEditingController passwordController = TextEditingController();
   final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController nationalIdController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nationalIdController = TextEditingController();
   final TextEditingController nationaltyController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController certificateController = TextEditingController();
-  final TextEditingController occupationController = TextEditingController();
-
+  final TextEditingController jobController = TextEditingController();
+  final TextEditingController servicesController = TextEditingController();
   final TextEditingController yearsOfExperienceController =
       TextEditingController();
   final TextEditingController priceRangeController = TextEditingController();
+  final bool isProvider; // it will be true and comes from login
 
   @override
   Widget build(BuildContext context) {
+    //print('is provider ${isProvider}');
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -44,7 +52,7 @@ class SignupProviderView extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
               child: Form(
-                key: _formField,
+                key: _formFieldProvider,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -271,7 +279,7 @@ class SignupProviderView extends StatelessWidget {
                     ),
                     height20,
 
-                    //---------------- Text Field occupation -------------------
+                    //---------------- Text Field Job -------------------
 
                     TextFormFieldWidget(
                       validator: (value) {
@@ -283,8 +291,31 @@ class SignupProviderView extends StatelessWidget {
                       obscureText: false,
                       keyboardType: TextInputType.text,
                       cursorColor: grey,
-                      controller: occupationController,
+                      controller: jobController,
                       labelText: 'المهنة',
+                      labelTextColor: grey,
+                      controllerTextColor: dark1Green,
+                      suffixIcon: const Icon(
+                        Icons.work_outline_outlined,
+                        color: grey,
+                      ),
+                    ),
+                    height20,
+
+                    //---------------- Text Field services -------------------
+
+                    TextFormFieldWidget(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'رجاءََ أدخل خدماتك';
+                        }
+                        return null;
+                      },
+                      obscureText: false,
+                      keyboardType: TextInputType.text,
+                      cursorColor: grey,
+                      controller: servicesController,
+                      labelText: 'الخدمات',
                       hintText: 'سباكة , دهان , ... الخ',
                       labelTextColor: grey,
                       controllerTextColor: dark1Green,
@@ -344,57 +375,116 @@ class SignupProviderView extends StatelessWidget {
 
                     //------------ Container (إنشاء حساب) -------------------
 
-                    ContainerWidget(
-                      containerHeight: 48,
-                      containerWidth: context.getWidth(),
-                      containerColor: fullNameController.text.isNotEmpty ||
-                              nationalIdController.text.isNotEmpty ||
-                              phoneNumberController.text.isNotEmpty ||
-                              emailController.text.isNotEmpty ||
-                              passwordController.text.isNotEmpty ||
-                              nationaltyController.text.isNotEmpty ||
-                              ageController.text.isNotEmpty ||
-                              certificateController.text.isNotEmpty ||
-                              occupationController.text.isNotEmpty ||
-                              yearsOfExperienceController.text.isNotEmpty ||
-                              priceRangeController.text.isNotEmpty
-                          ? green
-                          : grey,
-                      contanierBorderRadius: 10,
-                      onPressed: () {
-                        if (fullNameController.text.isNotEmpty ||
-                            nationalIdController.text.isNotEmpty ||
-                            phoneNumberController.text.isNotEmpty ||
-                            emailController.text.isNotEmpty ||
-                            passwordController.text.isNotEmpty ||
-                            nationaltyController.text.isNotEmpty ||
-                            ageController.text.isNotEmpty ||
-                            certificateController.text.isNotEmpty ||
-                            occupationController.text.isNotEmpty ||
-                            yearsOfExperienceController.text.isNotEmpty ||
-                            priceRangeController.text.isNotEmpty) {
+                    BlocListener<AuthBloc, AuthStatee>(
+                      listener: (context, state) {
+                        // ------------- Loading State --------------
+                        if (state is LoadingAuthState) {
+                          showLoadingDialog(context: context);
+                        }
+
+                        // -------- Sign Up Successed State ---------
+                        else if (state is SignUpSuccessedProviderState) {
+                          context.removeUnitl(
+                              screen: OtpView(
+                            email: emailController.text,
+                            isProvider: isProvider,
+                          ));
+
+                          fullNameController.clear();
+                          nationalIdController.clear();
+                          phoneNumberController.clear();
+                          emailController.clear();
+                          passwordController.clear();
+                          nationaltyController.clear();
+                          ageController.clear();
+                          certificateController.clear();
+                          servicesController.clear();
+                          yearsOfExperienceController.clear();
+                          priceRangeController.clear();
+                        }
+
+                        // -------- Sign Up Error State ---------
+                        else if (state is ErrorAuthState) {
+                          context.popScreen();
                           snackBarMassage(
-                              context: context,
-                              snackBarText: 'رجاءََ قم بتعبئة جميع الخانات');
+                              context: context, snackBarText: state.message);
                         }
                       },
-                      child: Center(
-                        child: TextWidget(
-                          text: 'إنشاء حساب',
-                          textSize: 20,
-                          textColor: fullNameController.text.isNotEmpty ||
-                                  nationalIdController.text.isNotEmpty ||
-                                  phoneNumberController.text.isNotEmpty ||
-                                  emailController.text.isNotEmpty ||
-                                  passwordController.text.isNotEmpty ||
-                                  nationaltyController.text.isNotEmpty ||
-                                  ageController.text.isNotEmpty ||
-                                  certificateController.text.isNotEmpty ||
-                                  occupationController.text.isNotEmpty ||
-                                  yearsOfExperienceController.text.isNotEmpty ||
-                                  priceRangeController.text.isNotEmpty
-                              ? white
-                              : black,
+                      child: ContainerWidget(
+                        containerHeight: 48,
+                        containerWidth: context.getWidth(),
+                        containerColor: fullNameController.text.isNotEmpty ||
+                                nationalIdController.text.isNotEmpty ||
+                                phoneNumberController.text.isNotEmpty ||
+                                emailController.text.isNotEmpty ||
+                                passwordController.text.isNotEmpty ||
+                                nationaltyController.text.isNotEmpty ||
+                                ageController.text.isNotEmpty ||
+                                certificateController.text.isNotEmpty ||
+                                servicesController.text.isNotEmpty ||
+                                yearsOfExperienceController.text.isNotEmpty ||
+                                priceRangeController.text.isNotEmpty
+                            ? green
+                            : grey,
+                        contanierBorderRadius: 10,
+
+                        // ------------- on press 'إنشاء حساب' event -----------
+                        onPressed: () {
+                          // ------ 1) check if all field is empty or not ------
+                          if (fullNameController.text.isEmpty ||
+                              nationalIdController.text.isEmpty ||
+                              phoneNumberController.text.isEmpty ||
+                              emailController.text.isEmpty ||
+                              passwordController.text.isEmpty ||
+                              nationaltyController.text.isEmpty ||
+                              ageController.text.isEmpty ||
+                              certificateController.text.isEmpty ||
+                              servicesController.text.isEmpty ||
+                              yearsOfExperienceController.text.isEmpty ||
+                              priceRangeController.text.isEmpty ||
+                              servicesController.text.isEmpty) {
+                            snackBarMassage(
+                                context: context,
+                                snackBarText: 'رجاءََ قم بتعبئة جميع الخانات');
+                          }
+                          // ------ 2) check if validate is all good ------
+                          // ------- and send the event with data to Auth Bloc -------
+                          else if (_formFieldProvider.currentState!.validate()) {
+                            context.read<AuthBloc>().add(SignUpProviderEvent(
+                                fullName: fullNameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                phoneNumber: phoneNumberController.text,
+                                nationalty: nationaltyController.text,
+                                nationalId: nationalIdController.text,
+                                age: ageController.text,
+                                certificate: certificateController.text,
+                                job: jobController.text,
+                                services: servicesController.text,
+                                yearsOfExperience:
+                                    yearsOfExperienceController.text,
+                                priceRange: priceRangeController.text));
+                          }
+                        },
+                        child: Center(
+                          child: TextWidget(
+                            text: 'إنشاء حساب',
+                            textSize: 20,
+                            textColor: fullNameController.text.isNotEmpty ||
+                                    nationalIdController.text.isNotEmpty ||
+                                    phoneNumberController.text.isNotEmpty ||
+                                    emailController.text.isNotEmpty ||
+                                    passwordController.text.isNotEmpty ||
+                                    nationaltyController.text.isNotEmpty ||
+                                    ageController.text.isNotEmpty ||
+                                    certificateController.text.isNotEmpty ||
+                                    servicesController.text.isNotEmpty ||
+                                    yearsOfExperienceController
+                                        .text.isNotEmpty ||
+                                    priceRangeController.text.isNotEmpty
+                                ? white
+                                : black,
+                          ),
                         ),
                       ),
                     )

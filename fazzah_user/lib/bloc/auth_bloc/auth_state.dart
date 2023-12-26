@@ -1,3 +1,4 @@
+import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 
 abstract class AuthStatee {}
@@ -6,18 +7,40 @@ class InitialState extends AuthStatee {}
 
 class LoadingAuthState extends AuthStatee {}
 
-class SignUpSuccessedState extends AuthStatee {}
+class SignUpSuccessedUserState extends AuthStatee {}
 
-class OTPSuccessedState extends AuthStatee {
-  final UserModel currentUser;
+class SignUpSuccessedProviderState extends AuthStatee {}
 
-  OTPSuccessedState({required this.currentUser});
+class OTPSuccessedUserState extends AuthStatee {
+  final UserModel? currentUser;
+  final bool isProvider;
+
+  OTPSuccessedUserState({required this.isProvider, required this.currentUser});
 }
 
-class LoginSuccessedState extends AuthStatee {
+class OTPSuccessedProviderState extends AuthStatee {
+  final ProviderModel? currentprovider;
+  final bool isProvider;
+
+  OTPSuccessedProviderState(
+      {required this.isProvider, required this.currentprovider});
+}
+
+class LoginSuccessedUserState extends AuthStatee {
   final UserModel currentUser;
 
-  LoginSuccessedState({required this.currentUser});
+  final bool isProvider;
+
+  LoginSuccessedUserState(
+      {required this.isProvider, required this.currentUser});
+}
+
+class LoginSuccessedProviderState extends AuthStatee {
+  final ProviderModel currentprovider;
+  final bool isProvider;
+
+  LoginSuccessedProviderState(
+      {required this.currentprovider, required this.isProvider});
 }
 
 class ErrorAuthState extends AuthStatee {

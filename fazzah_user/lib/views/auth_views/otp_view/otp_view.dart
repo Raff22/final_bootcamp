@@ -13,6 +13,7 @@ import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
 import 'package:fazzah_user/views/auth_views/otp_view/otp_widget/otp_text_field.dart';
+import 'package:fazzah_user/views/auth_views/provider_home_page.dart';
 import 'package:fazzah_user/views/auth_views/user_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,8 +23,10 @@ class OtpView extends StatelessWidget {
   OtpView({
     super.key,
     required this.email,
+    required this.isProvider,
   });
   final String email;
+  final bool isProvider; // it will be true if is provider and false if is user
 
   final _formField = GlobalKey<FormState>();
 
@@ -114,7 +117,7 @@ class OtpView extends StatelessWidget {
                             ));
                       },
                       text: const Text('Resend OTP'),
-                      duration: 30,
+                      duration: 60,
                     ),
 
                     // --------------  Container (تسجيل دخول)  ---------------
@@ -127,18 +130,51 @@ class OtpView extends StatelessWidget {
                           showLoadingDialog(context: context);
                         }
 
-                        // ------------ OTP Successed State -----------
-                        else if (state is OTPSuccessedState) {
-                          context.removeUnitl(
-                              screen:
-                                  UserHomePage(userModel: state.currentUser));
+                        //   if (state.isProvider == true) {
+                        //     context.removeUnitl(
+                        //         screen: ProviderHomePage(
+                        //             providerModel: state.currentprovider));
+                        //   } else {}
 
-                          pin1.clear();
-                          pin2.clear();
-                          pin3.clear();
-                          pin4.clear();
-                          pin5.clear();
-                          pin6.clear();
+                        //   pin1.clear();
+                        //   pin2.clear();
+                        //   pin3.clear();
+                        //   pin4.clear();
+                        //   pin5.clear();
+                        //   pin6.clear();
+                        // }
+                        // ------------ OTP Successed State -----------
+                        else if (state is OTPSuccessedUserState) {
+                          if (pin1.text.isEmpty ||
+                              pin2.text.isEmpty ||
+                              pin3.text.isEmpty ||
+                              pin4.text.isEmpty ||
+                              pin5.text.isEmpty ||
+                              pin6.text.isEmpty) {
+                            snackBarMassage(
+                                context: context,
+                                snackBarText: 'من فضلك قم بكتابة الرمز');
+                          } else {
+                            context.removeUnitl(
+                                screen:
+                                    UserHomePage(userModel: state.currentUser));
+                          }
+                        } else if (state is OTPSuccessedProviderState) {
+                          if (pin1.text.isEmpty ||
+                              pin2.text.isEmpty ||
+                              pin3.text.isEmpty ||
+                              pin4.text.isEmpty ||
+                              pin5.text.isEmpty ||
+                              pin6.text.isEmpty) {
+                            snackBarMassage(
+                                context: context,
+                                snackBarText: 'من فضلك قم بكتابة الرمز');
+                          } else {
+                            context.removeUnitl(
+                                screen: ProviderHomePage(
+                              providerModel: state.currentprovider,
+                            ));
+                          }
                         }
 
                         // -------- OTP Error State ---------
@@ -177,7 +213,7 @@ class OtpView extends StatelessWidget {
 
                           // ------ 2) check if validate is all good ------
                           // ------- and send the event otp to Auth Bloc -------
-                          else if (_formField.currentState!.validate()) {
+                          if (_formField.currentState!.validate()) {
                             final String otp = pin1.text +
                                 pin2.text +
                                 pin3.text +
@@ -187,9 +223,9 @@ class OtpView extends StatelessWidget {
                             print(otp);
                             print('Succecc Otp');
                             context.read<AuthBloc>().add(OTPEvent(
-                                  otp: otp,
-                                  email: email,
-                                ));
+                                otp: otp,
+                                email: email,
+                                isProvider: isProvider));
                           }
                         },
                         child: Center(
