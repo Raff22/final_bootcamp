@@ -10,6 +10,12 @@ class ShowAllProvidersState extends BookingState {
   ShowAllProvidersState({required this.providersList});
 }
 
+class ShowProviderRatingsState extends BookingState {
+  final List<Rating> ratings;
+
+  ShowProviderRatingsState({required this.ratings});
+}
+
 class BookingErrorState extends BookingState {
   final String error;
 

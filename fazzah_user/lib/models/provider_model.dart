@@ -58,7 +58,6 @@ class ProviderModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'phone_number': phoneNumber,
       'email': email,
