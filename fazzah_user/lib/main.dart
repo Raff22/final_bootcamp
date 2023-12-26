@@ -4,8 +4,7 @@ import 'package:fazzah_user/bloc/chat_bloc/chat_bloc.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/bloc/is_provider_cubit/is_provider_cubit.dart';
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
-import 'package:fazzah_user/views/booking_views/tracking_view.dart';
-import 'package:fazzah_user/views/chat_views/chat_widgets/test_page.dart';
+import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
 import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +58,7 @@ class MainApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        home: HomeScreen(),
+        home: const LogoView(),
       ),
     );
   }
