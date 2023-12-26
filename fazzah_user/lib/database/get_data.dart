@@ -1,4 +1,5 @@
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaGetAndDelete {
@@ -42,5 +43,18 @@ class SupaGetAndDelete {
     }
   }
 
-  getUser({required String userId}) {}
+  Future<UserModel?> getUser({required String userId}) async {
+    try {
+      final response = await supabase.from('users').select().eq('id', userId);
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return UserModel.fromJson(response[0]);
+      }
+    } catch (error) {
+      print("------- error in Supabase function getUser --------");
+      print(error);
+    }
+    return null;
+  }
 }
