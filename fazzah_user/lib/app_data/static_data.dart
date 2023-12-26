@@ -1,5 +1,3 @@
-import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
-
 List<String> services = [
   "تركيب مكيف",
   "تصليح مكيف",

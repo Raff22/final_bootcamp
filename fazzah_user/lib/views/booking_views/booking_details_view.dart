@@ -5,6 +5,7 @@ import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,11 @@ class BookingDetailsView extends StatelessWidget {
           title: "تفاصيل الحجز",
           context: context,
           leading: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<BookingBloc>().add(
+                    RequestProviderRatingsEvent(providerId: providerInfo.id!));
+                context.popScreen();
+              },
               icon: const Icon(Icons.arrow_back_ios, size: 20, color: black))),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -99,7 +104,8 @@ class BookingDetailsView extends StatelessWidget {
                               hours.length,
                               (index) => HourWidget(
                                   hour: hours[index],
-                                  isAvailable: (index % 3 == 0)))),
+                                  isAvailable: state.hours
+                                      .getHoursAvailabilityList()[index]))),
                     ),
                   );
                 } else {

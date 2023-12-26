@@ -27,12 +27,11 @@ class SupaGetAndDelete {
   }
 
   getAllProviders() async {
-    print(3);
     try {
       final response = await supabase.from('providers').select();
-      print(response);
       if (response.isEmpty) {
-        return [];
+        final List<ProviderModel> temp = [];
+        return temp;
       } else {
         return List.generate(response.length,
             (index) => ProviderModel.fromJson(response[index]));
@@ -46,9 +45,9 @@ class SupaGetAndDelete {
     try {
       final response =
           await supabase.from('ratings').select().eq('provider', providerId);
-      print(response);
       if (response.isEmpty) {
-        return [];
+        final List<Rating> temp = [];
+        return temp;
       } else {
         return List.generate(
             response.length, (index) => Rating.fromJson(response[index]));
@@ -60,13 +59,13 @@ class SupaGetAndDelete {
 
   getProviderWorkingHours({required String providerId}) async {
     try {
-      final response = await supabase
-          .from('working_hours')
-          .select()
-          .eq('provider', providerId);
+      final response =
+          await supabase.from('working_hours').select().eq('id', providerId);
       // print(response);
       if (response.isNotEmpty) {
         return WorkingHours.fromJson(response[0]);
+      } else {
+        return (WorkingHours());
       }
     } catch (error) {
       print(error.toString());

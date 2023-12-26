@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/provider_model.dart';
@@ -11,6 +12,7 @@ import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.d
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainView extends StatelessWidget {
   const MainView({super.key});
@@ -89,6 +91,7 @@ class MainView extends StatelessWidget {
                         color: Colors.black)),
                 InkWell(
                   onTap: () {
+                    context.read<BookingBloc>().add(RequestProvidersEvent());
                     context.pushScreen(screen: const ProvidersScreen());
                   },
                   child: const Text("عرض الكل",

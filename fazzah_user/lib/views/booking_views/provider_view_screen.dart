@@ -48,6 +48,7 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
             context: context,
             leading: IconButton(
                 onPressed: () {
+                  context.read<BookingBloc>().add(RequestProvidersEvent());
                   context.popScreen();
                 },
                 icon:
@@ -135,6 +136,8 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
                     containerHeight: 48,
                     containerColor: green,
                     onPressed: () {
+                      context.read<BookingBloc>().add(GetProviderHoursEvent(
+                          providerId: widget.providerInfo.id!));
                       context.pushScreen(
                           screen: BookingDetailsView(
                         providerInfo: widget.providerInfo,

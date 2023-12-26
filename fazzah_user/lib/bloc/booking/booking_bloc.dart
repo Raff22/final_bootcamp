@@ -11,12 +11,10 @@ part 'booking_state.dart';
 class BookingBloc extends Bloc<BookingEvent, BookingState> {
   BookingBloc() : super(BookingInitial()) {
     on<RequestProvidersEvent>((event, emit) async {
-      print("2");
       emit(BookingLoadingState());
       try {
         final List<ProviderModel> providers =
             await SupaGetAndDelete().getAllProviders();
-        print(providers);
         emit(ShowAllProvidersState(providersList: providers));
       } catch (error) {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
@@ -29,11 +27,11 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
             .getProviderRatings(providerId: event.providerId);
         emit(ShowProviderRatingsState(ratings: ratings));
       } catch (error) {
+        print(error.toString());
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
     on<SelectedServiceEvent>((event, emit) async {
-      print("here in selected");
       List<bool> selected = List.generate(services.length, (index) => false);
       selected[event.index] = true;
       emit(ShowSelectedServiceState(newSelected: selected));

@@ -56,4 +56,19 @@ class WorkingHours {
       '7pm': hour7pm,
     };
   }
+
+  List<bool> getHoursAvailabilityList() {
+    return [
+      hour10am ?? false,
+      hour11am ?? false,
+      hour12pm ?? false,
+      hour1pm ?? false,
+      hour2pm ?? false,
+      hour3pm ?? false,
+      hour4pm ?? false,
+      hour5pm ?? false,
+      hour6pm ?? false,
+      hour7pm ?? false,
+    ];
+  }
 }
