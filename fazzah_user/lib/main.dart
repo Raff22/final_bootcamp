@@ -3,7 +3,7 @@ import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/bloc/is_provider_cubit/is_provider_cubit.dart';
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
-import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
+import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fazzah_user/utils/helpers/supabase_initilizer.dart';
@@ -53,7 +53,7 @@ class MainApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        home: NavBar(),
+        home: const LogoView(),
       ),
     );
   }
