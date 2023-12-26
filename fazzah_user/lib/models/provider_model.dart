@@ -16,6 +16,7 @@ class ProviderModel {
   String? providerImage;
   num? rateAverage;
   int? ratesNumber;
+  String? services;
 
   ProviderModel(
       {this.id,
@@ -32,7 +33,8 @@ class ProviderModel {
       this.experience,
       this.providerImage,
       this.rateAverage,
-      this.ratesNumber});
+      this.ratesNumber,
+      this.services});
 
   factory ProviderModel.fromJson(Map<String, dynamic> jsonData) {
     return ProviderModel(
@@ -50,6 +52,7 @@ class ProviderModel {
         experience: jsonData['experience'],
         providerImage: jsonData['profile_image'],
         rateAverage: jsonData['rating_average'],
+        services: jsonData['services'],
         ratesNumber: jsonData['rate_number']);
   }
 
@@ -69,6 +72,7 @@ class ProviderModel {
       'experience': experience,
       'profile_image': providerImage,
       'rating_average': rateAverage,
+      'services': services,
       'rate_number': ratesNumber
     };
   }
