@@ -18,6 +18,7 @@ import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/login_or_sign_up_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
+import 'package:fazzah_user/views/auth_views/provider_home_page.dart';
 import 'package:fazzah_user/views/auth_views/signup_view/signup_provider_view/signup_provider_view.dart';
 import 'package:fazzah_user/views/auth_views/signup_view/signup_user_view/signup_user_view.dart';
 import 'package:fazzah_user/views/auth_views/user_home_page.dart';
@@ -47,6 +48,7 @@ class LoginView extends StatelessWidget {
               ),
               child: BlocBuilder<IsProviderCubit, bool>(
                 builder: (context, stateUser) {
+                  // stateUser if is true is provider and if it false is user
                   return Form(
                     key: _formField,
                     child: Column(
@@ -143,20 +145,27 @@ class LoginView extends StatelessWidget {
 
                         BlocListener<AuthBloc, AuthStatee>(
                           listener: (context, state) async {
-                            if (state is LoadingAuthState) {
+                            if (state is LoadingAuthLoginState) {
                               showLoadingDialog(context: context);
-                            } else if (state is LoginSuccessedState) {
+                            } else if (state is LoginSuccessedUserState) {
                               context.removeUnitl(
                                   screen: UserHomePage(
                                       userModel: state.currentUser));
 
                               emailController.clear();
                               passwordController.clear();
-                            } else if (state is ErrorAuthState) {
+                            } else if (state is LoginSuccessedProviderState) {
+                              context.removeUnitl(
+                                  screen: ProviderHomePage(
+                                      providerModel: state.currentprovider));
+                              emailController.clear();
+                              passwordController.clear();
+                            } else if (state is ErrorAuthLoginState) {
                               context.popScreen();
                               snackBarMassage(
                                   context: context,
-                                  snackBarText: state.message);
+                                  snackBarText:
+                                      'البريد الإلكتروني او الرقم السري غير صحيح');
                             }
                           },
                           child: ContainerWidget(
@@ -183,7 +192,8 @@ class LoginView extends StatelessWidget {
                                 print(stateUser);
                                 context.read<AuthBloc>().add(LoginEvent(
                                     email: emailController.text,
-                                    password: passwordController.text));
+                                    password: passwordController.text,
+                                    isProvider: stateUser));
                               }
                             },
                             child: Center(
@@ -229,9 +239,13 @@ class LoginView extends StatelessWidget {
                               navigatorTo: () {
                                 stateUser
                                     ? context.pushScreen(
-                                        screen: SignupProviderView())
+                                        screen: SignupProviderView(
+                                        isProvider: stateUser,
+                                      ))
                                     : context.pushScreen(
-                                        screen: SignupUserView());
+                                        screen: SignupUserView(
+                                        isProvider: stateUser,
+                                      ));
                               },
                             ),
                           ],

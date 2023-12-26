@@ -21,16 +21,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignupUserView extends StatelessWidget {
-  SignupUserView({super.key});
+  SignupUserView({super.key, required this.isProvider});
 
   final _formField = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-
+  final bool isProvider; // it will be false and comes from login
   @override
   Widget build(BuildContext context) {
+    // print('is provider ${isProvider}');
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -181,15 +182,16 @@ class SignupUserView extends StatelessWidget {
                       //--------------- listener function ----------------------
                       listener: (context, state) {
                         // ------------- Loading State --------------
-                        if (state is LoadingAuthState) {
+                        if (state is LoadingAuthSignupState) {
                           showLoadingDialog(context: context);
                         }
 
                         // -------- Sign Up Successed State ---------
-                        else if (state is SignUpSuccessedState) {
+                        else if (state is SignUpSuccessedUserState) {
                           context.pushScreen(
                               screen: OtpView(
                             email: emailController.text,
+                            isProvider: isProvider,
                           ));
 
                           fullNameController.clear();
@@ -199,7 +201,7 @@ class SignupUserView extends StatelessWidget {
                         }
 
                         // -------- Sign Up Error State ---------
-                        else if (state is ErrorAuthState) {
+                        else if (state is ErrorAuthSignupState) {
                           context.popScreen();
                           snackBarMassage(
                               context: context, snackBarText: state.message);
@@ -232,7 +234,7 @@ class SignupUserView extends StatelessWidget {
 
                           // ------ 2) check if validate is all good ------
                           // ------- and send the event with data to Auth Bloc -------
-                          if (_formField.currentState!.validate()) {
+                          else if (_formField.currentState!.validate()) {
                             context.read<AuthBloc>().add(SignUpUserEvent(
                                 fullName: fullNameController.text,
                                 email: emailController.text,

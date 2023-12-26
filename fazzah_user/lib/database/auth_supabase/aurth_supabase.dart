@@ -31,8 +31,52 @@ class AuthSupabase {
     }
   }
 
+  //------------------- Sign Up Supabase Provider -----------------------------
+  signupProvider(
+      {required String fullName,
+      required String email,
+      required String password,
+      required String phoneNumber,
+      required String nationalty,
+      required String nationalId,
+      required String age,
+      required String certificate,
+      required String job,
+      required String services,
+      required String yearsOfExperience,
+      required String priceRange}) async {
+    try {
+      final response =
+          await supabase.auth.signUp(password: password, email: email);
+      await supabase.from('providers').insert({
+        'id': response.user!.id,
+        'name': fullName,
+        'phone_number': phoneNumber,
+        'email': email,
+        'id_number': nationalId,
+        'nationality': nationalty,
+        'age': age,
+        'certificate': certificate,
+        'job': job,
+        'price_range': priceRange,
+        'experience': yearsOfExperience,
+        'services': services,
+      });
+      print("------- response sign up from supabase function --------");
+      print(response.user!.id);
+    } on PostgrestException catch (error) {
+      print("signup Error catch : ${error.toString()}");
+      throw 'البريد الإلكتروني مستخدم';
+    } on AuthException catch (error) {
+      print("signup Error catch : ${error.toString()}");
+      throw 'الرجاء المحاولة بعد ساعة';
+    } catch (error) {
+      print("Signup Error catch : ${error.toString()}");
+    }
+  }
+
   //------------------- OTP Supabase ------------------
-  otp({
+  Future<AuthResponse> otp({
     required String otp,
     required String email,
   }) async {
@@ -43,9 +87,10 @@ class AuthSupabase {
       print(
           "------- response OTP after sign up from supabase function --------");
       print(response.session);
+      return response;
     } on AuthException catch (error) {
       print("OTP Error catch : ${error.toString()}");
-      throw 'رمز التحقق غير صحيح او منتهي صلاحيته';
+      throw error.message;
     }
   }
 
@@ -63,12 +108,12 @@ class AuthSupabase {
       return response;
     } on AuthException catch (error) {
       print("Resend OTP Error catch : ${error.toString()}");
-      throw 'قم بتسجيل دخول';
+      throw error.message;
     }
   }
 
   //-------------- Login Supabase ----------------
-  login({
+  Future<AuthResponse> login({
     required String email,
     required String password,
   }) async {
@@ -81,9 +126,7 @@ class AuthSupabase {
       return response;
     } on AuthException catch (error) {
       print("Login Error catch : ${error.toString()}");
-      throw 'البريد الإلكتروني او الرقم السري غير صحيح';
+      throw error.message;
     }
   }
-
- 
 }
