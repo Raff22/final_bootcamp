@@ -27,7 +27,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
             .getProviderRatings(providerId: event.providerId);
         emit(ShowProviderRatingsState(ratings: ratings));
       } catch (error) {
-        print(error.toString());
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
@@ -42,6 +41,31 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         final WorkingHours hours = await SupaGetAndDelete()
             .getProviderWorkingHours(providerId: event.providerId);
         emit(ShowProviderWorkingHoursState(hours: hours));
+      } catch (error) {
+        emit(BookingErrorState(error: "حدث خطأ في النظام"));
+      }
+    });
+    on<SelectedHourEvent>((event, emit) async {
+      List<bool> selected = List.generate(hours.length, (index) => false);
+      selected[event.index] = true;
+      emit(ShowSelectedHourState(newSelected: selected));
+    });
+    on<RequestProvidersByNameEvent>((event, emit) async {
+      emit(BookingLoadingState());
+      try {
+        final List<ProviderModel> providers =
+            await SupaGetAndDelete().getProvidersByName(event.name);
+        emit(ShowAllProvidersState(providersList: providers));
+      } catch (error) {
+        emit(BookingErrorState(error: "حدث خطأ في النظام"));
+      }
+    });
+    on<RequestProvidersByServiceEvent>((event, emit) async {
+      emit(BookingLoadingState());
+      try {
+        final List<ProviderModel> providers =
+            await SupaGetAndDelete().getProvidersByService(event.service);
+        emit(ShowAllProvidersState(providersList: providers));
       } catch (error) {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }

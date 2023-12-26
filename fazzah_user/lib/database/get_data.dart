@@ -1,3 +1,4 @@
+import 'package:fazzah_user/app_data/static_data.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
@@ -29,6 +30,40 @@ class SupaGetAndDelete {
   getAllProviders() async {
     try {
       final response = await supabase.from('providers').select();
+      if (response.isEmpty) {
+        final List<ProviderModel> temp = [];
+        return temp;
+      } else {
+        return List.generate(response.length,
+            (index) => ProviderModel.fromJson(response[index]));
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  getProvidersByName(String name) async {
+    try {
+      final response =
+          await supabase.from('providers').select().eq('name', name);
+      if (response.isEmpty) {
+        final List<ProviderModel> temp = [];
+        return temp;
+      } else {
+        return List.generate(response.length,
+            (index) => ProviderModel.fromJson(response[index]));
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  getProvidersByService(String job) async {
+    print(job);
+    try {
+      final response =
+          await supabase.from('providers').select().textSearch('services', job);
+      print(response);
       if (response.isEmpty) {
         final List<ProviderModel> temp = [];
         return temp;

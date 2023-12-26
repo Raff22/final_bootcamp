@@ -1,43 +1,46 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:fazzah_user/app_data/static_data.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/constant/layout.dart';
+import 'package:fazzah_user/global/global_widget/search_bar.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/views/booking_views/providers_view.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainView extends StatelessWidget {
-  const MainView({super.key});
+  const MainView({super.key, required this.user});
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
-    List<String> list = [
-      "assets/images/AD.png",
-      "assets/images/AD-2.png",
-      "assets/images/AD-3.png",
-    ];
+    TextEditingController search = TextEditingController();
     return Scaffold(
       body: Column(
         children: [
           const SizedBox(
             height: 50,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 250, top: 50),
-            child: Text(" اهلا ,نوره",
-                style: TextStyle(
+          Padding(
+            padding: const EdgeInsets.only(left: 250, top: 50),
+            child: Text(" اهلا ${user.name!}",
+                style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.black)),
           ),
+          height20,
+          SearchBarWidget(
+              hint: "ابحث عن الخدمة",
+              onSubmmited: (String) {
+                context.read<BookingBloc>().add(RequestProvidersByServiceEvent(
+                    service: search.text.trim()));
+                context.pushScreen(screen: const ProvidersScreen());
+              },
+              controller: search),
           Container(
               child: CarouselSlider(
             options: CarouselOptions(
@@ -45,7 +48,7 @@ class MainView extends StatelessWidget {
               aspectRatio: 2.0,
               enlargeCenterPage: true,
             ),
-            items: list
+            items: adslist
                 .map((item) => Container(
                       color: Colors.white,
                       child: Center(child: Image.asset(item.toString())),

@@ -14,6 +14,7 @@ class ProvidersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController search = TextEditingController();
     return Scaffold(
         appBar: createAppBar(
             title: "الفنيين",
@@ -29,7 +30,14 @@ class ProvidersScreen extends StatelessWidget {
           child: ListView(
             children: [
               height20,
-              const SearchBarWidget(hint: "ابحث عن فني"),
+              SearchBarWidget(
+                  hint: "ابحث عن فني",
+                  onSubmmited: (String) {
+                    context
+                        .read<BookingBloc>()
+                        .add(RequestProvidersByNameEvent(name: search.text));
+                  },
+                  controller: search),
               height20,
               BlocBuilder<BookingBloc, BookingState>(
                 builder: (context, state) {

@@ -1,3 +1,4 @@
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/views/user_main_views/Favorate_screen.dart';
 import 'package:fazzah_user/views/user_main_views/home_view.dart';
 import 'package:fazzah_user/views/user_main_views/more_screen.dart';
@@ -6,20 +7,28 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class NavBar extends StatefulWidget {
+  const NavBar({super.key, required this.user});
+  final UserModel user;
   @override
   _NavBarState createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
+  late final List<Widget> _widgetOptions;
+  late UserModel currUser;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  static const List<Widget> _widgetOptions = <Widget>[
-    MainView(),
-    FavorateScreen(),
-    OrderCartScreen(),
-    MoreScreen()
-  ];
+  @override
+  void initState() {
+    _widgetOptions = [
+      MainView(user: widget.user),
+      const FavorateScreen(),
+      const OrderCartScreen(),
+      const MoreScreen()
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +56,11 @@ class _NavBarState extends State<NavBar> {
               gap: 8,
               activeColor: Colors.black,
               iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: Duration(milliseconds: 400),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              duration: const Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
               color: Colors.black,
-              tabs: [
+              tabs: const [
                 GButton(
                   icon: Icons.home,
                   text: 'الرئيسية',

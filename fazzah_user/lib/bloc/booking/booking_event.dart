@@ -10,10 +10,28 @@ class RequestProviderRatingsEvent extends BookingEvent {
   RequestProviderRatingsEvent({required this.providerId});
 }
 
+class RequestProvidersByNameEvent extends BookingEvent {
+  final String name;
+
+  RequestProvidersByNameEvent({required this.name});
+}
+
+class RequestProvidersByServiceEvent extends BookingEvent {
+  final String service;
+
+  RequestProvidersByServiceEvent({required this.service});
+}
+
 class SelectedServiceEvent extends BookingEvent {
   final int index;
 
   SelectedServiceEvent({required this.index});
+}
+
+class SelectedHourEvent extends BookingEvent {
+  final int index;
+
+  SelectedHourEvent({required this.index});
 }
 
 class GetProviderHoursEvent extends BookingEvent {

@@ -30,6 +30,12 @@ class ShowSelectedServiceState extends BookingState {
   ShowSelectedServiceState({required this.newSelected});
 }
 
+class ShowSelectedHourState extends BookingState {
+  final List<bool> newSelected;
+
+  ShowSelectedHourState({required this.newSelected});
+}
+
 class ShowProviderWorkingHoursState extends BookingState {
   final WorkingHours hours;
 

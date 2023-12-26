@@ -7,6 +7,12 @@ List<String> services = [
   "اصلاح عداد"
 ];
 
+List<String> adslist = [
+  "assets/images/AD.png",
+  "assets/images/AD-2.png",
+  "assets/images/AD-3.png",
+];
+
 List<String> hours = [
   "١٠ صباحا",
   "١١ صباحا",
