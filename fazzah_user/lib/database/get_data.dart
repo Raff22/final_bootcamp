@@ -1,6 +1,7 @@
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
+import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaGetAndDelete {
@@ -51,6 +52,21 @@ class SupaGetAndDelete {
       } else {
         return List.generate(
             response.length, (index) => Rating.fromJson(response[index]));
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  getProviderWorkingHours({required String providerId}) async {
+    try {
+      final response = await supabase
+          .from('working_hours')
+          .select()
+          .eq('provider', providerId);
+      // print(response);
+      if (response.isNotEmpty) {
+        return WorkingHours.fromJson(response[0]);
       }
     } catch (error) {
       print(error.toString());

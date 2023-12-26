@@ -135,7 +135,10 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
                     containerHeight: 48,
                     containerColor: green,
                     onPressed: () {
-                      context.pushScreen(screen: const BookingDetailsView());
+                      context.pushScreen(
+                          screen: BookingDetailsView(
+                        providerInfo: widget.providerInfo,
+                      ));
                     },
                     child: const Center(
                         child: TextWidget(

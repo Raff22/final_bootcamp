@@ -23,3 +23,15 @@ class BookingErrorState extends BookingState {
 }
 
 class BookingLoadingState extends BookingState {}
+
+class ShowSelectedServiceState extends BookingState {
+  final List<bool> newSelected;
+
+  ShowSelectedServiceState({required this.newSelected});
+}
+
+class ShowProviderWorkingHoursState extends BookingState {
+  final WorkingHours hours;
+
+  ShowProviderWorkingHoursState({required this.hours});
+}

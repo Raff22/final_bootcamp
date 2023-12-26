@@ -1,17 +1,23 @@
 import 'package:fazzah_user/app_data/static_data.dart';
+import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookingDetailsView extends StatelessWidget {
-  const BookingDetailsView({super.key});
+  const BookingDetailsView({super.key, required this.providerInfo});
+  final ProviderModel providerInfo;
 
   @override
   Widget build(BuildContext context) {
+    List<bool> selected = List.generate(services.length, (index) => false);
+
     return Scaffold(
       appBar: createAppBar(
           title: "تفاصيل الحجز",
@@ -29,9 +35,29 @@ class BookingDetailsView extends StatelessWidget {
               textSize: 22,
               textFontWeight: FontWeight.w500,
             ),
-            Wrap(
-                children: List.generate(services.length,
-                    (index) => ServiceCheckBox(serviceName: services[index]))),
+            BlocBuilder<BookingBloc, BookingState>(
+              builder: (context, state) {
+                if (state is ShowSelectedServiceState) {
+                  selected = state.newSelected;
+                }
+                return ToggleButtons(
+                    selectedColor: black,
+                    fillColor: coldGreen,
+                    splashColor: coldGreen,
+                    direction: Axis.vertical,
+                    isSelected: selected,
+                    onPressed: (index) {
+                      context
+                          .read<BookingBloc>()
+                          .add(SelectedServiceEvent(index: index));
+                    },
+                    children: List.generate(
+                        services.length,
+                        (index) => ServiceCheckBox(
+                            serviceName: services[index],
+                            state: selected[index])));
+              },
+            ),
             height20,
             const TextWidget(
               text: "ارفاق صورة الخلل (اختياري)",
@@ -61,17 +87,25 @@ class BookingDetailsView extends StatelessWidget {
               child: DatePickerDialog(
                   firstDate: DateTime.timestamp(), lastDate: DateTime(2055)),
             ),
-            SizedBox(
-              width: context.getWidth(),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                    children: List.generate(
-                        hours.length,
-                        (index) => HourWidget(
-                            hour: hours[index],
-                            isAvailable: (index % 3 == 0)))),
-              ),
+            BlocBuilder<BookingBloc, BookingState>(
+              builder: (context, state) {
+                if (state is ShowProviderWorkingHoursState) {
+                  return SizedBox(
+                    width: context.getWidth(),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                          children: List.generate(
+                              hours.length,
+                              (index) => HourWidget(
+                                  hour: hours[index],
+                                  isAvailable: (index % 3 == 0)))),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              },
             ),
             height20,
             const Row(
@@ -143,7 +177,6 @@ class PaymentMethodWidget extends StatelessWidget {
           Image.asset('assets/images/applepay.png'),
           InkWell(
             onTap: () {
-              print("here");
               showBottomSheet(
                   context: context,
                   backgroundColor: white,
@@ -216,21 +249,20 @@ class HourWidget extends StatelessWidget {
 }
 
 class ServiceCheckBox extends StatelessWidget {
-  const ServiceCheckBox({
-    super.key,
-    required this.serviceName,
-  });
+  const ServiceCheckBox(
+      {super.key, required this.serviceName, required this.state});
   final String serviceName;
+  final bool state;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Checkbox(
-            value: false,
-            onChanged: (value) {
-              value = !value!;
-            }),
+            value: state,
+            onChanged: (value) {},
+            fillColor: null,
+            activeColor: black),
         TextWidget(
           text: serviceName,
           textSize: 22,
