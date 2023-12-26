@@ -5,6 +5,7 @@ import 'package:fazzah_user/global/global_widget/search_bar.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +46,9 @@ class ProvidersScreen extends StatelessWidget {
                     return const Center(
                         child: CircularProgressIndicator(color: green));
                   } else if (state is ShowAllProvidersState) {
+                    if (state.providersList.isEmpty) {
+                      return const NotFoundWidget();
+                    }
                     return SizedBox(
                       width: context.getWidth(),
                       height: context.getHeight(),

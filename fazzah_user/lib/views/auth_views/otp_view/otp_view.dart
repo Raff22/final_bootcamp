@@ -1,7 +1,4 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
-
-import 'dart:async';
-
 import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
@@ -15,50 +12,37 @@ import 'package:fazzah_user/utils/helpers/loading_func.dart';
 import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
+import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/auth_views/otp_view/otp_widget/otp_text_field.dart';
+import 'package:fazzah_user/views/auth_views/provider_home_page.dart';
 import 'package:fazzah_user/views/auth_views/user_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timer_button/timer_button.dart';
 // import 'package:otp_timer_button/otp_timer_button.dart';
 
-class OtpView extends StatefulWidget {
-  const OtpView({
+class OtpView extends StatelessWidget {
+  OtpView({
     super.key,
     required this.email,
+    required this.isProvider,
   });
   final String email;
+  final bool isProvider; // it will be true if is provider and false if is user
 
-  @override
-  State<OtpView> createState() => _OtpViewState();
-}
-
-class _OtpViewState extends State<OtpView> {
   final _formField = GlobalKey<FormState>();
+
   TextEditingController pin1 = TextEditingController();
+
   TextEditingController pin2 = TextEditingController();
+
   TextEditingController pin3 = TextEditingController();
+
   TextEditingController pin4 = TextEditingController();
+
   TextEditingController pin5 = TextEditingController();
+
   TextEditingController pin6 = TextEditingController();
-  int secondsRemaining = 30;
-  bool enableResend = false;
-  late Timer timer;
-  @override
-  initState() {
-    super.initState();
-    timer = Timer.periodic(const Duration(seconds: 10), (_) {
-      if (secondsRemaining != 0) {
-        setState(() {
-          secondsRemaining--;
-        });
-      } else {
-        setState(() {
-          enableResend = true;
-        });
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +52,12 @@ class _OtpViewState extends State<OtpView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: const Icon(Icons.arrow_back_ios_rounded),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              context.pushScreen(screen: LoginView());
+            },
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -91,7 +80,7 @@ class _OtpViewState extends State<OtpView> {
                     //--------------------- Login Title  -----------------------
                     TitleView(
                       title: 'إنشاء حساب',
-                      supTitle: 'تم إرسال رمز التحقق إلى ${widget.email}',
+                      supTitle: 'تم إرسال رمز التحقق إلى $email',
                     ),
                     height20,
 
@@ -144,12 +133,12 @@ class _OtpViewState extends State<OtpView> {
                       timeOutInSeconds: 70,
                       onPressed: () {
                         context.read<AuthBloc>().add(ResendOTPEvent(
-                              email: widget.email,
+                              email: email,
                             ));
                         snackBarMassage(
                             context: context,
                             snackBarText:
-                                'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني ${widget.email}');
+                                'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني $email');
                       },
                     ),
                     height10,
@@ -160,29 +149,63 @@ class _OtpViewState extends State<OtpView> {
                       //--------------- listener function ----------------------
                       listener: (context, state) async {
                         // ------------- Loading State --------------
-                        if (state is LoadingAuthState) {
+                        if (state is LoadingAuthOTPState) {
                           showLoadingDialog(context: context);
                         }
 
                         // ------------ OTP Successed State -----------
-                        else if (state is OTPSuccessedState) {
-                          context.removeUnitl(
-                              screen:
-                                  UserHomePage(userModel: state.currentUser));
-
-                          pin1.clear();
-                          pin2.clear();
-                          pin3.clear();
-                          pin4.clear();
-                          pin5.clear();
-                          pin6.clear();
+                        else if (state is OTPSuccessedUserState) {
+                          if (pin1.text.isEmpty ||
+                              pin2.text.isEmpty ||
+                              pin3.text.isEmpty ||
+                              pin4.text.isEmpty ||
+                              pin5.text.isEmpty ||
+                              pin6.text.isEmpty) {
+                            snackBarMassage(
+                                context: context,
+                                snackBarText: 'من فضلك قم بكتابة الرمز');
+                          } else {
+                            context.removeUnitl(
+                                screen:
+                                    UserHomePage(userModel: state.currentUser));
+                            pin1.clear();
+                            pin2.clear();
+                            pin3.clear();
+                            pin4.clear();
+                            pin5.clear();
+                            pin6.clear();
+                          }
+                        } else if (state is OTPSuccessedProviderState) {
+                          if (pin1.text.isEmpty ||
+                              pin2.text.isEmpty ||
+                              pin3.text.isEmpty ||
+                              pin4.text.isEmpty ||
+                              pin5.text.isEmpty ||
+                              pin6.text.isEmpty) {
+                            snackBarMassage(
+                                context: context,
+                                snackBarText: 'من فضلك قم بكتابة الرمز');
+                          } else {
+                            context.removeUnitl(
+                                screen: ProviderHomePage(
+                              providerModel: state.currentprovider,
+                            ));
+                            pin1.clear();
+                            pin2.clear();
+                            pin3.clear();
+                            pin4.clear();
+                            pin5.clear();
+                            pin6.clear();
+                          }
                         }
 
                         // -------- OTP Error State ---------
-                        else if (state is ErrorAuthState) {
+                        else if (state is ErrorAuthOTPState) {
                           context.popScreen();
                           snackBarMassage(
-                              context: context, snackBarText: state.message);
+                              context: context,
+                              snackBarText:
+                                  'رمز التحقق غير صحيح أو منتهي صلاحيتة');
                         }
                       },
 
@@ -224,9 +247,9 @@ class _OtpViewState extends State<OtpView> {
                             print(otp);
                             print('Succecc Otp');
                             context.read<AuthBloc>().add(OTPEvent(
-                                  otp: otp,
-                                  email: widget.email,
-                                ));
+                                otp: otp,
+                                email: email,
+                                isProvider: isProvider));
                           }
                         },
                         child: Center(
@@ -254,19 +277,5 @@ class _OtpViewState extends State<OtpView> {
         ),
       ),
     );
-  }
-
-  void _resendCode() {
-    //other code here
-    setState(() {
-      secondsRemaining = 30;
-      enableResend = false;
-    });
-  }
-
-  @override
-  dispose() {
-    timer.cancel();
-    super.dispose();
   }
 }

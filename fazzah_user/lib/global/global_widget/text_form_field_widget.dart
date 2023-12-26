@@ -13,7 +13,8 @@ class TextFormFieldWidget extends StatelessWidget {
       required this.cursorColor,
       required this.controllerTextColor,
       this.suffixIcon,
-      required this.obscureText});
+      required this.obscureText,
+      this.hintText});
 
   final String? Function(String?)? validator;
   final TextInputType keyboardType;
@@ -24,6 +25,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final Color controllerTextColor;
   final Widget? suffixIcon;
   final bool obscureText;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,8 @@ class TextFormFieldWidget extends StatelessWidget {
       keyboardType: keyboardType,
       controller: controller,
       decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: const TextStyle(color: lightGrey),
           floatingLabelAlignment: FloatingLabelAlignment.start,
           contentPadding: const EdgeInsets.all(10),
           label: TextWidget(

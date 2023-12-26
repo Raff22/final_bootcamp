@@ -6,6 +6,7 @@ import 'package:fazzah_user/global/global_widget/search_bar.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
+import 'package:fazzah_user/utils/helpers/name_formatter.dart';
 import 'package:fazzah_user/views/booking_views/providers_view.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class MainView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 250, top: 50),
-            child: Text(" اهلا ${user.name!}",
+            child: Text(" أهلا ، ${getFirstWord(user.name!)}",
                 style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
