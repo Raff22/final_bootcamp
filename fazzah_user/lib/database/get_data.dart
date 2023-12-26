@@ -66,9 +66,6 @@ class SupaGetAndDelete {
       if (response.isEmpty) {
         return null;
       } else {
-        print('8888888888888888888888888888888');
-        print(response[0]);
-        print('8888888888888888888888888888888');
         return ProviderModel.fromJson(response[0]);
       }
     } catch (error) {

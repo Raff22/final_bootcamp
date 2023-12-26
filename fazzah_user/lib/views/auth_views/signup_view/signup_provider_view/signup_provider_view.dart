@@ -13,8 +13,10 @@ import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/format_checkers/format_checks.dart';
 import 'package:fazzah_user/utils/helpers/loading_func.dart';
 import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
+import 'package:fazzah_user/views/auth_views/auth_widget/login_or_sign_up_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
+import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/auth_views/otp_view/otp_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -378,7 +380,7 @@ class SignupProviderView extends StatelessWidget {
                     BlocListener<AuthBloc, AuthStatee>(
                       listener: (context, state) {
                         // ------------- Loading State --------------
-                        if (state is LoadingAuthState) {
+                        if (state is LoadingAuthSignupState) {
                           showLoadingDialog(context: context);
                         }
 
@@ -404,7 +406,7 @@ class SignupProviderView extends StatelessWidget {
                         }
 
                         // -------- Sign Up Error State ---------
-                        else if (state is ErrorAuthState) {
+                        else if (state is ErrorAuthSignupState) {
                           context.popScreen();
                           snackBarMassage(
                               context: context, snackBarText: state.message);
@@ -449,7 +451,8 @@ class SignupProviderView extends StatelessWidget {
                           }
                           // ------ 2) check if validate is all good ------
                           // ------- and send the event with data to Auth Bloc -------
-                          else if (_formFieldProvider.currentState!.validate()) {
+                          else if (_formFieldProvider.currentState!
+                              .validate()) {
                             context.read<AuthBloc>().add(SignUpProviderEvent(
                                 fullName: fullNameController.text,
                                 email: emailController.text,
@@ -487,7 +490,18 @@ class SignupProviderView extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    height20,
+                    //--------------------- Have Account -----------------------
+
+                    RowTowTextWidget(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      askText: 'لديك حساب ؟',
+                      textButtom: 'تسجيل دخول',
+                      navigatorTo: () {
+                        context.pushScreen(screen: LoginView());
+                      },
+                    ),
                   ],
                 ),
               ),

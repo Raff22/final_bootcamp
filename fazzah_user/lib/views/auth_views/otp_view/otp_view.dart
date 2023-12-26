@@ -12,6 +12,7 @@ import 'package:fazzah_user/utils/helpers/loading_func.dart';
 import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
+import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/auth_views/otp_view/otp_widget/otp_text_field.dart';
 import 'package:fazzah_user/views/auth_views/provider_home_page.dart';
 import 'package:fazzah_user/views/auth_views/user_home_page.dart';
@@ -50,7 +51,12 @@ class OtpView extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: const Icon(Icons.arrow_back_ios_rounded),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              context.pushScreen(screen: LoginView());
+            },
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -106,6 +112,9 @@ class OtpView extends StatelessWidget {
 
                     //--------------------- Resend OTP -----------------------
                     OtpTimerButton(
+                      backgroundColor: lightGreen,
+                      textColor: dark1Green,
+                      loadingIndicatorColor: green,
                       onPressed: () {
                         snackBarMassage(
                             context: context,
@@ -126,23 +135,10 @@ class OtpView extends StatelessWidget {
                       //--------------- listener function ----------------------
                       listener: (context, state) async {
                         // ------------- Loading State --------------
-                        if (state is LoadingAuthState) {
+                        if (state is LoadingAuthOTPState) {
                           showLoadingDialog(context: context);
                         }
 
-                        //   if (state.isProvider == true) {
-                        //     context.removeUnitl(
-                        //         screen: ProviderHomePage(
-                        //             providerModel: state.currentprovider));
-                        //   } else {}
-
-                        //   pin1.clear();
-                        //   pin2.clear();
-                        //   pin3.clear();
-                        //   pin4.clear();
-                        //   pin5.clear();
-                        //   pin6.clear();
-                        // }
                         // ------------ OTP Successed State -----------
                         else if (state is OTPSuccessedUserState) {
                           if (pin1.text.isEmpty ||
@@ -158,6 +154,12 @@ class OtpView extends StatelessWidget {
                             context.removeUnitl(
                                 screen:
                                     UserHomePage(userModel: state.currentUser));
+                            pin1.clear();
+                            pin2.clear();
+                            pin3.clear();
+                            pin4.clear();
+                            pin5.clear();
+                            pin6.clear();
                           }
                         } else if (state is OTPSuccessedProviderState) {
                           if (pin1.text.isEmpty ||
@@ -174,14 +176,22 @@ class OtpView extends StatelessWidget {
                                 screen: ProviderHomePage(
                               providerModel: state.currentprovider,
                             ));
+                            pin1.clear();
+                            pin2.clear();
+                            pin3.clear();
+                            pin4.clear();
+                            pin5.clear();
+                            pin6.clear();
                           }
                         }
 
                         // -------- OTP Error State ---------
-                        else if (state is ErrorAuthState) {
+                        else if (state is ErrorAuthOTPState) {
                           context.popScreen();
                           snackBarMassage(
-                              context: context, snackBarText: state.message);
+                              context: context,
+                              snackBarText:
+                                  'رمز التحقق غير صحيح أو منتهي صلاحيتة');
                         }
                       },
 
@@ -213,7 +223,7 @@ class OtpView extends StatelessWidget {
 
                           // ------ 2) check if validate is all good ------
                           // ------- and send the event otp to Auth Bloc -------
-                          if (_formField.currentState!.validate()) {
+                          else if (_formField.currentState!.validate()) {
                             final String otp = pin1.text +
                                 pin2.text +
                                 pin3.text +

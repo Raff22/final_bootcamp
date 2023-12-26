@@ -5,14 +5,13 @@ import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
   AuthBloc() : super(InitialState()) {
     //--------------------- Sign Up User Event ----------------------------
     on<SignUpUserEvent>((event, emit) async {
       try {
-        emit(LoadingAuthState());
+        emit(LoadingAuthSignupState());
         await AuthSupabase().signupUser(
             fullName: event.fullName,
             email: event.email,
@@ -20,14 +19,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
             phoneNumber: event.phoneNumber);
         emit(SignUpSuccessedUserState());
       } catch (error) {
-        emit(ErrorAuthState(message: error.toString()));
+        emit(ErrorAuthSignupState(message: error.toString()));
       }
     });
 
     //--------------------- Sign Up Provider Event ----------------------------
     on<SignUpProviderEvent>((event, emit) async {
       try {
-        emit(LoadingAuthState());
+        emit(LoadingAuthSignupState());
         await AuthSupabase().signupProvider(
           fullName: event.fullName,
           email: event.email,
@@ -44,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         );
         emit(SignUpSuccessedProviderState());
       } catch (error) {
-        emit(ErrorAuthState(message: error.toString()));
+        emit(ErrorAuthSignupState(message: error.toString()));
       }
     });
 
@@ -53,7 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
       print('1');
       try {
         print('2');
-        emit(LoadingAuthState());
+        emit(LoadingAuthOTPState());
         final currentUser = await AuthSupabase().otp(
           otp: event.otp,
           email: event.email,
@@ -82,7 +81,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         }
       } catch (error) {
         print('catch error ');
-        emit(ErrorAuthState(message: error.toString()));
+        emit(ErrorAuthOTPState(message: error.toString()));
       }
     });
 
@@ -93,7 +92,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
           email: event.email,
         );
       } catch (error) {
-        emit(ErrorAuthState(message: error.toString()));
+        emit(ErrorAuthOTPState(message: error.toString()));
       }
     });
 
@@ -102,7 +101,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
       print('1');
       try {
         print('2');
-        emit(LoadingAuthState());
+        emit(LoadingAuthLoginState());
         final currentUser = await AuthSupabase().login(
           email: event.email,
           password: event.password,
@@ -135,8 +134,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
           ));
         }
       } catch (error) {
-         print('catch error ');
-        emit(ErrorAuthState(message: error.toString()));
+        print('catch error ');
+        emit(ErrorAuthLoginState(message: error.toString()));
       }
     });
   }

@@ -5,7 +5,13 @@ abstract class AuthStatee {}
 
 class InitialState extends AuthStatee {}
 
-class LoadingAuthState extends AuthStatee {}
+class LoadingAuthSignupState extends AuthStatee {}
+
+class LoadingAuthOTPState extends AuthStatee {}
+
+class LoadingAuthLoginState extends AuthStatee {}
+
+
 
 class SignUpSuccessedUserState extends AuthStatee {}
 
@@ -43,8 +49,18 @@ class LoginSuccessedProviderState extends AuthStatee {
       {required this.currentprovider, required this.isProvider});
 }
 
-class ErrorAuthState extends AuthStatee {
+class ErrorAuthSignupState extends AuthStatee {
   final String message;
 
-  ErrorAuthState({required this.message});
+  ErrorAuthSignupState({required this.message});
+}
+class ErrorAuthOTPState extends AuthStatee {
+  final String message;
+
+  ErrorAuthOTPState({required this.message});
+}
+class ErrorAuthLoginState extends AuthStatee {
+  final String message;
+
+  ErrorAuthLoginState({required this.message});
 }

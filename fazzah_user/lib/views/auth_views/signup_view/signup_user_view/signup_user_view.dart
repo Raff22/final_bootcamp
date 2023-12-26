@@ -182,7 +182,7 @@ class SignupUserView extends StatelessWidget {
                       //--------------- listener function ----------------------
                       listener: (context, state) {
                         // ------------- Loading State --------------
-                        if (state is LoadingAuthState) {
+                        if (state is LoadingAuthSignupState) {
                           showLoadingDialog(context: context);
                         }
 
@@ -201,7 +201,7 @@ class SignupUserView extends StatelessWidget {
                         }
 
                         // -------- Sign Up Error State ---------
-                        else if (state is ErrorAuthState) {
+                        else if (state is ErrorAuthSignupState) {
                           context.popScreen();
                           snackBarMassage(
                               context: context, snackBarText: state.message);
@@ -234,7 +234,7 @@ class SignupUserView extends StatelessWidget {
 
                           // ------ 2) check if validate is all good ------
                           // ------- and send the event with data to Auth Bloc -------
-                          if (_formField.currentState!.validate()) {
+                          else if (_formField.currentState!.validate()) {
                             context.read<AuthBloc>().add(SignUpUserEvent(
                                 fullName: fullNameController.text,
                                 email: emailController.text,

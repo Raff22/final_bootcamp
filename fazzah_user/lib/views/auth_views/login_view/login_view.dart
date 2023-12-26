@@ -145,7 +145,7 @@ class LoginView extends StatelessWidget {
 
                         BlocListener<AuthBloc, AuthStatee>(
                           listener: (context, state) async {
-                            if (state is LoadingAuthState) {
+                            if (state is LoadingAuthLoginState) {
                               showLoadingDialog(context: context);
                             } else if (state is LoginSuccessedUserState) {
                               context.removeUnitl(
@@ -160,13 +160,12 @@ class LoginView extends StatelessWidget {
                                       providerModel: state.currentprovider));
                               emailController.clear();
                               passwordController.clear();
-                            } else if (state is ErrorAuthState) {
-                              print('***************Error********************');
-
+                            } else if (state is ErrorAuthLoginState) {
                               context.popScreen();
                               snackBarMassage(
                                   context: context,
-                                  snackBarText: state.message);
+                                  snackBarText:
+                                      'البريد الإلكتروني او الرقم السري غير صحيح');
                             }
                           },
                           child: ContainerWidget(

@@ -90,7 +90,7 @@ class AuthSupabase {
       return response;
     } on AuthException catch (error) {
       print("OTP Error catch : ${error.toString()}");
-      throw 'رمز التحقق غير صحيح او منتهي صلاحيته';
+      throw error.message;
     }
   }
 
@@ -126,7 +126,7 @@ class AuthSupabase {
       return response;
     } on AuthException catch (error) {
       print("Login Error catch : ${error.toString()}");
-      throw 'البريد الإلكتروني او الرقم السري غير صحيح';
+      throw error.message;
     }
   }
 }
