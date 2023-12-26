@@ -53,7 +53,7 @@ class MainApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        home: NavBar(),
+        home: LogoView(),
       ),
     );
   }

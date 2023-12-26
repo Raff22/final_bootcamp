@@ -1,27 +1,66 @@
+import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 
 abstract class AuthStatee {}
 
 class InitialState extends AuthStatee {}
 
-class LoadingAuthState extends AuthStatee {}
+class LoadingAuthSignupState extends AuthStatee {}
 
-class SignUpSuccessedState extends AuthStatee {}
+class LoadingAuthOTPState extends AuthStatee {}
 
-class OTPSuccessedState extends AuthStatee {
-  final UserModel currentUser;
+class LoadingAuthLoginState extends AuthStatee {}
 
-  OTPSuccessedState({required this.currentUser});
+
+
+class SignUpSuccessedUserState extends AuthStatee {}
+
+class SignUpSuccessedProviderState extends AuthStatee {}
+
+class OTPSuccessedUserState extends AuthStatee {
+  final UserModel? currentUser;
+  final bool isProvider;
+
+  OTPSuccessedUserState({required this.isProvider, required this.currentUser});
 }
 
-class LoginSuccessedState extends AuthStatee {
-  final UserModel currentUser;
+class OTPSuccessedProviderState extends AuthStatee {
+  final ProviderModel? currentprovider;
+  final bool isProvider;
 
-  LoginSuccessedState({required this.currentUser});
+  OTPSuccessedProviderState(
+      {required this.isProvider, required this.currentprovider});
 }
 
-class ErrorAuthState extends AuthStatee {
+class LoginSuccessedUserState extends AuthStatee {
+  final UserModel currentUser;
+
+  final bool isProvider;
+
+  LoginSuccessedUserState(
+      {required this.isProvider, required this.currentUser});
+}
+
+class LoginSuccessedProviderState extends AuthStatee {
+  final ProviderModel currentprovider;
+  final bool isProvider;
+
+  LoginSuccessedProviderState(
+      {required this.currentprovider, required this.isProvider});
+}
+
+class ErrorAuthSignupState extends AuthStatee {
   final String message;
 
-  ErrorAuthState({required this.message});
+  ErrorAuthSignupState({required this.message});
+}
+class ErrorAuthOTPState extends AuthStatee {
+  final String message;
+
+  ErrorAuthOTPState({required this.message});
+}
+class ErrorAuthLoginState extends AuthStatee {
+  final String message;
+
+  ErrorAuthLoginState({required this.message});
 }
