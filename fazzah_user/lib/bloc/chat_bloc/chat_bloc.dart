@@ -12,6 +12,8 @@ part 'chat_state.dart';
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc() : super(ChatInitial()) {
     on<GetUsersEvent>(getUsers);
+    on<GetProviderEvent>(getProviders);
+
     on<SendMessageEvent>(sendMessage);
   }
   final supabase = Supabase.instance.client;
@@ -25,6 +27,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           await SupaGetAndDelete().getAllProviders();
 
       emit(GetUsersSuccessedState(providers));
+      print("here is error");
+    } catch (e) {
+      print(e);
+      emit(ErrorGetUsersState());
+    }
+  }
+
+  getProviders(GetProviderEvent event, Emitter<ChatState> emit) async {
+    try {
+      String getCurrentUserId = supabase.auth.currentUser!.id;
+
+      final List<UserModel> users = await SupaGetAndDelete().getAllusers();
+
+      emit(GetPrividerSuccessedState(users));
       print("here is error");
     } catch (e) {
       print(e);

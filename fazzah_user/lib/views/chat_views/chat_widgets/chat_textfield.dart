@@ -17,7 +17,7 @@ class ChatTextField extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 12, left: 12, right: 12, bottom: 20),
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(color: Colors.grey[300]!),
+      decoration: BoxDecoration(color: Colors.white),
       child: TextField(
         minLines: 1,
         maxLines: 4,

@@ -11,4 +11,10 @@ final class GetUsersSuccessedState extends ChatState {
   GetUsersSuccessedState(this.providera);
 }
 
+final class GetPrividerSuccessedState extends ChatState {
+  final List<UserModel> users;
+
+  GetPrividerSuccessedState(this.users);
+}
+
 final class ErrorGetUsersState extends ChatState {}

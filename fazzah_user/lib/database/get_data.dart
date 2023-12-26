@@ -73,6 +73,22 @@ class SupaGetAndDelete {
     return null;
   }
 
+  getAllusers() async {
+    print(3);
+    try {
+      final response = await supabase.from('users').select();
+      print(response);
+      if (response.isEmpty) {
+        return [];
+      } else {
+        return List.generate(
+            response.length, (index) => UserModel.fromJson(response[index]));
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
   //---------------- get Provider -----------------------------
 
   Future<ProviderModel?> getProviderRahaf({required String userId}) async {
