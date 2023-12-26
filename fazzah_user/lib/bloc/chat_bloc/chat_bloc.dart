@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/models/message_model.dart';
+import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -14,31 +16,30 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
   final supabase = Supabase.instance.client;
 
-  String getCurrentUserId = "690bdc94-c8e7-4a15-b583-3e3770739641";
-
 // GetUsersEvent :
   getUsers(GetUsersEvent event, Emitter<ChatState> emit) async {
     try {
-      final List allUsers =
-          await supabase.from("users").select().neq("id", getCurrentUserId);
+      String getCurrentUserId = supabase.auth.currentUser!.id;
 
-      final List<UserModel> users =
-          allUsers.map((user) => UserModel.fromJson(user)).toList();
+      final List<ProviderModel> providers =
+          await SupaGetAndDelete().getAllProviders();
 
-      emit(GetUsersSuccessedState(users));
+      emit(GetUsersSuccessedState(providers));
+      print("here is error");
     } catch (e) {
       print(e);
       emit(ErrorGetUsersState());
     }
   }
 
-// SendMessageEvent :
   sendMessage(SendMessageEvent event, emit) async {
     try {
+      String getCurrentUserId = supabase.auth.currentUser!.id;
+
       final Message message = Message(
           content: event.message,
           fromUser: getCurrentUserId,
-          toUser: "18530733-f14b-4ba7-a923-258341cb7705");
+          toUser: event.toUserId);
       await supabase.from("messages").insert(message.toJson());
     } catch (e) {
       print(e);
@@ -46,8 +47,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Stream getMessages(String toUserId) {
-    // -- listen to stream from (messages) table ,
-    //    and get messages just between (current user) and (selected user)
+    String getCurrentUserId = supabase.auth.currentUser!.id;
+
     final allMesaages = supabase
         .from("messages")
         .stream(primaryKey: ['id'])

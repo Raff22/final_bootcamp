@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           if (state is GetUsersSuccessedState) {
             return ListView.separated(
-              itemCount: state.users.length,
+              itemCount: state.providera.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
@@ -57,11 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ChatScreen(
-                                  user: state.users[index],
+                                  provider: state.providera[index],
                                 )));
                   },
                   child: ListTile(
-                    title: Text(state.users[index].name ?? ""),
+                    title: Text(state.providera[index].name ?? ""),
                   ),
                 );
               },

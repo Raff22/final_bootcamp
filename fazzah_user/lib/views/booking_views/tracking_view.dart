@@ -52,8 +52,8 @@ class TrackingView extends StatelessWidget {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     ChatScreen(
-                                                        user: state
-                                                            .users.first)));
+                                                        provider: state
+                                                            .providera.first)));
                                       });
                                 } else if (state is ErrorGetUsersState) {
                                   return const Text("error!!");

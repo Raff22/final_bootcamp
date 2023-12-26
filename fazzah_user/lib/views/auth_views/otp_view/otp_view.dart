@@ -1,4 +1,3 @@
-// ignore_for_file: must_be_immutable, use_build_context_synchronously
 import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
@@ -18,7 +17,6 @@ import 'package:fazzah_user/views/auth_views/provider_home_page.dart';
 import 'package:fazzah_user/views/auth_views/user_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:otp_timer_button/otp_timer_button.dart';
 
 class OtpView extends StatelessWidget {
   OtpView({
@@ -111,23 +109,23 @@ class OtpView extends StatelessWidget {
                     height10,
 
                     //--------------------- Resend OTP -----------------------
-                    OtpTimerButton(
-                      backgroundColor: lightGreen,
-                      textColor: dark1Green,
-                      loadingIndicatorColor: green,
-                      onPressed: () {
-                        snackBarMassage(
-                            context: context,
-                            snackBarText:
-                                'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني $email');
+                    // OtpTimerButton(
+                    //   backgroundColor: lightGreen,
+                    //   textColor: dark1Green,
+                    //   loadingIndicatorColor: green,
+                    //   onPressed: () {
+                    //     snackBarMassage(
+                    //         context: context,
+                    //         snackBarText:
+                    //             'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني $email');
 
-                        context.read<AuthBloc>().add(ResendOTPEvent(
-                              email: email,
-                            ));
-                      },
-                      text: const Text('Resend OTP'),
-                      duration: 60,
-                    ),
+                    //     context.read<AuthBloc>().add(ResendOTPEvent(
+                    //           email: email,
+                    //         ));
+                    //   },
+                    //   text: const Text('Resend OTP'),
+                    //   duration: 60,
+                    // ),
 
                     // --------------  Container (تسجيل دخول)  ---------------
 

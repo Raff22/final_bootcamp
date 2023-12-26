@@ -26,18 +26,15 @@ class SupaGetAndDelete {
   }
 
   getAllProviders() async {
-    print("got here in getprovider");
-    print("id");
+    print(3);
     try {
       final response = await supabase.from('providers').select();
       print(response);
       if (response.isEmpty) {
-        return null;
+        return [];
       } else {
-        print("else in getProvider");
-        ProviderModel temp = ProviderModel.fromJson(response[0]);
-        print(temp.name);
-        return temp;
+        return List.generate(response.length,
+            (index) => ProviderModel.fromJson(response[index]));
       }
     } catch (error) {
       print(error.toString());
