@@ -1,5 +1,3 @@
-import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
-
 List<String> services = [
   "تركيب مكيف",
   "تصليح مكيف",
@@ -7,6 +5,12 @@ List<String> services = [
   "اصلاح تسريب",
   "تغيير اناره",
   "اصلاح عداد"
+];
+
+List<String> adslist = [
+  "assets/images/AD.png",
+  "assets/images/AD-2.png",
+  "assets/images/AD-3.png",
 ];
 
 List<String> hours = [
@@ -30,4 +34,19 @@ List workerslist = [
   //   profileimg: "assets/images/personimg.png",
   //   peice: "100-150",
   // ),
+];
+
+List<String> months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
 ];

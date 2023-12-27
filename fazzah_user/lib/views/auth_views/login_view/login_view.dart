@@ -18,10 +18,11 @@ import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/login_or_sign_up_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
-import 'package:fazzah_user/views/auth_views/provider_home_page.dart';
+import 'package:fazzah_user/views/provider_view/provider_booking_requests_view.dart';
+import 'package:fazzah_user/views/provider_view/provider_workin_time_page.dart';
 import 'package:fazzah_user/views/auth_views/signup_view/signup_provider_view/signup_provider_view.dart';
 import 'package:fazzah_user/views/auth_views/signup_view/signup_user_view/signup_user_view.dart';
-import 'package:fazzah_user/views/auth_views/user_home_page.dart';
+import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -149,14 +150,13 @@ class LoginView extends StatelessWidget {
                               showLoadingDialog(context: context);
                             } else if (state is LoginSuccessedUserState) {
                               context.removeUnitl(
-                                  screen: UserHomePage(
-                                      userModel: state.currentUser));
+                                  screen: NavBar(user: state.currentUser));
 
                               emailController.clear();
                               passwordController.clear();
                             } else if (state is LoginSuccessedProviderState) {
                               context.removeUnitl(
-                                  screen: ProviderHomePage(
+                                  screen: ProviderBookingRequestsView(
                                       providerModel: state.currentprovider));
                               emailController.clear();
                               passwordController.clear();

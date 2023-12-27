@@ -1,3 +1,4 @@
+
 abstract class AuthEvent {}
 
 class SignUpUserEvent extends AuthEvent {
@@ -65,7 +66,10 @@ class ResendOTPEvent extends AuthEvent {
 class LoginEvent extends AuthEvent {
   final String email;
   final String password;
-   final bool isProvider;
+  final bool isProvider;
 
-  LoginEvent({required this.email, required this.password , required this.isProvider});
+  LoginEvent(
+      {required this.email, required this.password, required this.isProvider});
 }
+
+

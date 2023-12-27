@@ -16,7 +16,7 @@ class ThirdOnboardingView extends StatelessWidget {
       body: OnboardingWidget(
         imagePath: 'assets/images/Electrician-amico 1.png',
         onboardingText: '٣ خطوات بسيطة ويوصلك من يحل مشكلتك',
-              firstHeightDot: 7,
+        firstHeightDot: 7,
         firstWidthDot: 7,
         firstRadiusDot: 7,
         secondHeightDot: 7,
@@ -31,7 +31,7 @@ class ThirdOnboardingView extends StatelessWidget {
           containerHeight: 48,
           containerColor: green,
           onPressed: () {
-            context.pushScreen(screen:  LoginView());
+            context.removeUnitl(screen: LoginView());
           },
           child: const Center(
               child: TextWidget(

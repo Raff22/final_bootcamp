@@ -5,7 +5,7 @@ import 'package:fazzah_user/global/global_widget/search_bar.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/views/booking_views/provider_view_screen.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +15,7 @@ class ProvidersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<BookingBloc>().add(RequestProvidersEvent());
-    print("1");
+    TextEditingController search = TextEditingController();
     return Scaffold(
         appBar: createAppBar(
             title: "الفنيين",
@@ -32,7 +31,14 @@ class ProvidersScreen extends StatelessWidget {
           child: ListView(
             children: [
               height20,
-              const SearchBarWidget(hint: "ابحث عن فني"),
+              SearchBarWidget(
+                  hint: "ابحث عن فني",
+                  onSubmmited: (String) {
+                    context
+                        .read<BookingBloc>()
+                        .add(RequestProvidersByNameEvent(name: search.text));
+                  },
+                  controller: search),
               height20,
               BlocBuilder<BookingBloc, BookingState>(
                 builder: (context, state) {
@@ -40,6 +46,9 @@ class ProvidersScreen extends StatelessWidget {
                     return const Center(
                         child: CircularProgressIndicator(color: green));
                   } else if (state is ShowAllProvidersState) {
+                    if (state.providersList.isEmpty) {
+                      return const NotFoundWidget();
+                    }
                     return SizedBox(
                       width: context.getWidth(),
                       height: context.getHeight(),
