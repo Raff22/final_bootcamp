@@ -11,6 +11,10 @@ class PriceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int num1 = int.parse(priceRange.split('-')[0]);
+    int num2 = int.parse(priceRange.split('-')[1]);
+    num avg = num1 + num2;
+    avg = avg * 0.5;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -20,8 +24,7 @@ class PriceWidget extends StatelessWidget {
           textFontWeight: FontWeight.w500,
         ),
         TextWidget(
-          text:
-              "${(int.parse(priceRange.split('-')[0]) + int.parse(priceRange.split('-')[1]) / 2)} SAR",
+          text: "$avg SAR",
           textSize: 22,
           textFontWeight: FontWeight.bold,
           textColor: green,
