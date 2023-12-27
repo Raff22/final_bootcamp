@@ -1,5 +1,3 @@
-import 'package:fazzah_user/database/get_data.dart';
-import 'package:fazzah_user/models/provider_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseUpdate {
