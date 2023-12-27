@@ -30,6 +30,14 @@ class ShowSelectedServiceState extends BookingState {
   ShowSelectedServiceState({required this.newSelected});
 }
 
+class ShowUserPaymentMethodsState extends BookingState {
+  final List<PaymentMethod> paymentMethodsList;
+  final List<bool> selectedPayments;
+
+  ShowUserPaymentMethodsState(
+      {required this.paymentMethodsList, required this.selectedPayments});
+}
+
 class ShowSelectedHourState extends BookingState {
   final List<bool> newSelected;
 
