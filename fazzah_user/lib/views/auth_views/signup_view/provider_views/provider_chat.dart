@@ -34,11 +34,11 @@ class _ProviderChatState extends State<ProviderChat> {
         actions: [
           IconButton(
               onPressed: () async {
-                await Supabase.instance.client.auth.signOut();
-                if (mounted) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NavBar()));
-                }
+                // await Supabase.instance.client.auth.signOut();
+                // if (mounted) {
+                //   Navigator.push(context,
+                //       MaterialPageRoute(builder: (context) => NavBar()));
+                // }
               },
               icon: const Icon(
                 Icons.logout,

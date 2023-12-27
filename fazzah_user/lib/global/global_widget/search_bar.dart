@@ -6,9 +6,11 @@ class SearchBarWidget extends StatelessWidget {
     super.key,
     required this.hint,
     this.controller,
+    this.onSubmmited,
   });
   final String hint;
   final TextEditingController? controller;
+  final Function(String)? onSubmmited;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class SearchBarWidget extends StatelessWidget {
       height: 48,
       width: 364,
       child: TextField(
+        onSubmitted: onSubmmited,
         controller: controller,
         style: const TextStyle(
           color: black,

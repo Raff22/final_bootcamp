@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/views/booking_views/provider_view_screen.dart';
+import 'package:fazzah_user/views/booking_views/providers_view.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_event.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_state.dart';
@@ -123,25 +125,34 @@ class kdmatWedget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        height: context.getHeight(divide: 5.4),
-        width: context.getWidth(divide: 2.5),
-        color: const Color(0xffeff0eb),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(img)),
-            ),
-            Text(
-              text,
-              style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-            )
-          ],
+    return InkWell(
+      onTap: () {
+        context
+            .read<BookingBloc>()
+            .add(RequestProvidersByServiceEvent(service: text));
+        context.pushScreen(screen: const ProvidersScreen());
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          height: context.getHeight(divide: 5.4),
+          width: context.getWidth(divide: 2.5),
+          color: const Color(0xffeff0eb),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(img)),
+              ),
+              Text(
+                text,
+                style:
+                    const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
         ),
       ),
     );

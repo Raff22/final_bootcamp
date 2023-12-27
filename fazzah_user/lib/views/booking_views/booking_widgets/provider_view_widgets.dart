@@ -1,3 +1,4 @@
+import 'package:fazzah_user/app_data/static_data.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/provider_model.dart';
@@ -86,6 +87,7 @@ class RatingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int starts = ratingInfo.rate!;
+
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,10 +107,12 @@ class RatingWidget extends StatelessWidget {
                   color: lightGrey);
             }),
           ),
-          TextWidget(text: ratingInfo.comment!, textColor: grey, textSize: 15),
+          TextWidget(text: ratingInfo.comment!, textSize: 15),
         ],
       ),
-      TextWidget(text: ratingInfo.createdAt!.toString())
+      TextWidget(
+          text:
+              "${months[DateTime.parse(ratingInfo.createdAt!).month - 1]}, ${DateTime.parse(ratingInfo.createdAt!).year}")
     ]);
   }
 }
