@@ -24,22 +24,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SignupProviderView extends StatelessWidget {
   SignupProviderView({super.key, required this.isProvider});
 
+  final bool isProvider;
   final _formFieldProvider = GlobalKey<FormState>();
+
   final TextEditingController passwordController = TextEditingController();
+
   final TextEditingController fullNameController = TextEditingController();
+
   final TextEditingController phoneNumberController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController nationalIdController = TextEditingController();
+
   final TextEditingController nationaltyController = TextEditingController();
+
   final TextEditingController ageController = TextEditingController();
+
   final TextEditingController certificateController = TextEditingController();
+
   final TextEditingController jobController = TextEditingController();
+
   final TextEditingController servicesController = TextEditingController();
+
   final TextEditingController yearsOfExperienceController =
       TextEditingController();
-  final TextEditingController priceRangeController = TextEditingController();
-  final bool isProvider; // it will be true and comes from login
 
+  final TextEditingController priceRangeController = TextEditingController();
+
+  // it will be true and comes from login
   @override
   Widget build(BuildContext context) {
     //print('is provider ${isProvider}');
@@ -70,8 +83,6 @@ class SignupProviderView extends StatelessWidget {
                       supTitle: 'خطوات بسيطة ويكون حسابك جاهز',
                     ),
                     height20,
-
-                    //---------------- upload provider image -------------------
 
                     // ----------------- Text Field Full Name ------------------
 

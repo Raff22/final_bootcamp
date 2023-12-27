@@ -4,7 +4,10 @@ import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:flutter/material.dart';
 
 AppBar createAppBar(
-    {required BuildContext context, Widget? leading, String? title}) {
+    {required BuildContext context,
+    Widget? leading,
+    String? title,
+    bool? centerTitle}) {
   return AppBar(
     toolbarHeight: context.getHeight(divide: 13),
     leading: leading,
@@ -14,6 +17,7 @@ AppBar createAppBar(
     )),
     foregroundColor: black,
     backgroundColor: lightGreen,
+    centerTitle: centerTitle,
     title: TextWidget(
       text: title ?? "",
       textSize: 28,

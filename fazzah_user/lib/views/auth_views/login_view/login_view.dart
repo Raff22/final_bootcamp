@@ -18,7 +18,7 @@ import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/login_or_sign_up_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
-import 'package:fazzah_user/views/auth_views/provider_home_page.dart';
+import 'package:fazzah_user/views/provider_view/provider_workin_time_page.dart';
 import 'package:fazzah_user/views/auth_views/signup_view/signup_provider_view/signup_provider_view.dart';
 import 'package:fazzah_user/views/auth_views/signup_view/signup_user_view/signup_user_view.dart';
 import 'package:fazzah_user/views/auth_views/user_home_page.dart';
@@ -156,7 +156,7 @@ class LoginView extends StatelessWidget {
                               passwordController.clear();
                             } else if (state is LoginSuccessedProviderState) {
                               context.removeUnitl(
-                                  screen: ProviderHomePage(
+                                  screen: ProviderWorkTimePage(
                                       providerModel: state.currentprovider));
                               emailController.clear();
                               passwordController.clear();

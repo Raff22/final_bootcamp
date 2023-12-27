@@ -138,5 +138,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         emit(ErrorAuthLoginState(message: error.toString()));
       }
     });
+
+
   }
 }
