@@ -10,6 +10,33 @@ class UploadProviderImageEvent extends ProviderEvent {
 
   UploadProviderImageEvent({
     required this.imageFile,
-     this.providerModel,
+    this.providerModel,
   });
+}
+
+class UpdateProviderImageEvent extends ProviderEvent {
+  final File imageFile;
+  final ProviderModel? providerModel;
+
+  UpdateProviderImageEvent({
+    required this.imageFile,
+    this.providerModel,
+  });
+}
+
+class UpdateProviderAccountInfo extends ProviderEvent {
+  final String providerID;
+  final String? name;
+  final String? nationalID;
+  final String? phoneNumber;
+  final String? nationality;
+  final String? job;
+
+  UpdateProviderAccountInfo(
+      {required this.providerID,
+      this.name,
+      this.nationalID,
+      this.phoneNumber,
+      this.nationality,
+      this.job});
 }

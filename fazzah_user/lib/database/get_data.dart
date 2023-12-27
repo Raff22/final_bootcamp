@@ -124,7 +124,6 @@ class SupaGetAndDelete {
   }
 
   //---------------- get Provider -----------------------------
-
   Future<ProviderModel?> getProviderRahaf({required String userId}) async {
     try {
       final response =

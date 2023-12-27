@@ -37,9 +37,10 @@ class DrawerProviderWidget extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // --------------- first Column ------------------
                 Column(
                   children: [
+
+                    // --------------- Image and Name Provider ------------------
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +50,8 @@ class DrawerProviderWidget extends StatelessWidget {
                             contanierBorderRadius: 0,
                             containerHeight: context.getWidth(divide: 4),
                             containerWidth: context.getWidth(divide: 4),
-                            child: providerModel!.providerImage!.isEmpty
+                            child: providerModel!.providerImage == null ||
+                                    providerModel!.providerImage!.isEmpty
                                 ? Image.asset(
                                     'assets/images/image_provider.png',
                                     fit: BoxFit.fill,
@@ -71,7 +73,8 @@ class DrawerProviderWidget extends StatelessWidget {
                       ],
                     ),
                     height40,
-                    //----------
+
+                    //------------------- Provider Account ---------------------
                     SubProviderDrawerWidget(
                       subTextView: 'حسابي',
                       iconString: 'assets/images/account.png',
@@ -83,7 +86,8 @@ class DrawerProviderWidget extends StatelessWidget {
                       },
                     ),
                     height40,
-                    //----------
+
+                    //------------------- Provider Booking ---------------------
                     SubProviderDrawerWidget(
                       subTextView: 'الطلبات',
                       iconString: 'assets/images/shopping_cart.png',
@@ -95,7 +99,8 @@ class DrawerProviderWidget extends StatelessWidget {
                       },
                     ),
                     height40,
-                    //----------
+
+                     //------------------- Provider Rating ---------------------
                     SubProviderDrawerWidget(
                       subTextView: 'اراء العملاء',
                       iconString: 'assets/images/star.png',
@@ -107,7 +112,8 @@ class DrawerProviderWidget extends StatelessWidget {
                       },
                     ),
                     height40,
-                    //----------
+                    
+                     //------------------- Provider Wallet ---------------------
                     SubProviderDrawerWidget(
                       subTextView: 'المحفظة',
                       iconString: 'assets/images/wallet.png',
@@ -119,7 +125,8 @@ class DrawerProviderWidget extends StatelessWidget {
                       },
                     ),
                     height40,
-                    //----------
+                    
+                     //--------------- Provider Working Time ------------------- 
                     SubProviderDrawerWidget(
                       subTextView: 'اوقات العمل',
                       iconString: 'assets/images/work_time.png',
@@ -134,7 +141,7 @@ class DrawerProviderWidget extends StatelessWidget {
                   ],
                 ),
 
-                // --------------- second Column ------------------
+                // --------------- Signout ------------------
                 ContainerWidget(
                   contanierBorderRadius: 0,
                   onPressed: () {},

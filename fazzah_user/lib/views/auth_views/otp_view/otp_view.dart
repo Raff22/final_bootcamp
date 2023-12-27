@@ -14,7 +14,7 @@ import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
 import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/auth_views/otp_view/otp_widget/otp_text_field.dart';
-import 'package:fazzah_user/views/provider_view/provider_workin_time_page.dart';
+import 'package:fazzah_user/views/provider_view/provider_booking_requests_view.dart';
 import 'package:fazzah_user/views/auth_views/user_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -187,7 +187,7 @@ class OtpView extends StatelessWidget {
                                 snackBarText: 'من فضلك قم بكتابة الرمز');
                           } else {
                             context.removeUnitl(
-                                screen: ProviderWorkTimePage(
+                                screen: ProviderBookingRequestsView(
                               providerModel: state.currentprovider,
                             ));
                             pin1.clear();
