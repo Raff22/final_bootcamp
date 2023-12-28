@@ -6,6 +6,7 @@ import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
+import 'package:fazzah_user/utils/helpers/map_splitter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'booking_event.dart';
@@ -16,10 +17,13 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<RequestProvidersEvent>((event, emit) async {
       emit(BookingLoadingState());
       try {
-        final List<ProviderModel> providers =
-            await SupaGetAndDelete().getAllProviders();
-        emit(ShowAllProvidersState(providersList: providers));
+        final Map<ProviderModel, bool> providers =
+            await SupaGetAndDelete().getAllProvidersFavs();
+        final List<ProviderModel> x = splitMapToKeyList(providers);
+        final List<bool> y = splitMapToValueList(providers);
+        emit(ShowAllProvidersState(providers: x, favs: y));
       } catch (error) {
+        print(error.toString());
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
@@ -56,9 +60,11 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<RequestProvidersByNameEvent>((event, emit) async {
       emit(BookingLoadingState());
       try {
-        final List<ProviderModel> providers =
+        final Map<ProviderModel, bool> providers =
             await SupaGetAndDelete().getProvidersByName(event.name);
-        emit(ShowAllProvidersState(providersList: providers));
+        final List<ProviderModel> x = splitMapToKeyList(providers);
+        final List<bool> y = splitMapToValueList(providers);
+        emit(ShowAllProvidersState(providers: x, favs: y));
       } catch (error) {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
@@ -66,9 +72,11 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<RequestProvidersByServiceEvent>((event, emit) async {
       emit(BookingLoadingState());
       try {
-        final List<ProviderModel> providers =
+        final Map<ProviderModel, bool> providers =
             await SupaGetAndDelete().getProvidersByService(event.service);
-        emit(ShowAllProvidersState(providersList: providers));
+        final List<ProviderModel> x = splitMapToKeyList(providers);
+        final List<bool> y = splitMapToValueList(providers);
+        emit(ShowAllProvidersState(providers: x, favs: y));
       } catch (error) {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }

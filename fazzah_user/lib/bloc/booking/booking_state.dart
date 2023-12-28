@@ -5,9 +5,10 @@ abstract class BookingState {}
 class BookingInitial extends BookingState {}
 
 class ShowAllProvidersState extends BookingState {
-  final List<ProviderModel> providersList;
+  final List<ProviderModel> providers;
+  final List<bool> favs;
 
-  ShowAllProvidersState({required this.providersList});
+  ShowAllProvidersState({required this.providers, required this.favs});
 }
 
 class ShowProviderRatingsState extends BookingState {

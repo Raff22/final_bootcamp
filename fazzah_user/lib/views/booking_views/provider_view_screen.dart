@@ -11,12 +11,17 @@ import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/views/booking_views/booking_details_view.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/provider_view_widgets.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_event.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProviderViewScreen extends StatefulWidget {
-  const ProviderViewScreen({super.key, required this.providerInfo});
+  ProviderViewScreen(
+      {super.key, required this.providerInfo, this.isFav = false});
   final ProviderModel providerInfo;
+  bool isFav;
 
   @override
   State<ProviderViewScreen> createState() => _ProviderViewScreenState();
@@ -44,6 +49,23 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
     TabController tabsController = TabController(length: 3, vsync: this);
     return Scaffold(
         appBar: createAppBar(
+            trailing: IconButton(onPressed: () {
+              context.read<FavBloc>().add(FavToggleEvent(
+                  state: widget.isFav, providerID: widget.providerInfo.id!));
+            }, icon: BlocBuilder<FavBloc, FavState>(
+              builder: (context, state) {
+                if (state is FavSelected) {
+                  if (state.id == widget.providerInfo.id!) {
+                    widget.isFav = state.isFav;
+                  }
+                }
+                return Icon(
+                  widget.isFav ? Icons.favorite : Icons.favorite_border,
+                  size: 30,
+                  color: Colors.red,
+                );
+              },
+            )),
             title: "الفني",
             context: context,
             leading: IconButton(

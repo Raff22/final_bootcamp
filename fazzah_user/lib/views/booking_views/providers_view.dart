@@ -46,16 +46,18 @@ class ProvidersScreen extends StatelessWidget {
                     return const Center(
                         child: CircularProgressIndicator(color: green));
                   } else if (state is ShowAllProvidersState) {
-                    if (state.providersList.isEmpty) {
+                    print(state.favs);
+                    if (state.providers.isEmpty) {
                       return const NotFoundWidget();
                     }
                     return SizedBox(
                       width: context.getWidth(),
                       height: context.getHeight(),
                       child: ListView.separated(
-                          itemCount: state.providersList.length,
+                          itemCount: state.providers.length,
                           itemBuilder: (context, index) => WorkerCard(
-                              providerInfo: state.providersList[index]),
+                              isFav: state.favs[index],
+                              providerInfo: state.providers[index]),
                           separatorBuilder: (BuildContext context, int index) {
                             return height20;
                           }),
