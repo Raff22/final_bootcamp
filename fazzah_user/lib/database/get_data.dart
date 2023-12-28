@@ -1,4 +1,5 @@
 import 'package:fazzah_user/app_data/static_data.dart';
+import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
@@ -49,6 +50,42 @@ class SupaGetAndDelete {
           await supabase.from('providers').select().eq('name', name);
       if (response.isEmpty) {
         final List<ProviderModel> temp = [];
+        return temp;
+      } else {
+        return List.generate(response.length,
+            (index) => ProviderModel.fromJson(response[index]));
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  getOrderProviders() async {
+    String id = supabase.auth.currentUser!.id;
+    print("got here in order here!");
+    print("id  $id");
+    try {
+      final response = await supabase.from('orders').select().eq("user", id);
+      print(response);
+      if (response.isEmpty) {
+        return null;
+      } else {
+        print("else in getProvider");
+        Order temp = Order.fromJson(response[0]);
+        print(temp.provider);
+        return temp;
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  getOrderedProvidersonly() async {
+    try {
+      final response = await supabase.from('orders').select();
+      if (response.isEmpty) {
+        print(response);
+        final List<Order> temp = [];
         return temp;
       } else {
         return List.generate(response.length,
