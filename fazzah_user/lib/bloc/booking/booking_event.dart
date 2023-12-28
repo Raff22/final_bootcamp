@@ -47,3 +47,17 @@ class GetProviderHoursEvent extends BookingEvent {
 
   GetProviderHoursEvent({required this.providerId});
 }
+
+class CreateOrderEvent extends BookingEvent {
+  final List<bool> servicesSelected;
+  final List<bool> hoursSelected;
+  final List<bool> selectedPayments;
+  final List<PaymentMethod> userPaymentMethods;
+  final DateTime date;
+  final ProviderModel provider;
+
+  CreateOrderEvent({required this.servicesSelected, required this.hoursSelected, required this.selectedPayments, required this.userPaymentMethods, required this.date, required this.provider});
+
+
+  
+}

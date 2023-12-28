@@ -49,3 +49,9 @@ class ShowProviderWorkingHoursState extends BookingState {
 
   ShowProviderWorkingHoursState({required this.hours});
 }
+
+class CreatedOrderSuccessfly extends BookingState {
+  final Order newOrder;
+
+  CreatedOrderSuccessfly({required this.newOrder});
+}

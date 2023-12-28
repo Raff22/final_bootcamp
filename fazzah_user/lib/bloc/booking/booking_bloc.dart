@@ -1,5 +1,7 @@
 import 'package:fazzah_user/app_data/static_data.dart';
 import 'package:fazzah_user/database/get_data.dart';
+import 'package:fazzah_user/database/supabase_add.dart';
+import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
@@ -72,7 +74,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       }
     });
     on<RequestUserPaymentMethodsEvent>((event, emit) async {
-      emit(BookingLoadingState());
       try {
         final List<PaymentMethod> methods =
             await SupaGetAndDelete().getUserPaymentMethods();
@@ -84,7 +85,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       }
     });
     on<SelectPaymentMethodEvent>((event, emit) async {
-      emit(BookingLoadingState());
       try {
         final List<PaymentMethod> methods =
             await SupaGetAndDelete().getUserPaymentMethods();
@@ -94,6 +94,50 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
             paymentMethodsList: methods, selectedPayments: bools));
       } catch (error) {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
+      }
+    });
+    on<CreateOrderEvent>((event, emit) async {
+      final selectedServiceIndex =
+          event.servicesSelected.indexWhere((element) => element == true);
+      final selectedHourIndex =
+          event.hoursSelected.indexWhere((element) => element == true);
+      final paymentMethodIndex =
+          event.selectedPayments.indexWhere((element) => element == true);
+      if (selectedServiceIndex < 0) {
+        emit(
+            BookingErrorState(error: "من فضلك اختر الخدمة حتى تتمكن من الحجز"));
+      }
+      if (selectedHourIndex < 0) {
+        emit(
+            BookingErrorState(error: "من فضلك اختر الساعة حتى تتمكن من الحجز"));
+      }
+      if (paymentMethodIndex < 0) {
+        emit(BookingErrorState(
+            error: "من فضلك اختر طريق الدفع حتى تتمكن من الحجز"));
+      } else {
+        emit(BookingLoadingState());
+        try {
+          double num1 = double.parse(event.provider.priceRange!.split('-')[0]);
+          double num2 = double.parse(event.provider.priceRange!.split('-')[1]);
+          double avg = num1 + num2;
+          avg = avg * 0.5;
+          Order newOrder = Order(
+              total: avg,
+              provider: event.provider.id,
+              orderType: services[selectedServiceIndex],
+              orderDate: event.date.toIso8601String(),
+              orderTime: hours[selectedHourIndex],
+              orderStatus: "مؤكد",
+              paymentMethod: event.userPaymentMethods[paymentMethodIndex].id!);
+          final Order? verfied = await SupaAdd().addNewOrder(newOrder);
+          if (verfied != null) {
+            emit(CreatedOrderSuccessfly(newOrder: newOrder));
+          } else {
+            emit(BookingErrorState(error: "حدث خطأ في النظام"));
+          }
+        } catch (error) {
+          emit(BookingErrorState(error: "حدث خطأ في النظام"));
+        }
       }
     });
   }

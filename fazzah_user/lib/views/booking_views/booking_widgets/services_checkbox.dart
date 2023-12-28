@@ -13,6 +13,7 @@ class ServiceCheckBox extends StatelessWidget {
     return Row(
       children: [
         Checkbox(
+            shape: const CircleBorder(side: BorderSide()),
             value: state,
             onChanged: (value) {},
             fillColor: null,
