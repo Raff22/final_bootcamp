@@ -101,9 +101,7 @@ class BookingDetailsView extends StatelessWidget {
                     ),
                   )),
               child: DatePickerDialog(
-                  cancelText: null,
-                  firstDate: DateTime.timestamp(),
-                  lastDate: DateTime(2055)),
+                  firstDate: DateTime.timestamp(), lastDate: DateTime(2055)),
             ),
             BlocBuilder<BookingBloc, BookingState>(
               builder: (context, state) {

@@ -77,6 +77,26 @@ class SupaGetAndDelete {
     }
   }
 
+  getFavoriteProviders() async {
+    final String id = supabase.auth.currentUser!.id;
+    List<ProviderModel> favs = [];
+    try {
+      final response =
+          await supabase.from('favorites').select().eq('user_id', id);
+      if (response.isEmpty) {
+        return favs;
+      } else {
+        for (Map map in response) {
+          final ProviderModel temp = getProvider(map['provider_id']);
+          favs.add(temp);
+        }
+        return favs;
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
   getProviderRatings({required String providerId}) async {
     try {
       final response =
