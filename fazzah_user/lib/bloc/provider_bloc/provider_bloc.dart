@@ -41,11 +41,20 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
           job: event.job,
         );
 
+        emit(SuccessUpdateProviderAccountState());
+      } catch (error) {
+        print(error);
+        emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
+      }
+    });
+
+    on<GetProviderData>((event, emit) async {
+      emit(LoadingUpdateProviderAccountState());
+      try {
         final ProviderModel? providerModel =
             await SupaGetAndDelete().getProviderRahaf(
           userId: event.providerID,
         );
-
         emit(SuccessUpdateProviderAccountState(providerModel: providerModel));
       } catch (error) {
         print(error);

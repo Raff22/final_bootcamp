@@ -15,7 +15,7 @@ import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
 import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/auth_views/otp_view/otp_widget/otp_text_field.dart';
 import 'package:fazzah_user/views/provider_view/provider_booking_requests_view.dart';
-import 'package:fazzah_user/views/auth_views/user_home_page.dart';
+import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timer_button/timer_button.dart';
@@ -166,8 +166,7 @@ class OtpView extends StatelessWidget {
                                 snackBarText: 'من فضلك قم بكتابة الرمز');
                           } else {
                             context.removeUnitl(
-                                screen:
-                                    UserHomePage(userModel: state.currentUser));
+                                screen: NavBar(user: state.currentUser!));
                             pin1.clear();
                             pin2.clear();
                             pin3.clear();
