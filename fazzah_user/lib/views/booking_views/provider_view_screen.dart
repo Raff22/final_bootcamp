@@ -19,7 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProviderViewScreen extends StatefulWidget {
   ProviderViewScreen(
-      {super.key, required this.providerInfo, this.isFav = false});
+      {super.key, required this.providerInfo, required this.isFav});
   final ProviderModel providerInfo;
   bool isFav;
 
