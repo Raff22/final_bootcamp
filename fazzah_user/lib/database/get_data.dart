@@ -1,4 +1,5 @@
 import 'package:fazzah_user/app_data/static_data.dart';
+import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
@@ -76,6 +77,26 @@ class SupaGetAndDelete {
     }
   }
 
+  getFavoriteProviders() async {
+    final String id = supabase.auth.currentUser!.id;
+    List<ProviderModel> favs = [];
+    try {
+      final response =
+          await supabase.from('favorites').select().eq('user_id', id);
+      if (response.isEmpty) {
+        return favs;
+      } else {
+        for (Map map in response) {
+          final ProviderModel temp = getProvider(map['provider_id']);
+          favs.add(temp);
+        }
+        return favs;
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
   getProviderRatings({required String providerId}) async {
     try {
       final response =
@@ -101,6 +122,25 @@ class SupaGetAndDelete {
         return WorkingHours.fromJson(response[0]);
       } else {
         return (WorkingHours());
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  getUserPaymentMethods() async {
+    String id = supabase.auth.currentUser!.id;
+    print(id);
+    try {
+      final response =
+          await supabase.from('payment_methods').select().eq('user_id', id);
+      print(response);
+      if (response.isEmpty) {
+        final List<PaymentMethod> temp = [];
+        return temp;
+      } else {
+        return List.generate(response.length,
+            (index) => PaymentMethod.fromJson(response[index]));
       }
     } catch (error) {
       print(error.toString());
