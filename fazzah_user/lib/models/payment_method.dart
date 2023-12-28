@@ -4,7 +4,7 @@ class PaymentMethod {
   String? name;
   String? email;
   String? expiresAt;
-  int? cardNumber;
+  String? cardNumber;
 
   PaymentMethod(
       {this.id,

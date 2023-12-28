@@ -7,7 +7,21 @@ class InitialProviderState extends ProviderState {}
 class LoadingImageProviderState extends ProviderState {}
 
 class SuccessUploadedImageState extends ProviderState {
-  final ProviderModel providerModel;
+  final String providerImagePath;
 
-  SuccessUploadedImageState({required this.providerModel});
+  SuccessUploadedImageState({required this.providerImagePath});
+}
+
+class LoadingUpdateProviderAccountState extends ProviderState {}
+
+class SuccessUpdateProviderAccountState extends ProviderState {
+  final ProviderModel? providerModel;
+
+  SuccessUpdateProviderAccountState({this.providerModel});
+}
+
+class ErrorUpdateProviderAccountState extends ProviderState {
+  final String errorMessage;
+
+  ErrorUpdateProviderAccountState({required this.errorMessage});
 }

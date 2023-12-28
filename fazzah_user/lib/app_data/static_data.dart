@@ -50,3 +50,9 @@ List<String> months = [
   'November',
   'December'
 ];
+
+Map<String, String> paymentMap = {
+  "applepay": "assets/images/applepay.png",
+  "paypal": "assets/images/paypal.png",
+  "visa": "assets/images/visa.png",
+};
