@@ -3,6 +3,8 @@ import 'package:fazzah_user/bloc/order_bloc/order_event.dart';
 import 'package:fazzah_user/bloc/order_bloc/order_state.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
+import 'package:fazzah_user/database/get_data.dart';
+import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
@@ -19,13 +21,11 @@ class OrderCartScreen extends StatefulWidget {
 class _OrderCartScreenState extends State<OrderCartScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabsController;
-
+  List<Order> orders = [];
   @override
   void initState() {
     super.initState();
     tabsController = TabController(length: 2, vsync: this);
-
-    // Dispatch the event here
     context.read<OrderBloc>().add(RequestallProvidersEvent());
   }
 
@@ -77,10 +77,10 @@ class _OrderCartScreenState extends State<OrderCartScreen>
         if (state is OrderLoadingState) {
           return const Center(child: CircularProgressIndicator(color: green));
         } else if (state is ShowAllProvidersState) {
-          if (state.providersList.isEmpty) {
+          if (state.isdonelist.isEmpty) {
             return Container();
           }
-          return buildProvidersList(context, state.providersList);
+          return buildProvidersList(context, state.isdonelist);
         } else if (state is OrderErrorState) {
           return Center(child: Text(state.error));
         }
@@ -100,6 +100,20 @@ class _OrderCartScreenState extends State<OrderCartScreen>
   }
 
   Widget buildServicesTab() {
-    return Center(child: Text('Services'));
+    return BlocBuilder<OrderBloc, OrderState>(
+      builder: (context, state) {
+        if (state is OrderLoadingState) {
+          return const Center(child: CircularProgressIndicator(color: green));
+        } else if (state is ShowAllProvidersState) {
+          if (state.isdonelist.isEmpty) {
+            return Container();
+          }
+          return buildProvidersList(context, state.notdonelist);
+        } else if (state is OrderErrorState) {
+          return Center(child: Text(state.error));
+        }
+        return const Center(child: Text('No data available'));
+      },
+    );
   }
 }

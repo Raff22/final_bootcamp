@@ -14,13 +14,17 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<RequestallProvidersEvent>((event, emit) async {
       emit(OrderLoadingState());
       try {
-        final List<ProviderModel> providers =
-            await SupaGetAndDelete().getAllProviders();
-        final List<Order> orders = await SupaGetAndDelete()
-            .getOrderProviders("8bc48f85-ab08-4d48-8c17-310a602ea808");
-        print(orders);
-        emit(ShowAllProvidersState(providersList: providers));
+        // final List<ProviderModel> providers =
+        //     await SupaGetAndDelete().getAllProviders();
+        final List<ProviderModel> notdone =
+            await SupaGetAndDelete().getOrderNotDone();
+        final List<ProviderModel> isdone =
+            await SupaGetAndDelete().getOrderDone();
+        // print("providers $providers");
+
+        emit(ShowAllProvidersState(isdonelist: isdone, notdonelist: notdone));
       } catch (error) {
+        print(error.toString());
         emit(OrderErrorState(error: "حدث خطأ في النظام"));
       }
     });

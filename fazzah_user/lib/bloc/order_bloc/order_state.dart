@@ -5,9 +5,10 @@ abstract class OrderState {}
 class OrderInitial extends OrderState {}
 
 class ShowAllProvidersState extends OrderState {
-  final List<ProviderModel> providersList;
+  final List<ProviderModel> isdonelist;
+  final List<ProviderModel> notdonelist;
 
-  ShowAllProvidersState({required this.providersList});
+  ShowAllProvidersState({required this.isdonelist, required this.notdonelist});
 }
 
 class ShowAllProvidersOrderState extends OrderState {
