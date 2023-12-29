@@ -1,5 +1,4 @@
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OrderCartScreen extends StatelessWidget {
