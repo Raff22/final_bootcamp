@@ -22,7 +22,6 @@ class OrderCartScreen extends StatefulWidget {
 class _OrderCartScreenState extends State<OrderCartScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabsController;
-  List<Order> orders = [];
   @override
   void initState() {
     super.initState();

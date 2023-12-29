@@ -1,5 +1,6 @@
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/user_model.dart';
 
 abstract class OrderState {}
 
@@ -10,6 +11,13 @@ class ShowUserOrdersState extends OrderState {
   final Map<Order, ProviderModel> notDoneMap;
 
   ShowUserOrdersState({required this.isDoneMap, required this.notDoneMap});
+}
+
+class ShowProviderOrdersState extends OrderState {
+  final Map<Order, UserModel> isDoneMap;
+  final Map<Order, UserModel> notDoneMap;
+
+  ShowProviderOrdersState({required this.isDoneMap, required this.notDoneMap});
 }
 
 class OrderErrorState extends OrderState {

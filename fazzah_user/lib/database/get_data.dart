@@ -184,8 +184,59 @@ class SupaGetAndDelete {
       } else {
         for (var map in response) {
           if (map['is_done'] == false) {
+            print("not doneeeee");
             final Order order = Order.fromJson(map);
             final ProviderModel temp = await getProvider(map['provider']);
+            data[order] = temp;
+          }
+        }
+        return data;
+      }
+    } catch (error) {
+      print(error.toString());
+      return data;
+    }
+  }
+
+  getDoneOrdersProvider() async {
+    final String id = supabase.auth.currentUser!.id;
+    Map<Order, UserModel> data = {};
+    try {
+      final response =
+          await supabase.from('orders').select().eq('provider', id);
+      if (response.isEmpty) {
+        return data;
+      } else {
+        print("getDoneOrdersProvider else");
+        for (var map in response) {
+          if (map['is_done']) {
+            final Order order = Order.fromJson(map);
+            final UserModel temp = await getUser(userId: map['user']);
+            print(temp.id);
+            data[order] = temp;
+          }
+        }
+        return data;
+      }
+    } catch (error) {
+      print(error.toString());
+      return data;
+    }
+  }
+
+  getNotDoneOrdersProvider() async {
+    final String id = supabase.auth.currentUser!.id;
+    Map<Order, UserModel> data = {};
+    try {
+      final response =
+          await supabase.from('orders').select().eq('provider', id);
+      if (response.isEmpty) {
+        return data;
+      } else {
+        for (var map in response) {
+          if (map['is_done'] == false) {
+            final Order order = Order.fromJson(map);
+            final UserModel temp = await getUser(userId: map['user']);
             data[order] = temp;
           }
         }
@@ -293,7 +344,7 @@ class SupaGetAndDelete {
   }
 
   //----------------- get User ------------------------
-  Future<UserModel?> getUser({required String userId}) async {
+  getUser({required String userId}) async {
     try {
       final response = await supabase.from('users').select().eq('id', userId);
       if (response.isEmpty) {
