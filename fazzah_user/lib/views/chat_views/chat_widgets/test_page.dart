@@ -1,4 +1,5 @@
 import 'package:fazzah_user/bloc/chat_bloc/chat_bloc.dart';
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/views/chat_views/chat_widgets/chating_screen.dart';
 import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () async {
                 await Supabase.instance.client.auth.signOut();
                 if (mounted) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NavBar()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              NavBar(user: UserModel(name: "نورة"))));
                 }
               },
               icon: const Icon(

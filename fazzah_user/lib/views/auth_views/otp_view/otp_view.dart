@@ -13,10 +13,12 @@ import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
 import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
 import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/auth_views/otp_view/otp_widget/otp_text_field.dart';
-import 'package:fazzah_user/views/auth_views/provider_home_page.dart';
+import 'package:fazzah_user/views/provider_view/provider_booking_requests_view.dart';
 import 'package:fazzah_user/views/auth_views/user_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timer_button/timer_button.dart';
+// import 'package:otp_timer_button/otp_timer_button.dart';
 
 class OtpView extends StatelessWidget {
   OtpView({
@@ -110,22 +112,35 @@ class OtpView extends StatelessWidget {
 
                     //--------------------- Resend OTP -----------------------
                     // OtpTimerButton(
-                    //   backgroundColor: lightGreen,
-                    //   textColor: dark1Green,
-                    //   loadingIndicatorColor: green,
                     //   onPressed: () {
                     //     snackBarMassage(
                     //         context: context,
                     //         snackBarText:
-                    //             'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني $email');
+                    //             'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني ${widget.email}');
 
                     //     context.read<AuthBloc>().add(ResendOTPEvent(
-                    //           email: email,
+                    //           email: widget.email,
                     //         ));
                     //   },
                     //   text: const Text('Resend OTP'),
-                    //   duration: 60,
+                    //   duration: 30,
                     // ),
+                    TimerButton(
+                      color: coldGreen,
+                      activeTextStyle: const TextStyle(color: black),
+                      label: " اعادة ارسال رمز تحقق",
+                      timeOutInSeconds: 70,
+                      onPressed: () {
+                        context.read<AuthBloc>().add(ResendOTPEvent(
+                              email: email,
+                            ));
+                        snackBarMassage(
+                            context: context,
+                            snackBarText:
+                                'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني $email');
+                      },
+                    ),
+                    height20,
 
                     // --------------  Container (تسجيل دخول)  ---------------
 
@@ -171,7 +186,7 @@ class OtpView extends StatelessWidget {
                                 snackBarText: 'من فضلك قم بكتابة الرمز');
                           } else {
                             context.removeUnitl(
-                                screen: ProviderHomePage(
+                                screen: ProviderBookingRequestsView(
                               providerModel: state.currentprovider,
                             ));
                             pin1.clear();

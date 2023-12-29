@@ -1,6 +1,6 @@
 import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
-import 'package:fazzah_user/database/auth_supabase/aurth_supabase.dart';
+import 'package:fazzah_user/database/aurth_supabase.dart';
 import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
@@ -138,5 +138,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         emit(ErrorAuthLoginState(message: error.toString()));
       }
     });
+
+
   }
 }

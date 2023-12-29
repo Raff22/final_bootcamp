@@ -28,19 +28,10 @@ class ChatScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List<Message> messages = snapshot.data!;
-            ScrollController scrollController = ScrollController();
-
-            Future.delayed(const Duration(milliseconds: 100 ~/ 60), () {
-              scrollController.animateTo(
-                  scrollController.position.maxScrollExtent,
-                  duration: const Duration(milliseconds: 100),
-                  curve: Curves.linear);
-            });
 
             return ListView.builder(
                 padding: const EdgeInsets.only(bottom: 100),
                 shrinkWrap: true,
-                controller: scrollController,
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
                   return ChatBubble(

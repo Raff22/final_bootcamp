@@ -48,6 +48,7 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
             context: context,
             leading: IconButton(
                 onPressed: () {
+                  context.read<BookingBloc>().add(RequestProvidersEvent());
                   context.popScreen();
                 },
                 icon:
@@ -106,10 +107,15 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
                       BlocBuilder<BookingBloc, BookingState>(
                         builder: (context, state) {
                           if (state is ShowProviderRatingsState) {
-                            return ListView.builder(
-                                itemCount: state.ratings.length,
-                                itemBuilder: (context, index) => RatingWidget(
-                                    ratingInfo: state.ratings[index]));
+                            return ListView.separated(
+                              itemCount: state.ratings.length,
+                              itemBuilder: (context, index) => RatingWidget(
+                                  ratingInfo: state.ratings[index]),
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const Divider();
+                              },
+                            );
                           } else if (state is BookingLoadingState) {
                             return const Center(
                                 child: CircularProgressIndicator(color: green));
@@ -130,7 +136,12 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
                     containerHeight: 48,
                     containerColor: green,
                     onPressed: () {
-                      context.pushScreen(screen: const BookingDetailsView());
+                      context.read<BookingBloc>().add(GetProviderHoursEvent(
+                          providerId: widget.providerInfo.id!));
+                      context.pushScreen(
+                          screen: BookingDetailsView(
+                        providerInfo: widget.providerInfo,
+                      ));
                     },
                     child: const Center(
                         child: TextWidget(
