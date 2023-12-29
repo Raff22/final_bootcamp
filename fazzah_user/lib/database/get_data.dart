@@ -1,4 +1,4 @@
-import 'package:fazzah_user/app_data/static_data.dart';
+import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
@@ -10,17 +10,12 @@ class SupaGetAndDelete {
   final supabase = Supabase.instance.client;
 
   getProvider(String id) async {
-    print("got here in getprovider");
-    print("id $id");
     try {
       final response = await supabase.from('providers').select().eq('id', id);
-      print(response);
       if (response.isEmpty) {
         return null;
       } else {
-        print("else in getProvider");
         ProviderModel temp = ProviderModel.fromJson(response[0]);
-        print(temp.name);
         return temp;
       }
     } catch (error) {
@@ -45,38 +40,145 @@ class SupaGetAndDelete {
     }
   }
 
+  getAllProvidersFavs() async {
+    Map<ProviderModel, bool> temp = {};
+    try {
+      final response = await supabase.from('providers').select();
+      if (response.isEmpty) {
+        return temp;
+      } else {
+        final List<ProviderModel> providers = List.generate(response.length,
+            (index) => ProviderModel.fromJson(response[index]));
+        final List<ProviderModel> favs = await getFavoriteProviders();
+        for (ProviderModel element in providers) {
+          if (favs.any((element2) => element.id == element2.id)) {
+            temp[element] = true;
+          } else {
+            temp[element] = false;
+          }
+        }
+        return temp;
+      }
+    } catch (error) {
+      print(error.toString());
+      return temp;
+    }
+  }
+
   getProvidersByName(String name) async {
+    Map<ProviderModel, bool> temp = {};
     try {
       final response =
           await supabase.from('providers').select().eq('name', name);
       if (response.isEmpty) {
-        final List<ProviderModel> temp = [];
         return temp;
       } else {
-        return List.generate(response.length,
+        final List<ProviderModel> providers = List.generate(response.length,
             (index) => ProviderModel.fromJson(response[index]));
+        final List<ProviderModel> favs = await getFavoriteProviders();
+        for (ProviderModel element in providers) {
+          if (favs.any((element2) => element.id == element2.id)) {
+            temp[element] = true;
+          } else {
+            temp[element] = false;
+          }
+        }
+        return temp;
       }
+    } catch (error) {
+      print(error.toString());
+      return temp;
+    }
+  }
+
+  deleteFavorite(String providerId) async {
+    final String id = supabase.auth.currentUser!.id;
+    try {
+      await supabase
+          .from('favorites')
+          .delete()
+          .eq('user_id', id)
+          .eq('provider_id', providerId);
     } catch (error) {
       print(error.toString());
     }
   }
 
-  getProvidersByService(String job) async {
-    print(job);
+  // getProvidersByService(String job) async {
+  //   Map<ProviderModel, bool> temp = {};
+  //   try {
+  //     final response =
+  //         await supabase.from('providers').select().textSearch('services', job);
+  //     if (response.isEmpty) {
+  //       return null;
+  //     } else {
+  //       print("else in getProvider");
+  //       ProviderModel temp = ProviderModel.fromJson(response[0]);
+  //       print(temp.name);
+  //       return temp;
+  //     }
+  //   } catch (error) {
+  //     print(error.toString());
+  //     return temp;
+  //   }
+  // }
+
+  getDoneOrders() async {
+    final String id = supabase.auth.currentUser!.id;
+    Map<Order, ProviderModel> data = {};
     try {
-      final response =
-          await supabase.from('providers').select().textSearch('services', job);
-      print(response);
+      final response = await supabase.from('orders').select().eq('user', id);
       if (response.isEmpty) {
-        return null;
+        return data;
       } else {
-        print("else in getProvider");
-        ProviderModel temp = ProviderModel.fromJson(response[0]);
-        print(temp.name);
-        return temp;
+        for (var map in response) {
+          if (map['is_done']) {
+            final Order order = Order.fromJson(map);
+            final ProviderModel temp = getProvider(map['provider']);
+            data[order] = temp;
+          }
+        }
+        return data;
       }
     } catch (error) {
       print(error.toString());
+      return temp;
+    }
+  }
+
+  deleteFavorite(String providerId) async {
+    final String id = supabase.auth.currentUser!.id;
+    try {
+      await supabase
+          .from('favorites')
+          .delete()
+          .eq('user_id', id)
+          .eq('provider_id', providerId);
+    } catch (error) {
+      print(error.toString());
+      return data;
+    }
+  }
+
+  getNotDoneOrders() async {
+    final String id = supabase.auth.currentUser!.id;
+    Map<Order, ProviderModel> data = {};
+    try {
+      final response = await supabase.from('orders').select().eq('user', id);
+      if (response.isEmpty) {
+        return data;
+      } else {
+        for (var map in response) {
+          if (map['is_done'] == false) {
+            final Order order = Order.fromJson(map);
+            final ProviderModel temp = getProvider(map['provider']);
+            data[order] = temp;
+          }
+        }
+      }
+    } catch (error) {
+      print(error.toString());
+      return data;
     }
   }
 
@@ -90,13 +192,14 @@ class SupaGetAndDelete {
         return favs;
       } else {
         for (Map map in response) {
-          final ProviderModel temp = getProvider(map['provider_id']);
+          final ProviderModel temp = await getProvider(map['provider_id']);
           favs.add(temp);
         }
         return favs;
       }
     } catch (error) {
       print(error.toString());
+      return favs;
     }
   }
 

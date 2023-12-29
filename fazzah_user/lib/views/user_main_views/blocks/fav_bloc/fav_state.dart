@@ -6,7 +6,9 @@ class FavInitial extends FavState {}
 
 class FavSelected extends FavState {
   final bool isFav;
-  FavSelected({required this.isFav});
+  final String id;
+
+  FavSelected({required this.isFav, required this.id});
 }
 
 class ShowFavoritesState extends FavState {
