@@ -1,3 +1,4 @@
+import 'package:fazzah_user/bloc/chat_bloc/chat_bloc.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
@@ -5,7 +6,9 @@ import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
+import 'package:fazzah_user/views/chat_views/chat_widgets/chating_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TrackingView extends StatelessWidget {
   const TrackingView({super.key});
@@ -38,7 +41,28 @@ class TrackingView extends StatelessWidget {
                         trailing: Wrap(
                           spacing: 10,
                           children: [
-                            ContactWidget(icon: Icons.chat, onpressed: () {}),
+                            BlocBuilder<ChatBloc, ChatState>(
+                              builder: (context, state) {
+                                if (state is GetUsersSuccessedState) {
+                                  return ContactWidget(
+                                      icon: Icons.chat,
+                                      onpressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChatScreen(
+                                                        provider: state
+                                                            .providera.first)));
+                                      });
+                                } else if (state is ErrorGetUsersState) {
+                                  return const Text("error!!");
+                                }
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                            ),
                             ContactWidget(icon: Icons.phone, onpressed: () {}),
                           ],
                         ),

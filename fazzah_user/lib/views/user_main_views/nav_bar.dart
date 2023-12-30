@@ -25,7 +25,7 @@ class _NavBarState extends State<NavBar> {
       MainView(user: widget.user),
       const FavorateScreen(),
       const OrderCartScreen(),
-      const MoreScreen()
+      MoreScreen(user: widget.user,)
     ];
     super.initState();
   }

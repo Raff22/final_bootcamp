@@ -1,27 +1,28 @@
 class Message {
   int? id;
+  String? createdAt;
+  String? content;
   String? fromUser;
   String? toUser;
-  String? message;
-  DateTime? createdAt;
+  bool? isMine;
 
-  Message({this.id, this.fromUser, this.toUser, this.message, this.createdAt});
+  Message({this.id, this.createdAt, this.content, this.fromUser, this.toUser});
 
-  Message.fromJson(Map<String, dynamic> json) {
+  Message.fromJson(Map<String, dynamic> json, String currentUserId) {
     id = json['id'];
+    createdAt = json['created_at'];
+    content = json['content'];
     fromUser = json['from_user'];
     toUser = json['to_user'];
-    message = json['message'];
-    createdAt = json['created_at'];
+    isMine = json['from_user'] == currentUserId;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+
+    data['content'] = content;
     data['from_user'] = fromUser;
     data['to_user'] = toUser;
-    data['message'] = message;
-    data['created_at'] = createdAt;
     return data;
   }
 }
