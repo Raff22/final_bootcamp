@@ -284,6 +284,19 @@ class SupaGetAndDelete {
     }
   }
 
+  getAddressesById({required int id}) async {
+    try {
+      final response = await supabase.from('addresses').select().eq('id', id);
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return Address.fromJson(response[0]);
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
   getProviderRatings({required String providerId}) async {
     try {
       final response =
@@ -326,6 +339,20 @@ class SupaGetAndDelete {
       } else {
         return List.generate(response.length,
             (index) => PaymentMethod.fromJson(response[index]));
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  getPaymentMethodById({required int id}) async {
+    try {
+      final response =
+          await supabase.from('payment_methods').select().eq('id', id);
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return PaymentMethod.fromJson(response[0]);
       }
     } catch (error) {
       print(error.toString());

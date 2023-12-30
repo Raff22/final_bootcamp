@@ -2,7 +2,9 @@ import 'package:fazzah_user/bloc/order_bloc/order_event.dart';
 import 'package:fazzah_user/bloc/order_bloc/order_state.dart';
 
 import 'package:fazzah_user/database/get_data.dart';
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/order_model.dart';
+import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 
@@ -33,6 +35,21 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         final Map<Order, UserModel> notDone =
             await SupaGetAndDelete().getNotDoneOrdersProvider();
         emit(ShowProviderOrdersState(isDoneMap: isDone, notDoneMap: notDone));
+      } catch (error) {
+        emit(OrderErrorState(error: "حدث خطأ في النظام"));
+      }
+    });
+
+    on<RequestOrderRelaitedInfoEvent>((event, emit) async {
+      emit(OrderLoadingState());
+      try {
+        final Address address =
+            await SupaGetAndDelete().getAddressesById(id: event.addressID);
+        final PaymentMethod payment = await SupaGetAndDelete()
+            .getPaymentMethodById(id: event.paymentMethodID);
+
+        emit(ShowOrderRelatiedInfo(
+            address: address, paymentMethod: payment));
       } catch (error) {
         emit(OrderErrorState(error: "حدث خطأ في النظام"));
       }
