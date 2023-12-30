@@ -16,16 +16,6 @@ class PaymentMethodWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //     padding: const EdgeInsets.all(8),
-    //     height: 58,
-    //     decoration: BoxDecoration(
-    //         border: Border.all(color: grey),
-    //         borderRadius: BorderRadius.circular(10)),
-    //     child:
-    //         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    //       getPaymentInfo(),
-    //     ]));
     return getPaymentInfo();
   }
 
