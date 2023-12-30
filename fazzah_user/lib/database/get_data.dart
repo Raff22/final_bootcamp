@@ -1,4 +1,5 @@
 import 'package:fazzah_user/app_data/static_data.dart';
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
@@ -176,6 +177,27 @@ class SupaGetAndDelete {
       }
     } catch (error) {
       print("------- error in Supabase function getUser --------");
+      print(error);
+    }
+    return null;
+  }
+
+  //---------------- get All Address by User ID -----------------------------
+  Future<Address?> getAllAddressbyUserID({required String userId}) async {
+    try {
+      final response = await supabase
+          .from('addresses')
+          .select()
+          .eq('user_id', '8bc48f85-ab08-4d48-8c17-310a602ea808');
+      print(response[0]);
+
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return Address.fromJson(response[0]);
+      }
+    } catch (error) {
+      print("------- error in Supabase function getAddress --------");
       print(error);
     }
     return null;

@@ -21,6 +21,7 @@ dependencies:
   image_picker: ^1.0.5
   cached_network_image: ^3.3.0
   timer_button: ^2.1.1
+  geolocator: ^10.1.0
 
 dev_dependencies:
   flutter_test:
