@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Order {
   int? id;
   String? provider;
@@ -6,7 +8,7 @@ class Order {
   String? orderTime;
   String? orderDate;
   String? orderStatus;
-  double? total;
+  num? total;
   bool? isDone;
   int? paymentMethod;
 

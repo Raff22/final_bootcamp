@@ -1,36 +1,47 @@
-import 'package:fazzah_user/constant/color.dart';
+import 'package:fazzah_user/bloc/chat_bloc/chat_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChatField extends StatelessWidget {
-  const ChatField({
+class ChatTextField extends StatelessWidget {
+  const ChatTextField({
     super.key,
-    this.controller,
+    required this.controller,
+    required this.toUserId,
   });
-  final TextEditingController? controller;
+
+  final TextEditingController controller;
+  final String toUserId;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      width: 364,
+    return Container(
+      padding: const EdgeInsets.only(top: 12, left: 12, right: 12, bottom: 20),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(color: Colors.white),
       child: TextField(
+        minLines: 1,
+        maxLines: 4,
         controller: controller,
-        style: const TextStyle(
-          color: black,
-          fontSize: 20,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 0.5,
-        ),
         decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: grey)),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: grey)),
-          suffixIcon: const Icon(Icons.send),
-          suffixIconColor: grey,
-        ),
+            hintText: "send message",
+            hintStyle: const TextStyle(color: Colors.grey),
+            suffixIcon: IconButton(
+              onPressed: () {
+                context
+                    .read<ChatBloc>()
+                    .add(SendMessageEvent(controller.text, toUserId));
+                controller.clear();
+              },
+              icon: const Icon(Icons.send),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide.none),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide.none)),
       ),
     );
   }

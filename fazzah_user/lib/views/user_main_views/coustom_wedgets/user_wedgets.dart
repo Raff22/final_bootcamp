@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/constant/color.dart';
+import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';

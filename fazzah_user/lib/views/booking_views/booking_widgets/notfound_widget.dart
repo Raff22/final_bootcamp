@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 class NotFoundWidget extends StatelessWidget {
   const NotFoundWidget({
     super.key,
+    required this.message,
   });
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +18,8 @@ class NotFoundWidget extends StatelessWidget {
         'assets/images/Electrician-pana 1.png',
         width: context.getWidth(divide: 2),
       ),
-      const TextWidget(
-        text: "نعتذر، لا يوجد ما تبحث عنه حاليًا",
+       TextWidget(
+        text: message,
         textColor: green,
         textSize: 25,
       )

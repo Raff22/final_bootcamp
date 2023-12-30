@@ -2,6 +2,7 @@ import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_event.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_state.dart';
@@ -27,6 +28,10 @@ class FavorateScreen extends StatelessWidget {
             return Center(child: Text(state.error));
           }
           if (state is ShowFavoritesState) {
+            if (state.favList.isEmpty) {
+              return const Center(
+                  child: NotFoundWidget(message: "المفضلة فارغة"));
+            }
             return Padding(
               padding: const EdgeInsets.all(
                 20.0,
