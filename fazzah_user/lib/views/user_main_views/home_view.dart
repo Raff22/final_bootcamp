@@ -115,7 +115,8 @@ class MainView extends StatelessWidget {
                   ratesNumber: 100,
                   priceRange: "100-150",
                   providerImage:
-                      'https://freepngimg.com/thumb/industrial_worker/168550-worker-png-file-hd.png')),
+                      'https://freepngimg.com/thumb/industrial_worker/168550-worker-png-file-hd.png'),
+              isFav: false),
         ],
       ),
     );

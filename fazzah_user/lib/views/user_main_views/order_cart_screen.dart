@@ -3,11 +3,13 @@ import 'package:fazzah_user/bloc/order_bloc/order_event.dart';
 import 'package:fazzah_user/bloc/order_bloc/order_state.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
+import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
+import 'package:fazzah_user/utils/helpers/map_splitter.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
+import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_order_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +27,7 @@ class _OrderCartScreenState extends State<OrderCartScreen>
   void initState() {
     super.initState();
     tabsController = TabController(length: 2, vsync: this);
-    context.read<OrderBloc>().add(RequestallProvidersEvent());
+    context.read<OrderBloc>().add(RequestAllUserOrdersEvent());
   }
 
   @override
@@ -37,82 +39,84 @@ class _OrderCartScreenState extends State<OrderCartScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          mainScreenAppbar(title: "طلباتي"), // Ensure this is a valid AppBar
-          SizedBox(
-            width:
-                context.getWidth(divide: 1.02), // Ensure this method is defined
-            height: 70,
-            child: TabBar(
-                indicatorColor: green,
-                labelStyle:
-                    const TextStyle(fontSize: 20, fontFamily: "SF-Arabic"),
-                labelColor: green,
-                unselectedLabelColor: grey,
-                controller: tabsController,
-                tabs: const [
-                  Tab(text: "طلباتي القادمه"),
-                  Tab(text: "الخدمات"),
-                ]),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: tabsController,
-              children: [
-                buildUpcomingOrdersTab(context),
-                buildServicesTab(),
-              ],
+      appBar: createAppBar(context: context, title: "طلباتي"),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            SizedBox(
+              width: context.getWidth(
+                  divide: 1.02), // Ensure this method is defined
+              height: 70,
+              child: TabBar(
+                  indicatorColor: green,
+                  labelStyle:
+                      const TextStyle(fontSize: 20, fontFamily: "SF-Arabic"),
+                  labelColor: green,
+                  unselectedLabelColor: grey,
+                  controller: tabsController,
+                  tabs: const [
+                    Tab(text: "طلباتي القادمه"),
+                    Tab(text: "طلباتي السابقة"),
+                  ]),
             ),
-          ),
-        ],
+            BlocBuilder<OrderBloc, OrderState>(
+              builder: (context, state) {
+                if (state is OrderLoadingState) {
+                  return const Center(
+                      child: CircularProgressIndicator(color: green));
+                } else if (state is ShowUserOrdersState) {
+                  final List<Order> ordersDone =
+                      splitMapToKeyList(state.isDoneMap);
+                  final List<ProviderModel> providersDone =
+                      splitMapToValueList(state.isDoneMap);
+                  final List<Order> ordersNotDone =
+                      splitMapToKeyList(state.notDoneMap);
+                  final List<ProviderModel> providersNotDone =
+                      splitMapToValueList(state.notDoneMap);
+                  return SizedBox(
+                    width: context.getWidth(divide: 1.02),
+                    height: ordersDone.length > ordersNotDone.length
+                        ? context.getHeight(divide: 5) * ordersDone.length
+                        : context.getHeight(divide: 5) * ordersNotDone.length,
+                    child: TabBarView(
+                      controller: tabsController,
+                      children: [
+                        orderListView(
+                            providersList: providersDone,
+                            orderList: ordersDone),
+                        orderListView(
+                            providersList: providersNotDone,
+                            orderList: ordersNotDone)
+                      ],
+                    ),
+                  );
+                } else if (state is OrderErrorState) {
+                  return Center(child: Text(state.error));
+                }
+                return Container();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget buildUpcomingOrdersTab(BuildContext context) {
-    return BlocBuilder<OrderBloc, OrderState>(
-      builder: (context, state) {
-        if (state is OrderLoadingState) {
-          return const Center(child: CircularProgressIndicator(color: green));
-        } else if (state is ShowAllProvidersState) {
-          if (state.isdonelist.isEmpty) {
-            return Container();
-          }
-          return buildProvidersList(context, state.isdonelist);
-        } else if (state is OrderErrorState) {
-          return Center(child: Text(state.error));
-        }
-        return const Center(child: Text('No data available'));
-      },
-    );
-  }
-
-  Widget buildProvidersList(
-      BuildContext context, List<ProviderModel> providersList) {
-    return ListView.separated(
-      itemCount: providersList.length,
-      itemBuilder: (context, index) =>
-          WorkerCard(providerInfo: providersList[index]),
-      separatorBuilder: (BuildContext context, int index) => height20,
-    );
-  }
-
-  Widget buildServicesTab() {
-    return BlocBuilder<OrderBloc, OrderState>(
-      builder: (context, state) {
-        if (state is OrderLoadingState) {
-          return const Center(child: CircularProgressIndicator(color: green));
-        } else if (state is ShowAllProvidersState) {
-          if (state.isdonelist.isEmpty) {
-            return Container();
-          }
-          return buildProvidersList(context, state.notdonelist);
-        } else if (state is OrderErrorState) {
-          return Center(child: Text(state.error));
-        }
-        return const Center(child: Text('No data available'));
-      },
+  Widget orderListView(
+      {required List<ProviderModel> providersList,
+      required List<Order> orderList}) {
+    if (orderList.isEmpty) {
+      return const NotFoundWidget(message: "لا توجد طلبات في الوقت الحالي");
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      child: ListView.separated(
+        itemCount: providersList.length,
+        itemBuilder: (context, index) => UserOrderCard(
+            provider: providersList[index], order: orderList[index]),
+        separatorBuilder: (BuildContext context, int index) => height20,
+      ),
     );
   }
 }

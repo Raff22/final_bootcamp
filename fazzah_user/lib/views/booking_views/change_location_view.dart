@@ -2,13 +2,16 @@ import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:flutter/material.dart';
 
 class ChangeLocationView extends StatelessWidget {
-  const ChangeLocationView({super.key});
+  const ChangeLocationView({super.key, required this.order});
+
+  final Order order;
 
   @override
   Widget build(BuildContext context) {

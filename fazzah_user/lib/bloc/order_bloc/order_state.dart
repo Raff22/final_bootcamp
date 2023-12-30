@@ -1,20 +1,23 @@
+import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/user_model.dart';
 
 abstract class OrderState {}
 
 class OrderInitial extends OrderState {}
 
-class ShowAllProvidersState extends OrderState {
-  final List<ProviderModel> isdonelist;
-  final List<ProviderModel> notdonelist;
+class ShowUserOrdersState extends OrderState {
+  final Map<Order, ProviderModel> isDoneMap;
+  final Map<Order, ProviderModel> notDoneMap;
 
-  ShowAllProvidersState({required this.isdonelist, required this.notdonelist});
+  ShowUserOrdersState({required this.isDoneMap, required this.notDoneMap});
 }
 
-class ShowAllProvidersOrderState extends OrderState {
-  final List<ProviderModel> providersList;
+class ShowProviderOrdersState extends OrderState {
+  final Map<Order, UserModel> isDoneMap;
+  final Map<Order, UserModel> notDoneMap;
 
-  ShowAllProvidersOrderState({required this.providersList});
+  ShowProviderOrdersState({required this.isDoneMap, required this.notDoneMap});
 }
 
 class OrderErrorState extends OrderState {
@@ -24,15 +27,3 @@ class OrderErrorState extends OrderState {
 }
 
 class OrderLoadingState extends OrderState {}
-
-class ShowSelectedServiceState extends OrderState {
-  final List<bool> newSelected;
-
-  ShowSelectedServiceState({required this.newSelected});
-}
-
-class ShowSelectedHourState extends OrderState {
-  final List<bool> newSelected;
-
-  ShowSelectedHourState({required this.newSelected});
-}

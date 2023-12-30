@@ -203,12 +203,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
                 _savePaymentMethod();
-              },
-            ),
-            ElevatedButton(
-              child: const Text('حفظ'),
-              onPressed: () {
-                Navigator.of(context).pop();
+                context.read<PayBloc>().add(RequestallPaymentsEvent());
               },
             ),
           ],
@@ -242,6 +237,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
         print('Error when inserting: ${response.error!.message}');
         return;
       }
+      context.read<PayBloc>().add(RequestallPaymentsEvent());
 
       print('Payment method added successfully');
       // Clear the text fields after saving
