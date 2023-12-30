@@ -10,12 +10,16 @@ import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
+import 'package:fazzah_user/utils/helpers/loading_func.dart';
+import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/hour_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/payment_method.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/price_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/services_checkbox.dart';
+import 'package:fazzah_user/views/booking_views/change_location_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 
 class BookingDetailsView extends StatelessWidget {
   const BookingDetailsView({super.key, required this.providerInfo});
@@ -23,6 +27,7 @@ class BookingDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime selectedDate = DateTime.now();
     List<bool> selectedServices =
         List.generate(services.length, (index) => false);
     List<bool> selectedHours = List.generate(hours.length, (index) => false);
@@ -87,21 +92,24 @@ class BookingDetailsView extends StatelessWidget {
               textSize: 22,
               textFontWeight: FontWeight.w500,
             ),
-            Theme(
-              data: Theme.of(context).copyWith(
-                  colorScheme: const ColorScheme.light(
-                    shadow: grey,
-                    primary: coldGreen, // <-- SEE HERE
-                    onPrimary: black, // <-- SEE HERE
-                    onSurface: black, // <-- SEE HERE
-                  ),
-                  textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                      foregroundColor: black, // button text color
-                    ),
-                  )),
-              child: DatePickerDialog(
-                  firstDate: DateTime.timestamp(), lastDate: DateTime(2055)),
+            SizedBox(
+              height: 200,
+              child: DatePickerWidget(
+                looping: false, // default is not looping
+                firstDate: DateTime.now(),
+                lastDate: DateTime(2026),
+                dateFormat: "dd/MMMM/yyyy",
+                locale: DatePicker.localeFromString('ar'),
+                onChange: (DateTime newDate, _) {
+                  selectedDate = newDate;
+                  print(selectedDate);
+                },
+                pickerTheme: const DateTimePickerTheme(
+                  backgroundColor: lightGreen,
+                  itemTextStyle: TextStyle(color: Colors.black, fontSize: 19),
+                  dividerColor: green,
+                ),
+              ),
             ),
             BlocBuilder<BookingBloc, BookingState>(
               builder: (context, state) {
@@ -180,18 +188,40 @@ class BookingDetailsView extends StatelessWidget {
               textColor: red,
             ),
             height20,
-            ContainerWidget(
-                contanierBorderRadius: 10,
-                containerWidth: context.getWidth(),
-                containerHeight: 48,
-                containerColor: green,
-                onPressed: () {},
-                child: const Center(
-                    child: TextWidget(
-                  text: "تأكيد الحجز",
-                  textSize: 25,
-                  textColor: lightGrey,
-                ))),
+            BlocListener<BookingBloc, BookingState>(
+              listener: (context, state) {
+                if (state is BookingLoadingState) {
+                  showLoadingDialog(context: context);
+                }
+                if (state is BookingErrorState) {
+                  snackBarMassage(snackBarText: state.error, context: context);
+                }
+                if (state is CreatedOrderSuccessfly) {
+                  context.removeUnitl(
+                      screen: ChangeLocationView(order: state.newOrder));
+                }
+              },
+              child: ContainerWidget(
+                  contanierBorderRadius: 10,
+                  containerWidth: context.getWidth(),
+                  containerHeight: 48,
+                  containerColor: green,
+                  onPressed: () {
+                    context.read<BookingBloc>().add(CreateOrderEvent(
+                        servicesSelected: selectedServices,
+                        hoursSelected: selectedHours,
+                        selectedPayments: selectedPayments,
+                        userPaymentMethods: paymentMethods,
+                        date: selectedDate,
+                        provider: providerInfo));
+                  },
+                  child: const Center(
+                      child: TextWidget(
+                    text: "تأكيد الحجز",
+                    textSize: 25,
+                    textColor: lightGrey,
+                  ))),
+            ),
           ],
         ),
       ),
