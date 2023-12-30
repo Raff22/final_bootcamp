@@ -4,6 +4,7 @@ import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
@@ -13,13 +14,12 @@ import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/loading_func.dart';
 import 'package:fazzah_user/utils/helpers/show_message.dart';
 import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/address_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/hour_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/payment_method.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/price_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/services_checkbox.dart';
-import 'package:fazzah_user/views/booking_views/change_location_view.dart';
 import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
-import 'package:fazzah_user/views/user_main_views/order_cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
@@ -37,6 +37,8 @@ class BookingDetailsView extends StatelessWidget {
     WorkingHours availableHours = WorkingHours();
     List<bool> selectedPayments = [];
     List<PaymentMethod> paymentMethods = [];
+    List<bool> selectedAddresses = [];
+    List<Address> addresses = [];
 
     return Scaffold(
       appBar: createAppBar(
@@ -105,7 +107,6 @@ class BookingDetailsView extends StatelessWidget {
                 locale: DatePicker.localeFromString('ar'),
                 onChange: (DateTime newDate, _) {
                   selectedDate = newDate;
-                  print(selectedDate);
                 },
                 pickerTheme: const DateTimePickerTheme(
                   backgroundColor: lightGreen,
@@ -118,9 +119,7 @@ class BookingDetailsView extends StatelessWidget {
               builder: (context, state) {
                 if (state is ShowProviderWorkingHoursState) {
                   availableHours = state.hours;
-                  context
-                      .read<BookingBloc>()
-                      .add(RequestUserPaymentMethodsEvent());
+                  context.read<BookingBloc>().add(RequestUserAddressesEvent());
                 }
                 if (state is ShowSelectedHourState) {
                   selectedHours = state.newSelected;
@@ -150,6 +149,41 @@ class BookingDetailsView extends StatelessWidget {
                                     .getHoursAvailabilityList()[index]))),
                   ),
                 );
+              },
+            ),
+            height20,
+            const TextWidget(
+              text: "اختر الموقع",
+              textSize: 22,
+              textFontWeight: FontWeight.w500,
+            ),
+            height20,
+            BlocBuilder<BookingBloc, BookingState>(
+              builder: (context, state) {
+                if (state is ShowUserAddressesState) {
+                  context
+                      .read<BookingBloc>()
+                      .add(RequestUserPaymentMethodsEvent());
+                  selectedAddresses = state.selectedAddresses;
+                  addresses = state.addressesList;
+                }
+
+                return ToggleButtons(
+                    selectedColor: black,
+                    fillColor: coldGreen,
+                    splashColor: coldGreen,
+                    direction: Axis.vertical,
+                    isSelected: selectedAddresses,
+                    onPressed: (index5) {
+                      context
+                          .read<BookingBloc>()
+                          .add(SelectAddressEvent(index: index5));
+                    },
+                    children: List.generate(
+                        addresses.length,
+                        (index7) => AddressWidget(
+                            addi: addresses[index7],
+                            state: selectedAddresses[index7])));
               },
             ),
             height20,
@@ -201,7 +235,9 @@ class BookingDetailsView extends StatelessWidget {
                 }
                 if (state is CreatedOrderSuccessfly) {
                   showMessageDialog(context: context, message: 'تم تأكيد طلبك');
-                  context.removeUnitl(screen: NavBar(user: state.user));
+                  Future.delayed(const Duration(seconds: 1), () {
+                    context.removeUnitl(screen: NavBar(user: state.user));
+                  });
                 }
               },
               child: ContainerWidget(
@@ -211,6 +247,8 @@ class BookingDetailsView extends StatelessWidget {
                   containerColor: green,
                   onPressed: () {
                     context.read<BookingBloc>().add(CreateOrderEvent(
+                        selectedAddresses: selectedAddresses,
+                        userAddresses: addresses,
                         servicesSelected: selectedServices,
                         hoursSelected: selectedHours,
                         selectedPayments: selectedPayments,

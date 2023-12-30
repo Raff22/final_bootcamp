@@ -39,6 +39,14 @@ class ShowUserPaymentMethodsState extends BookingState {
       {required this.paymentMethodsList, required this.selectedPayments});
 }
 
+class ShowUserAddressesState extends BookingState {
+  final List<Address> addressesList;
+  final List<bool> selectedAddresses;
+
+  ShowUserAddressesState(
+      {required this.addressesList, required this.selectedAddresses});
+}
+
 class ShowSelectedHourState extends BookingState {
   final List<bool> newSelected;
 
@@ -55,5 +63,4 @@ class CreatedOrderSuccessfly extends BookingState {
   final UserModel user;
 
   CreatedOrderSuccessfly({required this.user});
-
 }

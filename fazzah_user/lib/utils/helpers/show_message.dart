@@ -9,7 +9,11 @@ showMessageDialog({required BuildContext context, required String message}) {
       builder: (context) {
         return Center(
             child: Container(
+                width: 364,
+                height: 58,
                 color: coldGreen,
-                child: TextWidget(text: message, textColor: green)));
+                child: Center(
+                    child: TextWidget(
+                        text: message, textColor: green, textSize: 20))));
       });
 }

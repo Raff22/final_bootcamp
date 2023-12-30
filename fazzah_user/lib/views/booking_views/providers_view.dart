@@ -46,7 +46,6 @@ class ProvidersScreen extends StatelessWidget {
                     return const Center(
                         child: CircularProgressIndicator(color: green));
                   } else if (state is ShowAllProvidersState) {
-                    print(state.favs);
                     if (state.providers.isEmpty) {
                       return const NotFoundWidget(
                           message: "نعتذر، لا يوجد ما تبحث عنه حاليًا");
