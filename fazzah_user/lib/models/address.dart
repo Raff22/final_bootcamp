@@ -27,14 +27,14 @@ class Address {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['address'] = this.address;
-    data['city'] = this.city;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['address_title'] = this.addressTitle;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['address'] = address;
+    data['city'] = city;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['address_title'] = addressTitle;
     return data;
   }
 }

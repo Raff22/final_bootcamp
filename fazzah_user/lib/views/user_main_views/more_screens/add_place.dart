@@ -5,6 +5,7 @@ import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_form_field_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
@@ -12,6 +13,7 @@ import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/show_dialog_message.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/user_bloc.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/user_event.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -19,8 +21,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 
 class AddPlaceScreen extends StatefulWidget {
-  const AddPlaceScreen({super.key, required this.user});
+  const AddPlaceScreen({super.key, required this.user, required this.address});
   final UserModel user;
+  final Address address;
 
   @override
   State<AddPlaceScreen> createState() => _AddPlaceScreenState();
@@ -48,21 +51,33 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
     return await Geolocator.getCurrentPosition();
   }
-  //----------------------------------------------------------------------------
 
-  //---- initial values -----
-  final _formNewAddressField = GlobalKey<FormState>();
+  //----------------------------------------------------------------------------
+  String? cityName;
+  String? address;
+  late double latitude;
+  late double longitude;
   TextEditingController addressTitle = TextEditingController();
-  String? cityName = 'Riyadh';
-  String? address = 'RFHA7596,Al Hamra,Riyadh Principality,13216';
-  double latitude = 24.774265;
-  double longitude = 46.738586;
+  //---- initial values -----
+  @override
+  void initState() {
+    cityName = widget.address.city;
+    address = widget.address.address;
+    latitude = widget.address.latitude!;
+    longitude = widget.address.longitude!;
+    addressTitle.text = widget.address.addressTitle ?? '';
+
+    super.initState();
+  }
+
+  final _formNewAddressField = GlobalKey<FormState>();
+
   //-------------------------
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfff0ede5),
+      backgroundColor: googlBackgroundColor,
       appBar: createAppBar(
           context: context,
           title: 'تحديد الموقع',
@@ -70,6 +85,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
           leading: IconButton(
               onPressed: () {
                 context.popScreen();
+                context.read<UserBloc>().add(GetAllUserAddressEvent());
               },
               icon: const Icon(Icons.arrow_back_ios_new_rounded))),
       body: GoogleMap(
@@ -141,8 +157,6 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                               getUserCurrentLocation().then((value) async {
                                 latitude = value.latitude;
                                 longitude = value.longitude;
-                                //final double latitudeUser = 24.8692532;
-                                // final double longitudeUser = 46.6521100;
 
                                 List<Placemark> placemarks =
                                     await placemarkFromCoordinates(
@@ -221,6 +235,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                         print('longitude');
                         print(longitude);
                         context.read<UserBloc>().add(AddNewAddress(
+                            addressId: widget.address.id,
                             userId: widget.user.id,
                             address: address,
                             city: cityName,
@@ -245,6 +260,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                       ),
                     ),
                   ),
+                  height40
                   //----------------------------------------------------------------
                 ],
               ),

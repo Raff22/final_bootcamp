@@ -6,6 +6,8 @@ import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/user_bloc.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/user_event.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/about_Fazaah.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/my_account.dart';
@@ -13,11 +15,11 @@ import 'package:fazzah_user/views/user_main_views/more_screens/my_places.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/pay_ways.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/polcies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key, required this.user});
-    final UserModel user;
-
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,11 @@ class MoreScreen extends StatelessWidget {
                   iconeImage: 'assets/images/2.png',
                   textScreenName: 'عناويني المحفوظه',
                   onPressd: () {
-                    context.pushScreen(screen:  MyPlacesScreen(user: user,));
+                    context.read<UserBloc>().add(GetAllUserAddressEvent());
+                    context.pushScreen(
+                        screen: MyPlacesScreen(
+                      user: user,
+                    ));
                   },
                   iconWidget: const Icon(Icons.arrow_forward_ios_rounded),
                 ),

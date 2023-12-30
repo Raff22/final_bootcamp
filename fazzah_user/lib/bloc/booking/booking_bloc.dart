@@ -1,10 +1,12 @@
 import 'package:fazzah_user/app_data/static_data.dart';
 import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/database/supabase_add.dart';
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:fazzah_user/utils/helpers/map_splitter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +25,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         final List<bool> y = splitMapToValueList(providers);
         emit(ShowAllProvidersState(providers: x, favs: y));
       } catch (error) {
-        print(error.toString());
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
@@ -82,12 +83,24 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       }
     });
     on<RequestUserPaymentMethodsEvent>((event, emit) async {
+      print("here in RequestUserPaymentMethodsEvent");
       try {
         final List<PaymentMethod> methods =
             await SupaGetAndDelete().getUserPaymentMethods();
         emit(ShowUserPaymentMethodsState(
             paymentMethodsList: methods,
             selectedPayments: List.generate(methods.length, (index) => false)));
+      } catch (error) {
+        emit(BookingErrorState(error: "حدث خطأ في النظام"));
+      }
+    });
+    on<RequestUserAddressesEvent>((event, emit) async {
+      try {
+        final List<Address> addies =
+            await SupaGetAndDelete().getUserAddresses();
+        emit(ShowUserAddressesState(
+            addressesList: addies,
+            selectedAddresses: List.generate(addies.length, (index) => false)));
       } catch (error) {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
@@ -104,6 +117,18 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+    on<SelectAddressEvent>((event, emit) async {
+      try {
+        final List<Address> addies =
+            await SupaGetAndDelete().getUserAddresses();
+        List<bool> bools = List.generate(addies.length, (index) => false);
+        bools[event.index] = true;
+        emit(ShowUserAddressesState(
+            addressesList: addies, selectedAddresses: bools));
+      } catch (error) {
+        emit(BookingErrorState(error: "حدث خطأ في النظام"));
+      }
+    });
     on<CreateOrderEvent>((event, emit) async {
       final selectedServiceIndex =
           event.servicesSelected.indexWhere((element) => element == true);
@@ -111,25 +136,30 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
           event.hoursSelected.indexWhere((element) => element == true);
       final paymentMethodIndex =
           event.selectedPayments.indexWhere((element) => element == true);
+      final addressIndex =
+          event.selectedAddresses.indexWhere((element) => element == true);
       if (selectedServiceIndex < 0) {
         emit(
             BookingErrorState(error: "من فضلك اختر الخدمة حتى تتمكن من الحجز"));
-      }
-      if (selectedHourIndex < 0) {
+      } else if (selectedHourIndex < 0) {
         emit(
             BookingErrorState(error: "من فضلك اختر الساعة حتى تتمكن من الحجز"));
-      }
-      if (paymentMethodIndex < 0) {
+      } else if (addressIndex < 0) {
+        emit(
+            BookingErrorState(error: "من فضلك اختر الموقع حتى تتمكن من الحجز"));
+      } else if (paymentMethodIndex < 0) {
         emit(BookingErrorState(
             error: "من فضلك اختر طريق الدفع حتى تتمكن من الحجز"));
       } else {
-        emit(BookingLoadingState());
         try {
+          emit(BookingLoadingState());
           double num1 = double.parse(event.provider.priceRange!.split('-')[0]);
           double num2 = double.parse(event.provider.priceRange!.split('-')[1]);
           double avg = num1 + num2;
           avg = avg * 0.5;
           Order newOrder = Order(
+              address: event.userAddresses[addressIndex].id,
+              isDone: false,
               total: avg,
               provider: event.provider.id,
               orderType: services[selectedServiceIndex],
@@ -139,7 +169,8 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
               paymentMethod: event.userPaymentMethods[paymentMethodIndex].id!);
           final Order? verfied = await SupaAdd().addNewOrder(newOrder);
           if (verfied != null) {
-            emit(CreatedOrderSuccessfly(newOrder: newOrder));
+            final UserModel user = await SupaGetAndDelete().getCurrentUser();
+            emit(CreatedOrderSuccessfly(user: user));
           } else {
             emit(BookingErrorState(error: "حدث خطأ في النظام"));
           }

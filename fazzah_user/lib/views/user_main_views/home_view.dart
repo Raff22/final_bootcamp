@@ -5,6 +5,7 @@ import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/search_bar.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
@@ -43,7 +44,9 @@ class MainView extends StatelessWidget {
           //-------------------- Add user Location ------------------
           InkWell(
             onTap: () {
-              context.pushScreen(screen: AddPlaceScreen(user: user));
+  // 
+              final Address address = Address(city: 'Riyadh' , address: 'RFHA7596,Al Hamra,Riyadh Principality,13216' , latitude: 24.774265 ,longitude: 46.738586);
+              context.pushScreen(screen: AddPlaceScreen(user: user ,address: address,));
             },
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),

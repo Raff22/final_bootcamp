@@ -106,17 +106,14 @@ class SupaGetAndDelete {
 
   getOrderProviders() async {
     String id = supabase.auth.currentUser!.id;
-    print("got here in order here!");
-    print("id  $id");
     try {
       final response = await supabase.from('orders').select().eq("user", id);
       print(response);
       if (response.isEmpty) {
         return null;
       } else {
-        print("else in getProvider");
         Order temp = Order.fromJson(response[0]);
-        print(temp.provider);
+
         return temp;
       }
     } catch (error) {
@@ -185,7 +182,6 @@ class SupaGetAndDelete {
       } else {
         for (var map in response) {
           if (map['is_done'] == false) {
-            print("not doneeeee");
             final Order order = Order.fromJson(map);
             final ProviderModel temp = await getProvider(map['provider']);
             data[order] = temp;
@@ -270,27 +266,21 @@ class SupaGetAndDelete {
     }
   }
 
-  Future<List<ProviderModel>> getOrderedProviders() async {
+  getUserAddresses() async {
     final String id = supabase.auth.currentUser!.id;
-    List<ProviderModel> order = [];
+    List<Address> temp = [];
     try {
-      final response = await supabase.from('orders').select().eq('user', id);
+      final response =
+          await supabase.from('addresses').select().eq('user_id', id);
       if (response.isEmpty) {
-        return order;
+        return temp;
       } else {
-        for (Map map in response) {
-          final ProviderModel? temp = await getProvider(map['provider']);
-          order.add(temp!);
-        }
-        return order;
-
-        //return List.generate(
-        // order.length, (index) => ProviderModel.fromJson(response[index]));
+        return List.generate(
+            response.length, (index) => Address.fromJson(response[index]));
       }
     } catch (error) {
-      print(
-          "------------------------${error.toString()}----------------------------");
-      throw const FormatException("error");
+      print(error.toString());
+      return temp;
     }
   }
 
@@ -327,11 +317,9 @@ class SupaGetAndDelete {
 
   getUserPaymentMethods() async {
     String id = supabase.auth.currentUser!.id;
-    print(id);
     try {
       final response =
           await supabase.from('payment_methods').select().eq('user_id', id);
-      print(response);
       if (response.isEmpty) {
         final List<PaymentMethod> temp = [];
         return temp;
@@ -358,6 +346,16 @@ class SupaGetAndDelete {
       print(error);
     }
     return null;
+  }
+
+  getCurrentUser() async {
+    final String id = supabase.auth.currentUser!.id;
+    try {
+      final response = await supabase.from('users').select().eq('id', id);
+      return UserModel.fromJson(response[0]);
+    } catch (error) {
+      print(error);
+    }
   }
 
   getAllusers() async {
