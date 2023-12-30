@@ -45,7 +45,7 @@ class UserOrderCard extends StatelessWidget {
                   children: [
                     Text(" الخدمة: ${order.orderType ?? ""} ",
                         style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
+                            fontSize: 15, fontWeight: FontWeight.bold)),
                     Text(" الفني: ${provider.name ?? ""} "),
                     Text(
                       "السعر: ${order.total.toString()}",

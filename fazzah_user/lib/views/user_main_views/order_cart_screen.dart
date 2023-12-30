@@ -8,6 +8,7 @@ import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/map_splitter.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_order_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,6 +106,9 @@ class _OrderCartScreenState extends State<OrderCartScreen>
   Widget orderListView(
       {required List<ProviderModel> providersList,
       required List<Order> orderList}) {
+    if (orderList.isEmpty) {
+      return const NotFoundWidget(message: "لا توجد طلبات في الوقت الحالي");
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: ListView.separated(

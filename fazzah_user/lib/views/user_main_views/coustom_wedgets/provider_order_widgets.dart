@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
@@ -39,11 +38,112 @@ class ProviderOrderCard extends StatelessWidget {
               containerWidth: context.getWidth(),
               containerHeight: 48,
               containerColor: green,
-              onPressed: () {},
+              onPressed: () {
+                showBottomSheet(
+                    backgroundColor: white,
+                    enableDrag: true,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    context: context,
+                    builder: (context) {
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TextWidget(
+                                text: "تفاصيل الطلب",
+                                textSize: 22,
+                                textFontWeight: FontWeight.w600,
+                              ),
+                              const Divider(),
+                              const TextWidget(
+                                  text: "معلومات الحجز",
+                                  textSize: 22,
+                                  textFontWeight: FontWeight.w500),
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TextWidget(
+                                        text: "اسم المستخدم", textSize: 17),
+                                    TextWidget(
+                                        text: "${user.name}", textSize: 17),
+                                  ]),
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TextWidget(
+                                        text: "تاريخ الطلب", textSize: 17),
+                                    TextWidget(
+                                        text: "${order.orderDate}",
+                                        textSize: 17),
+                                  ]),
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TextWidget(
+                                        text: "وقت الحجز", textSize: 17),
+                                    TextWidget(
+                                        text: "${order.orderTime}",
+                                        textSize: 17),
+                                  ]),
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TextWidget(
+                                        text: "نوع الطلب", textSize: 17),
+                                    TextWidget(
+                                        text: "${order.orderType}",
+                                        textSize: 17),
+                                  ]),
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TextWidget(
+                                        text: "حالة الطلب", textSize: 17),
+                                    TextWidget(
+                                        text: "${order.orderStatus}",
+                                        textSize: 17),
+                                  ]),
+                              height50,
+                              const Divider(),
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TextWidget(
+                                        text: "المجموع", textSize: 17),
+                                    TextWidget(
+                                        text: "${order.total}", textSize: 17),
+                                  ]),
+                              height20,
+                              Center(
+                                child: ContainerWidget(
+                                    contanierBorderRadius: 10,
+                                    containerWidth: 366,
+                                    containerHeight: 48,
+                                    containerColor: green,
+                                    onPressed: () {},
+                                    child: const Center(
+                                        child: TextWidget(
+                                      text: "تتبع الموقع",
+                                      textSize: 25,
+                                      textColor: lightGrey,
+                                    ))),
+                              ),
+                            ]),
+                      );
+                    });
+              },
               child: const Center(
                   child: TextWidget(
                 text: "تفاصيل الطلب",
-                textSize: 25,
+                textSize: 20,
                 textColor: lightGrey,
               ))),
         ],

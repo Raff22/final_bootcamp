@@ -12,6 +12,7 @@ import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/map_splitter.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
 import 'package:fazzah_user/views/booking_views/tracking_view.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/provider_order_widgets.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_order_widget.dart';
@@ -114,6 +115,9 @@ class _ProviderBookingRequestsViewState
 
   Widget orderListViewP(
       {required List<UserModel> usersList, required List<Order> orderList}) {
+    if (usersList.isEmpty) {
+      return const NotFoundWidget(message: "لا توجد طلبات في الوقت الحالي");
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
       child: SizedBox(
@@ -127,36 +131,5 @@ class _ProviderBookingRequestsViewState
         ),
       ),
     );
-    // return Container(
-    //   width: context.getWidth(divide: 1.02),
-    //   padding: const EdgeInsets.all(8.0),
-    //   child: Column(
-    //     mainAxisSize: MainAxisSize.min,
-    //     children: [
-    //       ListTile(
-    //         title: const Text("hhhhhhhhh"),
-    //         trailing: Row(
-    //           mainAxisSize: MainAxisSize.min,
-    //           children: [
-    //             ContactWidget(icon: Icons.chat, onpressed: () {}),
-    //             ContactWidget(icon: Icons.phone, onpressed: () {}),
-    //           ],
-    //         ),
-    //       ),
-    //       ContainerWidget(
-    //           contanierBorderRadius: 10,
-    //           containerWidth: context.getWidth(),
-    //           containerHeight: 48,
-    //           containerColor: green,
-    //           onPressed: () {},
-    //           child: const Center(
-    //               child: TextWidget(
-    //             text: "تفاصيل الطلب",
-    //             textSize: 25,
-    //             textColor: lightGrey,
-    //           ))),
-    //     ],
-    //   ),
-    // );
   }
 }

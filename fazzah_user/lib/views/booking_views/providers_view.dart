@@ -48,7 +48,8 @@ class ProvidersScreen extends StatelessWidget {
                   } else if (state is ShowAllProvidersState) {
                     print(state.favs);
                     if (state.providers.isEmpty) {
-                      return const NotFoundWidget();
+                      return const NotFoundWidget(
+                          message: "نعتذر، لا يوجد ما تبحث عنه حاليًا");
                     }
                     return SizedBox(
                       width: context.getWidth(),
