@@ -417,4 +417,25 @@ class SupaGetAndDelete {
     }
     return null;
   }
+
+  //---------------- get All Address by User ID -----------------------------
+  Future<Address?> getAllAddressbyUserID({required String userId}) async {
+    try {
+      final response = await supabase
+          .from('addresses')
+          .select()
+          .eq('user_id', '8bc48f85-ab08-4d48-8c17-310a602ea808');
+      print(response[0]);
+
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return Address.fromJson(response[0]);
+      }
+    } catch (error) {
+      print("------- error in Supabase function getAddress --------");
+      print(error);
+    }
+    return null;
+  }
 }

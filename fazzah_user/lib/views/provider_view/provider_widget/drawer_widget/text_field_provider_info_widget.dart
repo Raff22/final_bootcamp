@@ -1,17 +1,23 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldProviderInfoWidget extends StatelessWidget {
-  const TextFieldProviderInfoWidget(
+   TextFieldProviderInfoWidget(
       {super.key,
       required this.labelText,
       required this.controllerText,
-      this.onChanged});
+      this.onChanged,
+      this.validator,
+      required this.keyboardType});
   final String labelText;
-  final TextEditingController controllerText;
+  TextEditingController controllerText;
   final Function(String?)? onChanged;
+  final String? Function(String?)? validator;
+  final TextInputType keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,9 @@ class TextFieldProviderInfoWidget extends StatelessWidget {
             textSize: 20,
           ),
         ),
-        TextField(
+        TextFormField(
+          validator: validator,
+          keyboardType: keyboardType,
           onChanged: onChanged,
           style: const TextStyle(color: grey),
           cursorColor: grey,
