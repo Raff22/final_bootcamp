@@ -8,14 +8,12 @@ import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/map_splitter.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
-import 'package:fazzah_user/views/booking_views/tracking_view.dart';
+import 'package:fazzah_user/views/provider_view/provider_widget/drawer_provider_widget.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/provider_order_widgets.dart';
-import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_order_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,14 +46,8 @@ class _ProviderBookingRequestsViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: createAppBar(
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_sharp),
-              onPressed: () {
-                context.popScreen();
-              }),
-          context: context,
-          title: "الطلبات"),
+      drawer: DrawerProviderWidget(providerModel: widget.providerModel),
+      appBar: createAppBar(context: context, title: "الطلبات"),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(

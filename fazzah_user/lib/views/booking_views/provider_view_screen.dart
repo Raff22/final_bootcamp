@@ -131,7 +131,7 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
                           if (state is ShowProviderRatingsState) {
                             return ListView.separated(
                               itemCount: state.ratings.length,
-                              itemBuilder: (context, index) => RatingWidget(
+                              itemBuilder: (context, index) => MyRatingWidget(
                                   ratingInfo: state.ratings[index]),
                               separatorBuilder:
                                   (BuildContext context, int index) {
