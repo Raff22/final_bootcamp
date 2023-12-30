@@ -11,12 +11,15 @@ import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/loading_func.dart';
+import 'package:fazzah_user/utils/helpers/show_message.dart';
 import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/hour_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/payment_method.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/price_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/services_checkbox.dart';
 import 'package:fazzah_user/views/booking_views/change_location_view.dart';
+import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
+import 'package:fazzah_user/views/user_main_views/order_cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
@@ -178,7 +181,7 @@ class BookingDetailsView extends StatelessWidget {
                     children: List.generate(
                         paymentMethods.length,
                         (index2) => PaymentMethodWidget(
-                            method: paymentMethods[index2], showOnTap: false)));
+                            method: paymentMethods[index2])));
               },
             ),
             height20,
@@ -197,8 +200,8 @@ class BookingDetailsView extends StatelessWidget {
                   snackBarMassage(snackBarText: state.error, context: context);
                 }
                 if (state is CreatedOrderSuccessfly) {
-                  context.removeUnitl(
-                      screen: ChangeLocationView(order: state.newOrder));
+                  showMessageDialog(context: context, message: 'تم تأكيد طلبك');
+                  context.removeUnitl(screen: NavBar(user: state.user));
                 }
               },
               child: ContainerWidget(

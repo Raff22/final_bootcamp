@@ -5,6 +5,7 @@ import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:fazzah_user/utils/helpers/map_splitter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -114,22 +115,21 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       if (selectedServiceIndex < 0) {
         emit(
             BookingErrorState(error: "من فضلك اختر الخدمة حتى تتمكن من الحجز"));
-      }
-      if (selectedHourIndex < 0) {
+      } else if (selectedHourIndex < 0) {
         emit(
             BookingErrorState(error: "من فضلك اختر الساعة حتى تتمكن من الحجز"));
-      }
-      if (paymentMethodIndex < 0) {
+      } else if (paymentMethodIndex < 0) {
         emit(BookingErrorState(
             error: "من فضلك اختر طريق الدفع حتى تتمكن من الحجز"));
       } else {
-        emit(BookingLoadingState());
         try {
+          emit(BookingLoadingState());
           double num1 = double.parse(event.provider.priceRange!.split('-')[0]);
           double num2 = double.parse(event.provider.priceRange!.split('-')[1]);
           double avg = num1 + num2;
           avg = avg * 0.5;
           Order newOrder = Order(
+              isDone: false,
               total: avg,
               provider: event.provider.id,
               orderType: services[selectedServiceIndex],
@@ -139,7 +139,8 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
               paymentMethod: event.userPaymentMethods[paymentMethodIndex].id!);
           final Order? verfied = await SupaAdd().addNewOrder(newOrder);
           if (verfied != null) {
-            emit(CreatedOrderSuccessfly(newOrder: newOrder));
+            final UserModel user = await SupaGetAndDelete().getCurrentUser();
+            emit(CreatedOrderSuccessfly(user: user));
           } else {
             emit(BookingErrorState(error: "حدث خطأ في النظام"));
           }

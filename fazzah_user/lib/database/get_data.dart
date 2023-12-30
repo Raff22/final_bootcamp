@@ -184,7 +184,6 @@ class SupaGetAndDelete {
       } else {
         for (var map in response) {
           if (map['is_done'] == false) {
-            print("not doneeeee");
             final Order order = Order.fromJson(map);
             final ProviderModel temp = await getProvider(map['provider']);
             data[order] = temp;
@@ -357,6 +356,16 @@ class SupaGetAndDelete {
       print(error);
     }
     return null;
+  }
+
+  getCurrentUser() async {
+    final String id = supabase.auth.currentUser!.id;
+    try {
+      final response = await supabase.from('users').select().eq('id', id);
+      return UserModel.fromJson(response[0]);
+    } catch (error) {
+      print(error);
+    }
   }
 
   getAllusers() async {

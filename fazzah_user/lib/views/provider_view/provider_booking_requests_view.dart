@@ -87,9 +87,9 @@ class _ProviderBookingRequestsViewState
                       controller: tabsController,
                       children: [
                         orderListViewP(
-                            usersList: usersDone, orderList: ordersDone),
+                            usersList: usersNotDone, orderList: ordersNotDone),
                         orderListViewP(
-                            usersList: usersNotDone, orderList: ordersNotDone)
+                            usersList: usersDone, orderList: ordersDone)
                       ],
                     );
                   } else if (state is OrderErrorState) {

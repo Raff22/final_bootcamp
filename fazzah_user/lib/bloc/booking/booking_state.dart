@@ -52,7 +52,8 @@ class ShowProviderWorkingHoursState extends BookingState {
 }
 
 class CreatedOrderSuccessfly extends BookingState {
-  final Order newOrder;
+  final UserModel user;
 
-  CreatedOrderSuccessfly({required this.newOrder});
+  CreatedOrderSuccessfly({required this.user});
+
 }
