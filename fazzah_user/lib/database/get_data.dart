@@ -125,68 +125,68 @@ class SupaGetAndDelete {
     }
   }
 
-  getProvidersByService(String job) async {
-    Map<ProviderModel, bool> temp = {};
-    try {
-      final response =
-          await supabase.from('providers').select().textSearch('services', job);
-      if (response.isEmpty) {
-        return temp;
-      } else {
-        final List<ProviderModel> providers = List.generate(response.length,
-            (index) => ProviderModel.fromJson(response[index]));
-        final List<ProviderModel> favs = await getFavoriteProviders();
-        for (ProviderModel element in providers) {
-          if (favs.any((element2) => element.id == element2.id)) {
-            temp[element] = true;
-          } else {
-            temp[element] = false;
-          }
-        }
-        return temp;
-      }
-    } catch (error) {
-      print(error.toString());
-      return temp;
-    }
-  }
+  // getProvidersByService(String job) async {
+  //   Map<ProviderModel, bool> temp = {};
+  //   try {
+  //     final response =
+  //         await supabase.from('providers').select().textSearch('services', job);
+  //     if (response.isEmpty) {
+  //       return temp;
+  //     } else {
+  //       final List<ProviderModel> providers = List.generate(response.length,
+  //           (index) => ProviderModel.fromJson(response[index]));
+  //       final List<ProviderModel> favs = await getFavoriteProviders();
+  //       for (ProviderModel element in providers) {
+  //         if (favs.any((element2) => element.id == element2.id)) {
+  //           temp[element] = true;
+  //         } else {
+  //           temp[element] = false;
+  //         }
+  //       }
+  //       return temp;
+  //     }
+  //   } catch (error) {
+  //     print(error.toString());
+  //     return temp;
+  //   }
+  // }
 
-  getDoneOrders() async {
-    final String id = supabase.auth.currentUser!.id;
-    Map<Order, ProviderModel> data = {};
-    try {
-      final response = await supabase.from('orders').select().eq('user', id);
-      if (response.isEmpty) {
-        return data;
-      } else {
-        for (var map in response) {
-          if (map['is_done']) {
-            final Order order = Order.fromJson(map);
-            final ProviderModel temp = await getProvider(map['provider']);
-            data[order] = temp;
-          }
-        }
-        return data;
-      }
-    } catch (error) {
-      print(error.toString());
-      return temp;
-    }
-  }
+  // getDoneOrders() async {
+  //   final String id = supabase.auth.currentUser!.id;
+  //   Map<Order, ProviderModel> data = {};
+  //   try {
+  //     final response = await supabase.from('orders').select().eq('user', id);
+  //     if (response.isEmpty) {
+  //       return data;
+  //     } else {
+  //       for (var map in response) {
+  //         if (map['is_done']) {
+  //           final Order order = Order.fromJson(map);
+  //           final ProviderModel temp = await getProvider(map['provider']);
+  //           data[order] = temp;
+  //         }
+  //       }
+  //       return data;
+  //     }
+  //   } catch (error) {
+  //     print(error.toString());
+  //     return temp;
+  //   }
+  // }
 
-  deleteFavorite(String providerId) async {
-    final String id = supabase.auth.currentUser!.id;
-    try {
-      await supabase
-          .from('favorites')
-          .delete()
-          .eq('user_id', id)
-          .eq('provider_id', providerId);
-    } catch (error) {
-      print(error.toString());
-      return data;
-    }
-  }
+  // deleteFavorite(String providerId) async {
+  //   final String id = supabase.auth.currentUser!.id;
+  //   try {
+  //     await supabase
+  //         .from('favorites')
+  //         .delete()
+  //         .eq('user_id', id)
+  //         .eq('provider_id', providerId);
+  //   } catch (error) {
+  //     print(error.toString());
+  //     return data;
+  //   }
+  // }
 
   getNotDoneOrders() async {
     final String id = supabase.auth.currentUser!.id;
