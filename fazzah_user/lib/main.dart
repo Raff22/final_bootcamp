@@ -3,6 +3,8 @@ import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
 import 'package:fazzah_user/bloc/chat_bloc/chat_bloc.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/bloc/is_provider_cubit/is_provider_cubit.dart';
+import 'package:fazzah_user/bloc/order_bloc/order_bloc.dart';
+import 'package:fazzah_user/bloc/payments_bloc/payments_bloc.dart';
 import 'package:fazzah_user/bloc/provider_bloc/provider_bloc.dart';
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
@@ -50,6 +52,15 @@ class MainApp extends StatelessWidget {
         ),
         BlocProvider<ProviderBloc>(
           create: (context) => ProviderBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ChatBloc(),
+        ),
+        BlocProvider(
+          create: (context) => OrderBloc(),
+        ),
+        BlocProvider(
+          create: (context) => PayBloc(),
         ),
       ],
       child: MaterialApp(

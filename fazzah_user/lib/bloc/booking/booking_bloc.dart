@@ -1,5 +1,6 @@
 import 'package:fazzah_user/app_data/static_data.dart';
 import 'package:fazzah_user/database/get_data.dart';
+import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
@@ -66,6 +67,31 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         final List<ProviderModel> providers =
             await SupaGetAndDelete().getProvidersByService(event.service);
         emit(ShowAllProvidersState(providersList: providers));
+      } catch (error) {
+        emit(BookingErrorState(error: "حدث خطأ في النظام"));
+      }
+    });
+    on<RequestUserPaymentMethodsEvent>((event, emit) async {
+      emit(BookingLoadingState());
+      try {
+        final List<PaymentMethod> methods =
+            await SupaGetAndDelete().getUserPaymentMethods();
+        emit(ShowUserPaymentMethodsState(
+            paymentMethodsList: methods,
+            selectedPayments: List.generate(methods.length, (index) => false)));
+      } catch (error) {
+        emit(BookingErrorState(error: "حدث خطأ في النظام"));
+      }
+    });
+    on<SelectPaymentMethodEvent>((event, emit) async {
+      emit(BookingLoadingState());
+      try {
+        final List<PaymentMethod> methods =
+            await SupaGetAndDelete().getUserPaymentMethods();
+        List<bool> bools = List.generate(methods.length, (index) => false);
+        bools[event.index] = true;
+        emit(ShowUserPaymentMethodsState(
+            paymentMethodsList: methods, selectedPayments: bools));
       } catch (error) {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }

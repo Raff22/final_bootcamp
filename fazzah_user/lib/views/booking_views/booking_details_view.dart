@@ -4,6 +4,7 @@ import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
@@ -26,6 +27,8 @@ class BookingDetailsView extends StatelessWidget {
         List.generate(services.length, (index) => false);
     List<bool> selectedHours = List.generate(hours.length, (index) => false);
     WorkingHours availableHours = WorkingHours();
+    List<bool> selectedPayments = [];
+    List<PaymentMethod> paymentMethods = [];
 
     return Scaffold(
       appBar: createAppBar(
@@ -104,6 +107,9 @@ class BookingDetailsView extends StatelessWidget {
               builder: (context, state) {
                 if (state is ShowProviderWorkingHoursState) {
                   availableHours = state.hours;
+                  context
+                      .read<BookingBloc>()
+                      .add(RequestUserPaymentMethodsEvent());
                 }
                 if (state is ShowSelectedHourState) {
                   selectedHours = state.newSelected;
@@ -139,12 +145,34 @@ class BookingDetailsView extends StatelessWidget {
             PriceWidget(priceRange: providerInfo.priceRange ?? "100-100"),
             height20,
             const TextWidget(
-              text: "طريقة الدفع",
+              text: "اختر طريقة الدفع",
               textSize: 22,
               textFontWeight: FontWeight.w500,
             ),
             height20,
-            const PaymentMethodWidget(),
+            BlocBuilder<BookingBloc, BookingState>(
+              builder: (context, state) {
+                if (state is ShowUserPaymentMethodsState) {
+                  selectedPayments = state.selectedPayments;
+                  paymentMethods = state.paymentMethodsList;
+                }
+                return ToggleButtons(
+                    selectedColor: black,
+                    fillColor: coldGreen,
+                    splashColor: coldGreen,
+                    direction: Axis.vertical,
+                    isSelected: selectedPayments,
+                    onPressed: (index3) {
+                      context
+                          .read<BookingBloc>()
+                          .add(SelectPaymentMethodEvent(index: index3));
+                    },
+                    children: List.generate(
+                        paymentMethods.length,
+                        (index2) => PaymentMethodWidget(
+                            method: paymentMethods[index2], showOnTap: false)));
+              },
+            ),
             height20,
             const TextWidget(
               text: "ملاحظة : هذه القيمة لا تشمل قيمة الادوات المطلوبة",
