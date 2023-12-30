@@ -7,6 +7,7 @@ import 'package:fazzah_user/bloc/order_bloc/order_bloc.dart';
 import 'package:fazzah_user/bloc/provider_bloc/provider_bloc.dart';
 import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
 import 'package:fazzah_user/views/auth_views/logo_view/logo_view.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fazzah_user/utils/helpers/supabase_initilizer.dart';
@@ -57,6 +58,9 @@ class MainApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => OrderBloc(),
+        ),
+        BlocProvider(
+          create: (context) => UserBloc(),
         ),
       ],
       child: MaterialApp(

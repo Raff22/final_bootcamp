@@ -23,6 +23,8 @@ dependencies:
   timer_button: ^2.1.1
   geolocator: ^10.1.0
   flutter_rating_bar: ^4.0.1
+  google_maps_flutter: ^2.5.0
+  geocoding: ^2.1.1
 
 dev_dependencies:
   flutter_test:

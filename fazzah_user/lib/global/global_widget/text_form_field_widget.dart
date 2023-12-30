@@ -8,7 +8,7 @@ class TextFormFieldWidget extends StatelessWidget {
       this.validator,
       required this.keyboardType,
       required this.controller,
-      required this.labelText,
+      this.labelText,
       required this.labelTextColor,
       required this.cursorColor,
       required this.controllerTextColor,
@@ -19,7 +19,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType keyboardType;
   final TextEditingController controller;
-  final String labelText;
+  final String? labelText;
   final Color labelTextColor;
   final Color cursorColor;
   final Color controllerTextColor;
@@ -42,7 +42,7 @@ class TextFormFieldWidget extends StatelessWidget {
           floatingLabelAlignment: FloatingLabelAlignment.start,
           contentPadding: const EdgeInsets.all(10),
           label: TextWidget(
-            text: labelText,
+            text: labelText ?? '',
             textColor: labelTextColor,
           ),
           enabledBorder: OutlineInputBorder(

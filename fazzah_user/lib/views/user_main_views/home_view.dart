@@ -43,7 +43,7 @@ class MainView extends StatelessWidget {
           //-------------------- Add user Location ------------------
           InkWell(
             onTap: () {
-              context.pushScreen(screen: const AddPlaceScreen());
+              context.pushScreen(screen: AddPlaceScreen(user: user));
             },
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
