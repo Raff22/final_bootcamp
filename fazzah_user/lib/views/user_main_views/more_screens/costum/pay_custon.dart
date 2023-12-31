@@ -60,12 +60,12 @@ class PaymentCard extends StatelessWidget {
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(16),
                               child: (paymentinfo.name == "ApplePay")
-                                  ? Image.asset('assets/images/apple_pay.jpg',
+                                  ? Image.asset('assets/images/apple_pay.png',
                                       fit: BoxFit.cover)
                                   : (paymentinfo.name == "Visa" ||
                                           paymentinfo.name == "visa")
                                       ? Image.asset(
-                                          'assets/images/visalogo.jpg',
+                                          'assets/images/visalogo.png',
                                           fit: BoxFit.fill)
                                       : Image.asset(
                                           'assets/images/paypallogo.png',

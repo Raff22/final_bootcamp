@@ -42,7 +42,10 @@ class MoreScreen extends StatelessWidget {
                   iconeImage: 'assets/images/1.png',
                   textScreenName: 'حسابي',
                   onPressd: () {
-                    context.pushScreen(screen: const MyAccountScreen());
+                    context.pushScreen(
+                        screen: MyAccountScreen(
+                      user: user,
+                    ));
                   },
                   iconWidget: const Icon(Icons.arrow_forward_ios_rounded),
                 ),

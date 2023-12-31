@@ -17,6 +17,7 @@ import 'package:fazzah_user/views/booking_views/booking_widgets/contact_widget.d
 import 'package:fazzah_user/views/booking_views/booking_widgets/payment_method.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/rating_bottom_sheet.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/status_container.dart';
+import 'package:fazzah_user/views/chat_views/chat_widgets/user_chat_screem.dart';
 import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,7 +75,14 @@ class OrderDetailsView extends StatelessWidget {
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          ContactWidget(icon: Icons.chat, onpressed: () {}),
+                          ContactWidget(
+                              icon: Icons.chat,
+                              onpressed: () {
+                                context.pushScreen(
+                                    screen: UserchatScreen(
+                                  provider: provider,
+                                ));
+                              }),
                           width20,
                           ContactWidget(icon: Icons.phone, onpressed: () {}),
                         ],
