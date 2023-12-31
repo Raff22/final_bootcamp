@@ -55,4 +55,7 @@ Map<String, String> paymentMap = {
   "applepay": "assets/images/applepay.png",
   "paypal": "assets/images/paypal.png",
   "visa": "assets/images/visa.png",
+  "Applepay": "assets/images/applepay.png",
+  "Paypal": "assets/images/paypal.png",
+  "Visa": "assets/images/visa.png",
 };

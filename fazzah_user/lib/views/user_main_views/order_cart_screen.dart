@@ -41,7 +41,7 @@ class _OrderCartScreenState extends State<OrderCartScreen>
     return Scaffold(
       appBar: createAppBar(context: context, title: "طلباتي"),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             SizedBox(
@@ -56,7 +56,7 @@ class _OrderCartScreenState extends State<OrderCartScreen>
                   unselectedLabelColor: grey,
                   controller: tabsController,
                   tabs: const [
-                    Tab(text: "طلباتي القادمه"),
+                    Tab(text: "طلباتي القادمة"),
                     Tab(text: "طلباتي السابقة"),
                   ]),
             ),
@@ -74,20 +74,15 @@ class _OrderCartScreenState extends State<OrderCartScreen>
                       splitMapToKeyList(state.notDoneMap);
                   final List<ProviderModel> providersNotDone =
                       splitMapToValueList(state.notDoneMap);
-                  return SizedBox(
-                    width: context.getWidth(divide: 1.02),
-                    height: ordersDone.length > ordersNotDone.length
-                        ? context.getHeight(divide: 5) * ordersDone.length
-                        : context.getHeight(divide: 5) * ordersNotDone.length,
+                  return Expanded(
                     child: TabBarView(
                       controller: tabsController,
                       children: [
                         orderListView(
-                            providersList: providersDone,
-                            orderList: ordersDone),
-                        orderListView(
                             providersList: providersNotDone,
-                            orderList: ordersNotDone)
+                            orderList: ordersNotDone),
+                        orderListView(
+                            providersList: providersDone, orderList: ordersDone)
                       ],
                     ),
                   );

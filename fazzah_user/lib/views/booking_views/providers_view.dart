@@ -44,9 +44,9 @@ class ProvidersScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state is BookingLoadingState) {
                     return const Center(
-                        child: CircularProgressIndicator(color: green));
+                        child: Center(
+                            child: CircularProgressIndicator(color: green)));
                   } else if (state is ShowAllProvidersState) {
-                    print(state.favs);
                     if (state.providers.isEmpty) {
                       return const NotFoundWidget(
                           message: "نعتذر، لا يوجد ما تبحث عنه حاليًا");

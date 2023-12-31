@@ -13,7 +13,7 @@ import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/map_splitter.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
 import 'package:fazzah_user/views/provider_view/provider_widget/drawer_provider_widget.dart';
-import 'package:fazzah_user/views/user_main_views/coustom_wedgets/provider_order_widgets.dart';
+import 'package:fazzah_user/views/provider_view/provider_widget/provider_order_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,7 +64,7 @@ class _ProviderBookingRequestsViewState
                   unselectedLabelColor: grey,
                   controller: tabsController,
                   tabs: const [
-                    Tab(text: "طلباتي القادمه"),
+                    Tab(text: "طلباتي القادمة"),
                     Tab(text: "طلباتي السابقة"),
                   ]),
             ),
@@ -87,9 +87,9 @@ class _ProviderBookingRequestsViewState
                       controller: tabsController,
                       children: [
                         orderListViewP(
-                            usersList: usersDone, orderList: ordersDone),
+                            usersList: usersNotDone, orderList: ordersNotDone),
                         orderListViewP(
-                            usersList: usersNotDone, orderList: ordersNotDone)
+                            usersList: usersDone, orderList: ordersDone)
                       ],
                     );
                   } else if (state is OrderErrorState) {

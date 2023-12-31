@@ -285,7 +285,7 @@ class HomeScreenBotton extends StatelessWidget {
       height: context.getHeight(divide: 16),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: const BorderRadius.all(Radius.circular(11)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Center(
         child: Text(
