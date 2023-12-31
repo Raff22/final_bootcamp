@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -32,8 +31,7 @@ class SupaStorage {
       required ProviderModel providerModel,
       required String path}) async {
     try {
-      await deleteProviderImage(
-          file: file, providerModel: providerModel, path: path);
+      await deleteProviderImage(providerModel: providerModel);
       return await uploadProviderImage(
           file: file, providerModel: providerModel);
     } catch (error) {
@@ -42,19 +40,19 @@ class SupaStorage {
   }
 
   // ----------------- Delete Provider Image -----------------------
-  deleteProviderImage(
-      {required File file,
-      required ProviderModel providerModel,
-      required String path}) async {
-    List pathList = path.split('/');
-    path = 'profile_images/';
-    path += pathList[pathList.length - 1];
+  deleteProviderImage({required ProviderModel providerModel}) async {
     try {
-      await supabase.from('Fazzah_storage').remove([path]);
-      ProviderModel? temp = await SupaGet().getProvider(providerModel.id!);
-      temp!.providerImage = null;
-      await SupabaseUpdate().updateProviderProfileImage(
-          providerID: providerModel.id!, providerImage: temp.providerImage!);
+      final allList =
+          await supabase.from('Fazzah_storage').list(path: 'profile_images');
+      for (var element in allList) {
+        if (element.name.startsWith(providerModel.id!)) {
+          await supabase
+              .from('Fazzah_storage')
+              .remove(["profile_images/${element.name}"]);
+        }
+      }
+      providerModel.providerImage = null;
+      await SupabaseUpdate().updateProvider(providerModel);
     } catch (error) {
       print('delete peovider image Error : ${error.toString()}');
     }
