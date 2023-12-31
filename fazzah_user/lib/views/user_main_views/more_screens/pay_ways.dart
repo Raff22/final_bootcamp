@@ -57,15 +57,25 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
               height: context.getHeight(divide: 2),
               width: context.getWidth(divide: 1),
               child: buildUpcomingPaysTab(context)),
-
-          ElevatedButton(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               _showPaymentBottomSheet(context);
             },
-            child: const Text('اضف طريقة الدفع'),
+            child: Container(
+              width: context.getWidth(divide: 1.2),
+              height: context.getHeight(divide: 16),
+              decoration: BoxDecoration(
+                color: const Color(0xffeff0eb),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Center(
+                child: Text(
+                  "اضف طريقة الدفع",
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+              ),
+            ),
           ),
-          const SizedBox(height: 16),
-          // The rest of your UI here
         ],
       ),
     );
@@ -147,18 +157,17 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Confirm Delete'),
-                content: Text(
-                    'Are you sure you want to delete this payment method?'),
+                title: Text('تاكيد الحذف '),
+                content: Text('هل انت متاكد من حذف البطاقه؟'),
                 actions: <Widget>[
                   TextButton(
-                    child: Text('Cancel'),
+                    child: Text('الغاء'),
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the dialog
                     },
                   ),
                   TextButton(
-                    child: Text('Delete'),
+                    child: Text('حذف'),
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the dialog
                       deletePaymentMethod(PaymentsList[index].id!);

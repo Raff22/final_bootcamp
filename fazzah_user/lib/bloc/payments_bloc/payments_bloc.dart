@@ -13,7 +13,7 @@ class PayBloc extends Bloc<PayEvent, PayState> {
         //     await SupaGetAndDelete().getAllProviders();
 
         final List<PaymentMethod> isdone =
-            await SupaGetAndDelete().getUserPaymentMethods();
+            await SupaGet().getUserPaymentMethods();
         // print("providers $providers");
 
         emit(ShowAllPaymentsState(isdonelist: isdone));
