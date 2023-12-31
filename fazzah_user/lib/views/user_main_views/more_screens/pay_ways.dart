@@ -4,7 +4,9 @@ import 'package:fazzah_user/bloc/payments_bloc/payments_state.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/models/payment_method.dart';
+import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
+import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/costum/pay_custon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,14 +40,24 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text("طرق الدفع"),
-        leading: IconButton(
+      appBar: createAppBar(
+          context: context,
+          title: ' طرق الدفع',
+          centerTitle: true,
+          trailing: IconButton(
             onPressed: () {
               context.read<PayBloc>().add(RequestallPaymentsEvent());
             },
-            icon: const Icon(Icons.refresh)),
-      ),
+            icon: Icon(
+              Icons.refresh,
+              size: 25,
+            ),
+          ),
+          leading: IconButton(
+              onPressed: () {
+                context.popScreen();
+              },
+              icon: const Icon(Icons.arrow_back_ios_new_rounded))),
       body: Column(
         children: [
           const SizedBox(height: 100),
@@ -189,26 +201,73 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                TextField(
-                  controller: cardnameController,
-                  decoration: const InputDecoration(labelText: 'الاسم'),
-                ),
-                if (selectedPaymentMethod == 'Visa')
-                  TextField(
-                    controller: cardNumberController,
-                    decoration: const InputDecoration(labelText: 'رقم البطاقة'),
+                // TextField(
+                //   controller: cardnameController,
+                //   decoration: const InputDecoration(labelText: 'الاسم'),
+                // ),
+                Padding(
+                  padding: EdgeInsets.all(1),
+                  child: TextField(
+                    controller: cardnameController,
+                    decoration: InputDecoration(
+                        hintText: " الاسم",
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10)))),
                   ),
+                ),
+                height20,
+                if (selectedPaymentMethod == 'Visa')
+                  // TextField(
+                  //   controller: cardNumberController,
+                  //   decoration: const InputDecoration(labelText: 'رقم البطاقة'),
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.all(1),
+                    child: TextField(
+                      controller: cardNumberController,
+                      decoration: InputDecoration(
+                          hintText: 'رقم البطاقة',
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)))),
+                    ),
+                  ),
+                height20,
                 if (selectedPaymentMethod == 'PayPal' ||
                     selectedPaymentMethod == 'ApplePay')
-                  TextField(
-                    controller: emailController,
-                    decoration:
-                        const InputDecoration(labelText: 'البريد الإلكتروني'),
+                  // TextField(
+                  //   controller: emailController,
+                  //   decoration:
+                  //       const InputDecoration(labelText: 'البريد الإلكتروني'),
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.all(1),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                          hintText: 'البريد الإلكتروني',
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)))),
+                    ),
                   ),
-                TextField(
-                  controller: expiresAtController,
-                  decoration:
-                      const InputDecoration(labelText: 'تاريخ الانتهاء'),
+
+                // TextField(
+                //   controller: expiresAtController,
+                //   decoration:
+                //       const InputDecoration(labelText: 'تاريخ الانتهاء'),
+                // ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: TextField(
+                    controller: expiresAtController,
+                    decoration: InputDecoration(
+                        hintText: 'تاريخ الانتهاء',
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10)))),
+                  ),
                 ),
               ],
             ),

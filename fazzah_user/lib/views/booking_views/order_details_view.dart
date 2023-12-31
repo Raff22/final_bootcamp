@@ -17,11 +17,7 @@ import 'package:fazzah_user/views/booking_views/booking_widgets/contact_widget.d
 import 'package:fazzah_user/views/booking_views/booking_widgets/payment_method.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/rating_bottom_sheet.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/status_container.dart';
-<<<<<<< HEAD
-import 'package:fazzah_user/views/booking_views/tracking_view.dart';
 import 'package:fazzah_user/views/chat_views/chat_widgets/user_chat_screem.dart';
-=======
->>>>>>> main
 import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
