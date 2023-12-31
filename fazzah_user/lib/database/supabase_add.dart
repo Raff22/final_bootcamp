@@ -1,6 +1,7 @@
 import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/rating_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaAdd {
@@ -23,7 +24,7 @@ class SupaAdd {
     final String id = supabase.auth.currentUser!.id;
     bool add = true;
     try {
-      final response = await SupaGetAndDelete().getFavoriteProviders();
+      final response = await SupaGet().getFavoriteProviders();
       for (ProviderModel element in response) {
         if (element.id == providerId) {
           add = false;
@@ -40,7 +41,14 @@ class SupaAdd {
     }
   }
 
-  
+  addRating(Rating rating) async {
+    try {
+      await supabase.from('ratings').insert(rating.toJson());
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
   //---------------- Add new Address -----------------------------
   addNewAddressUser(
       {required String userId,

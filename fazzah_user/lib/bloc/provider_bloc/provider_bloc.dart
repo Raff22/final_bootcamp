@@ -51,8 +51,7 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
     on<GetProviderData>((event, emit) async {
       emit(LoadingUpdateProviderAccountState());
       try {
-        final ProviderModel? providerModel =
-            await SupaGetAndDelete().getProviderRahaf(
+        final ProviderModel? providerModel = await SupaGet().getProviderRahaf(
           userId: event.providerID,
         );
         emit(SuccessUpdateProviderAccountState(providerModel: providerModel));

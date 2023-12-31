@@ -62,6 +62,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 }
 
 Future<List<Address>> getAddress() async {
-  final List<Address> addressList = await SupaGetAndDelete().getUserAddresses();
+  final List<Address> addressList = await SupaGet().getUserAddresses();
   return addressList;
 }

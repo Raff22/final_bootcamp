@@ -56,7 +56,7 @@ class _OrderCartScreenState extends State<OrderCartScreen>
                   unselectedLabelColor: grey,
                   controller: tabsController,
                   tabs: const [
-                    Tab(text: "طلباتي القادمه"),
+                    Tab(text: "طلباتي القادمة"),
                     Tab(text: "طلباتي السابقة"),
                   ]),
             ),

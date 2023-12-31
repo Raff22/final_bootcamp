@@ -36,3 +36,17 @@ class ShowOrderRelatiedInfo extends OrderState {
 
   ShowOrderRelatiedInfo({required this.address, required this.paymentMethod});
 }
+
+class DeletedOrderSuccessfully extends OrderState {
+  final UserModel user;
+
+  DeletedOrderSuccessfully({required this.user});
+}
+
+class PaymentCompletedSuccessfully extends OrderState {
+  final UserModel user;
+
+  PaymentCompletedSuccessfully({required this.user});
+}
+
+class RatingAddedSuccessfully extends OrderState {}

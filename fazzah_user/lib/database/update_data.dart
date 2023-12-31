@@ -1,3 +1,5 @@
+import 'package:fazzah_user/models/order_model.dart';
+import 'package:fazzah_user/models/provider_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseUpdate {
@@ -59,5 +61,17 @@ class SupabaseUpdate {
       print(error);
     }
     return null;
+  }
+
+  updateOrder(Order order, ProviderModel provider) async {
+    try {
+      await supabase.from('orders').update(order.toJson()).eq('id', order.id!);
+      await supabase
+          .from('providers')
+          .update(provider.toJson())
+          .eq('id', provider.id!);
+    } catch (error) {
+      print(error.toString());
+    }
   }
 }

@@ -12,7 +12,7 @@ import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/loading_func.dart';
-import 'package:fazzah_user/utils/helpers/show_message.dart';
+import 'package:fazzah_user/utils/helpers/show_message_green.dart';
 import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/address_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/hour_widget.dart';
@@ -236,7 +236,8 @@ class BookingDetailsView extends StatelessWidget {
                 if (state is CreatedOrderSuccessfly) {
                   showMessageDialog(context: context, message: 'تم تأكيد طلبك');
                   Future.delayed(const Duration(seconds: 1), () {
-                    context.removeUnitl(screen: NavBar(user: state.user));
+                    context.removeUnitl(
+                        screen: NavBar(user: state.user, index: 2));
                   });
                 }
               },

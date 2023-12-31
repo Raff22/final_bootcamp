@@ -11,8 +11,13 @@ import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
+import 'package:fazzah_user/utils/helpers/show_dialog_message.dart';
+import 'package:fazzah_user/utils/helpers/show_message_green.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/payment_method.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/status_container.dart';
 import 'package:fazzah_user/views/booking_views/tracking_view.dart';
+import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
+import 'package:fazzah_user/views/user_main_views/order_cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -81,19 +86,7 @@ class OrderDetailsView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const TextWidget(text: "حالة الطلب", textSize: 20),
-                        Container(
-                            height: 25,
-                            width: 65,
-                            decoration: BoxDecoration(
-                              color: lightGrey,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: TextWidget(
-                                  text: "${order.orderStatus}",
-                                  textColor: green,
-                                  textSize: 16),
-                            ))
+                        OrderStatusWidget(status: "${order.orderStatus}"),
                       ]),
                   height20,
                   const TextWidget(text: "رقم الطلب", textSize: 20),
@@ -119,19 +112,70 @@ class OrderDetailsView extends StatelessWidget {
                   TextWidget(text: "${order.total}", textSize: 15),
                   height20,
                   order.isDone! == false
-                      ? ContainerWidget(
-                          contanierBorderRadius: 10,
-                          containerWidth: context.getWidth(),
-                          containerHeight: 48,
-                          containerColor: green,
-                          onPressed: () {},
-                          child: const Center(
-                              child: TextWidget(
-                            text: "الدفع الان",
-                            textSize: 25,
-                            textColor: lightGrey,
-                          )))
+                      ? Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: BlocListener<OrderBloc, OrderState>(
+                            listener: (context, state) {
+                              if (state is PaymentCompletedSuccessfully) {
+                                context.removeUnitl(
+                                    screen: NavBar(user: state.user));
+                                showMessageDialog(
+                                    context: context,
+                                    message: "شكرا لك ، تم الدفع بنجاح.");
+                              }
+                            },
+                            child: ContainerWidget(
+                                contanierBorderRadius: 10,
+                                containerWidth: context.getWidth(),
+                                containerHeight: 48,
+                                containerColor: green,
+                                onPressed: () {
+                                  context.read<OrderBloc>().add(PayingEvent(
+                                      order: order, provider: provider));
+                                },
+                                child: const Center(
+                                    child: TextWidget(
+                                  text: "الدفع الان",
+                                  textSize: 20,
+                                  textColor: lightGrey,
+                                ))),
+                          ),
+                        )
                       : const Text(""),
+                  BlocListener<OrderBloc, OrderState>(
+                    listener: (context, state) {
+                      if (state is DeletedOrderSuccessfully) {
+                        context.removeUnitl(
+                            screen: NavBar(user: state.user, index: 2));
+                        showMessageDialog(
+                            context: context, message: "تم حذف الطلب");
+                      }
+                    },
+                    child: ContainerWidget(
+                        contanierBorderRadius: 10,
+                        containerWidth: context.getWidth(),
+                        containerHeight: 48,
+                        containerColor: grey,
+                        onPressed: () {
+                          print("dalete");
+                          showDialogAlertMessage(
+                              context: context,
+                              contentText: 'هل انت متأكد من حذف الطلب؟',
+                              titleText: 'حذف الطلب',
+                              onPressed: () {
+                                context
+                                    .read<OrderBloc>()
+                                    .add(DeleteOrderEvent(orderId: order.id!));
+                                context.popScreen();
+                              });
+                        },
+                        child: const Center(
+                            child: TextWidget(
+                          text: "حذف الطلب",
+                          textSize: 20,
+                          textColor: black,
+                        ))),
+                  )
                 ],
               ),
             );

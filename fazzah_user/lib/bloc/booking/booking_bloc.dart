@@ -20,7 +20,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       emit(BookingLoadingState());
       try {
         final Map<ProviderModel, bool> providers =
-            await SupaGetAndDelete().getAllProvidersFavs();
+            await SupaGet().getAllProvidersFavs();
         final List<ProviderModel> x = splitMapToKeyList(providers);
         final List<bool> y = splitMapToValueList(providers);
         emit(ShowAllProvidersState(providers: x, favs: y));
@@ -31,8 +31,8 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<RequestProviderRatingsEvent>((event, emit) async {
       emit(BookingLoadingState());
       try {
-        final List<Rating> ratings = await SupaGetAndDelete()
-            .getProviderRatings(providerId: event.providerId);
+        final List<Rating> ratings =
+            await SupaGet().getProviderRatings(providerId: event.providerId);
         emit(ShowProviderRatingsState(ratings: ratings));
       } catch (error) {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
@@ -46,7 +46,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<GetProviderHoursEvent>((event, emit) async {
       emit(BookingLoadingState());
       try {
-        final WorkingHours hours = await SupaGetAndDelete()
+        final WorkingHours hours = await SupaGet()
             .getProviderWorkingHours(providerId: event.providerId);
         emit(ShowProviderWorkingHoursState(hours: hours));
       } catch (error) {
@@ -62,7 +62,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       emit(BookingLoadingState());
       try {
         final Map<ProviderModel, bool> providers =
-            await SupaGetAndDelete().getProvidersByName(event.name);
+            await SupaGet().getProvidersByName(event.name);
         final List<ProviderModel> x = splitMapToKeyList(providers);
         final List<bool> y = splitMapToValueList(providers);
         emit(ShowAllProvidersState(providers: x, favs: y));
@@ -74,7 +74,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       emit(BookingLoadingState());
       try {
         final Map<ProviderModel, bool> providers =
-            await SupaGetAndDelete().getProvidersByService(event.service);
+            await SupaGet().getProvidersByService(event.service);
         final List<ProviderModel> x = splitMapToKeyList(providers);
         final List<bool> y = splitMapToValueList(providers);
         emit(ShowAllProvidersState(providers: x, favs: y));
@@ -86,7 +86,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       print("here in RequestUserPaymentMethodsEvent");
       try {
         final List<PaymentMethod> methods =
-            await SupaGetAndDelete().getUserPaymentMethods();
+            await SupaGet().getUserPaymentMethods();
         emit(ShowUserPaymentMethodsState(
             paymentMethodsList: methods,
             selectedPayments: List.generate(methods.length, (index) => false)));
@@ -96,8 +96,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     });
     on<RequestUserAddressesEvent>((event, emit) async {
       try {
-        final List<Address> addies =
-            await SupaGetAndDelete().getUserAddresses();
+        final List<Address> addies = await SupaGet().getUserAddresses();
         emit(ShowUserAddressesState(
             addressesList: addies,
             selectedAddresses: List.generate(addies.length, (index) => false)));
@@ -108,7 +107,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<SelectPaymentMethodEvent>((event, emit) async {
       try {
         final List<PaymentMethod> methods =
-            await SupaGetAndDelete().getUserPaymentMethods();
+            await SupaGet().getUserPaymentMethods();
         List<bool> bools = List.generate(methods.length, (index) => false);
         bools[event.index] = true;
         emit(ShowUserPaymentMethodsState(
@@ -119,8 +118,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     });
     on<SelectAddressEvent>((event, emit) async {
       try {
-        final List<Address> addies =
-            await SupaGetAndDelete().getUserAddresses();
+        final List<Address> addies = await SupaGet().getUserAddresses();
         List<bool> bools = List.generate(addies.length, (index) => false);
         bools[event.index] = true;
         emit(ShowUserAddressesState(
@@ -169,7 +167,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
               paymentMethod: event.userPaymentMethods[paymentMethodIndex].id!);
           final Order? verfied = await SupaAdd().addNewOrder(newOrder);
           if (verfied != null) {
-            final UserModel user = await SupaGetAndDelete().getCurrentUser();
+            final UserModel user = await SupaGet().getCurrentUser();
             emit(CreatedOrderSuccessfly(user: user));
           } else {
             emit(BookingErrorState(error: "حدث خطأ في النظام"));

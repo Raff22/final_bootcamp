@@ -44,9 +44,17 @@ class MainView extends StatelessWidget {
           //-------------------- Add user Location ------------------
           InkWell(
             onTap: () {
-  // 
-              final Address address = Address(city: 'Riyadh' , address: 'RFHA7596,Al Hamra,Riyadh Principality,13216' , latitude: 24.774265 ,longitude: 46.738586);
-              context.pushScreen(screen: AddPlaceScreen(user: user ,address: address,));
+              //
+              final Address address = Address(
+                  city: 'Riyadh',
+                  address: 'RFHA7596,Al Hamra,Riyadh Principality,13216',
+                  latitude: 24.774265,
+                  longitude: 46.738586);
+              context.pushScreen(
+                  screen: AddPlaceScreen(
+                user: user,
+                address: address,
+              ));
             },
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),

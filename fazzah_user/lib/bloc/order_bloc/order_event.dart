@@ -1,3 +1,7 @@
+import 'package:fazzah_user/models/order_model.dart';
+import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/rating_model.dart';
+
 abstract class OrderEvent {}
 
 class RequestAllUserOrdersEvent extends OrderEvent {}
@@ -12,4 +16,23 @@ class RequestOrderRelaitedInfoEvent extends OrderEvent {
     required this.paymentMethodID,
     required this.addressID,
   });
+}
+
+class DeleteOrderEvent extends OrderEvent {
+  final int orderId;
+
+  DeleteOrderEvent({required this.orderId});
+}
+
+class PayingEvent extends OrderEvent {
+  Order order;
+  ProviderModel provider;
+
+  PayingEvent({required this.order, required this.provider});
+}
+
+class RatingAddingEvent extends OrderEvent {
+  final Rating rating;
+
+  RatingAddingEvent({required this.rating});
 }

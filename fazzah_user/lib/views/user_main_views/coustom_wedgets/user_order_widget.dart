@@ -3,11 +3,11 @@ import 'package:fazzah_user/bloc/order_bloc/order_bloc.dart';
 import 'package:fazzah_user/bloc/order_bloc/order_event.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/status_container.dart';
 import 'package:fazzah_user/views/booking_views/order_details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,29 +69,7 @@ class UserOrderCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      // Row(
-                      //   children: [
-                      //     ContactWidget(icon: Icons.chat, onpressed: () {}),
-                      //     ContactWidget(icon: Icons.phone, onpressed: () {}),
-                      //   ],
-                      // ),
-                      Container(
-                          height: 25,
-                          width: 65,
-                          decoration: BoxDecoration(
-                            color: lightGrey,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: TextWidget(
-                                text: "${order.orderStatus}",
-                                textColor: green,
-                                textSize: 16),
-                          ))
-                    ],
-                  ),
+                  OrderStatusWidget(status: "${order.orderStatus}"),
                 ],
               ),
             ),
