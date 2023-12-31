@@ -5,6 +5,7 @@ import 'package:fazzah_user/database/supabse_storage.dart';
 import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/global/globals_data/globals_data.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
@@ -57,6 +58,32 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
         emit(SuccessUpdateProviderAccountState(providerModel: providerModel));
       } catch (error) {
         print(error);
+        emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
+      }
+    });
+
+    on<GetProviderWorkingHoursEvent>((event, emit) async {
+      emit(LoadingUpdateProviderAccountState());
+      try {
+        WorkingHours workHours = await SupaGet()
+            .getProviderWorkingHours(providerId: event.providerID);
+        emit(ShowProviderTheirWorkingHours(wHours: workHours));
+      } catch (error) {
+        print(error.toString());
+        emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
+      }
+    });
+
+    on<SelectHourSwitchEvent>((event, emit) async {
+      emit(UpdateHourSwitchState(wHours: event.wHours));
+    });
+
+    on<UpdateProviderWorkingHours>((event, emit) async {
+      try {
+        await SupabaseUpdate().updateWorkingHours(event.wHours);
+        emit(UpdatedProviderWorkingHoursSuccessState());
+      } catch (error) {
+        print(error.toString());
         emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
       }
     });

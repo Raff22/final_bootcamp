@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
+import 'package:fazzah_user/bloc/provider_bloc/provider_bloc.dart';
+import 'package:fazzah_user/bloc/provider_bloc/provider_event.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
@@ -49,8 +51,8 @@ class DrawerProviderWidget extends StatelessWidget {
                         ClipOval(
                           child: ContainerWidget(
                             contanierBorderRadius: 0,
-                            containerHeight: context.getWidth(divide: 4),
-                            containerWidth: context.getWidth(divide: 4),
+                            containerHeight: context.getWidth(divide: 4.5),
+                            containerWidth: context.getWidth(divide: 4.5),
                             child: providerModel!.providerImage == null ||
                                     providerModel!.providerImage!.isEmpty
                                 ? Image.asset(
@@ -135,6 +137,9 @@ class DrawerProviderWidget extends StatelessWidget {
                       subTextView: 'اوقات العمل',
                       iconString: 'assets/images/work_time.png',
                       onPressed: () {
+                        context.read<ProviderBloc>().add(
+                            GetProviderWorkingHoursEvent(
+                                providerID: providerModel!.id!));
                         context.pushScreen(
                             screen: ProviderWorkTimePage(
                           providerModel: providerModel,
