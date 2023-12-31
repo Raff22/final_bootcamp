@@ -6,6 +6,8 @@ import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/views/booking_views/tracking_view.dart';
+import 'package:fazzah_user/views/chat_views/chat_widgets/provider_chat_screen.dart';
+import 'package:fazzah_user/views/chat_views/chat_widgets/test_page.dart';
 import 'package:flutter/material.dart';
 
 class ProviderOrderCard extends StatelessWidget {
@@ -26,7 +28,16 @@ class ProviderOrderCard extends StatelessWidget {
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ContactWidget(icon: Icons.chat, onpressed: () {}),
+                ContactWidget(
+                    icon: Icons.chat,
+                    onpressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProviderchatScreen(
+                                    provider: user,
+                                  )));
+                    }),
                 width20,
                 ContactWidget(icon: Icons.phone, onpressed: () {}),
               ],

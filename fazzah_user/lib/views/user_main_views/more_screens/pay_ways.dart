@@ -33,6 +33,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
 
   @override
   void initState() {
+    context.read<PayBloc>().add(RequestallPaymentsEvent());
     super.initState();
   }
 
@@ -93,6 +94,14 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                     title: const Text('PayPal'),
                     onTap: () {
                       setState(() => selectedPaymentMethod = 'PayPal');
+                      Navigator.pop(context);
+                      _showInfoInputDialog(context);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('ApplePay'),
+                    onTap: () {
+                      setState(() => selectedPaymentMethod = 'ApplePay');
                       Navigator.pop(context);
                       _showInfoInputDialog(context);
                     },
@@ -183,7 +192,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                     decoration: const InputDecoration(labelText: 'رقم البطاقة'),
                   ),
                 if (selectedPaymentMethod == 'PayPal' ||
-                    selectedPaymentMethod == 'Visa')
+                    selectedPaymentMethod == 'ApplePay')
                   TextField(
                     controller: emailController,
                     decoration:
