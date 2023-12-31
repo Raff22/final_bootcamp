@@ -13,13 +13,14 @@ import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/show_dialog_message.dart';
 import 'package:fazzah_user/utils/helpers/show_message_green.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/contact_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/payment_method.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/rating_bottom_sheet.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/status_container.dart';
-import 'package:fazzah_user/views/booking_views/tracking_view.dart';
 import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
-import 'package:fazzah_user/views/user_main_views/order_cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class OrderDetailsView extends StatelessWidget {
   const OrderDetailsView(
@@ -118,10 +119,11 @@ class OrderDetailsView extends StatelessWidget {
                             listener: (context, state) {
                               if (state is PaymentCompletedSuccessfully) {
                                 context.removeUnitl(
-                                    screen: NavBar(user: state.user));
+                                    screen: NavBar(user: state.user, index: 2));
                                 showMessageDialog(
                                     context: context,
                                     message: "شكرا لك ، تم الدفع بنجاح.");
+                                    
                               }
                             },
                             child: ContainerWidget(
