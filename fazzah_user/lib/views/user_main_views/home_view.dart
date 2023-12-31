@@ -1,14 +1,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fazzah_user/app_data/static_data.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
+import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/search_bar.dart';
+import 'package:fazzah_user/global/global_widget/text_widget.dart';
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/helpers/name_formatter.dart';
 import 'package:fazzah_user/views/booking_views/providers_view.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
+import 'package:fazzah_user/views/user_main_views/more_screens/add_place.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +24,9 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController search = TextEditingController();
     return Scaffold(
-      body: Column(
+        body: SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
         children: [
           const SizedBox(
             height: 50,
@@ -33,6 +39,41 @@ class MainView extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.black)),
           ),
+          height10,
+
+          //-------------------- Add user Location ------------------
+          InkWell(
+            onTap: () {
+              //
+              final Address address = Address(
+                  city: 'Riyadh',
+                  address: 'RFHA7596,Al Hamra,Riyadh Principality,13216',
+                  latitude: 24.774265,
+                  longitude: 46.738586);
+              context.pushScreen(
+                  screen: AddPlaceScreen(
+                user: user,
+                address: address,
+              ));
+            },
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.location_pin,
+                    color: grey,
+                  ),
+                  width10,
+                  TextWidget(
+                    text: 'انقر هنا لإضافة عنوانك',
+                    textColor: darkGrey,
+                  )
+                ],
+              ),
+            ),
+          ),
+          //------------------------------------------------------------
           height20,
           SearchBarWidget(
               hint: "ابحث عن الخدمة",
@@ -107,6 +148,7 @@ class MainView extends StatelessWidget {
               ],
             ),
           ),
+
           const SizedBox(height: 10),
           WorkerCard(
               providerInfo: ProviderModel(
@@ -119,6 +161,6 @@ class MainView extends StatelessWidget {
               isFav: false),
         ],
       ),
-    );
+    ));
   }
 }

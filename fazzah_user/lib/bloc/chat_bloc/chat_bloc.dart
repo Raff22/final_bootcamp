@@ -23,8 +23,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     try {
       String getCurrentUserId = supabase.auth.currentUser!.id;
 
-      final List<ProviderModel> providers =
-          await SupaGetAndDelete().getAllProviders();
+      final List<ProviderModel> providers = await SupaGet().getAllProviders();
 
       emit(GetUsersSuccessedState(providers));
       print("here is error");
@@ -38,7 +37,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     try {
       String getCurrentUserId = supabase.auth.currentUser!.id;
 
-      final List<UserModel> users = await SupaGetAndDelete().getAllusers();
+      final List<UserModel> users = await SupaGet().getAllusers();
 
       emit(GetPrividerSuccessedState(users));
       print("here is error");

@@ -1,3 +1,4 @@
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/provider_model.dart';
@@ -6,7 +7,7 @@ import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SupaGetAndDelete {
+class SupaGet {
   final supabase = Supabase.instance.client;
 
   getProvider(String id) async {
@@ -90,32 +91,16 @@ class SupaGetAndDelete {
     }
   }
 
-  deleteFavorite(String providerId) async {
-    final String id = supabase.auth.currentUser!.id;
-    try {
-      await supabase
-          .from('favorites')
-          .delete()
-          .eq('user_id', id)
-          .eq('provider_id', providerId);
-    } catch (error) {
-      print(error.toString());
-    }
-  }
-
   getOrderProviders() async {
     String id = supabase.auth.currentUser!.id;
-    print("got here in order here!");
-    print("id  $id");
     try {
       final response = await supabase.from('orders').select().eq("user", id);
       print(response);
       if (response.isEmpty) {
         return null;
       } else {
-        print("else in getProvider");
         Order temp = Order.fromJson(response[0]);
-        print(temp.provider);
+
         return temp;
       }
     } catch (error) {
@@ -198,7 +183,6 @@ class SupaGetAndDelete {
       } else {
         for (var map in response) {
           if (map['is_done'] == false) {
-            print("not doneeeee");
             final Order order = Order.fromJson(map);
             final ProviderModel temp = await getProvider(map['provider']);
             data[order] = temp;
@@ -283,27 +267,34 @@ class SupaGetAndDelete {
     }
   }
 
-  Future<List<ProviderModel>> getOrderedProviders() async {
+  getUserAddresses() async {
     final String id = supabase.auth.currentUser!.id;
-    List<ProviderModel> order = [];
+    List<Address> temp = [];
     try {
-      final response = await supabase.from('orders').select().eq('user', id);
+      final response =
+          await supabase.from('addresses').select().eq('user_id', id);
       if (response.isEmpty) {
-        return order;
+        return temp;
       } else {
-        for (Map map in response) {
-          final ProviderModel? temp = await getProvider(map['provider']);
-          order.add(temp!);
-        }
-        return order;
-
-        //return List.generate(
-        // order.length, (index) => ProviderModel.fromJson(response[index]));
+        return List.generate(
+            response.length, (index) => Address.fromJson(response[index]));
       }
     } catch (error) {
-      print(
-          "------------------------${error.toString()}----------------------------");
-      throw const FormatException("error");
+      print(error.toString());
+      return temp;
+    }
+  }
+
+  getAddressesById({required int id}) async {
+    try {
+      final response = await supabase.from('addresses').select().eq('id', id);
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return Address.fromJson(response[0]);
+      }
+    } catch (error) {
+      print(error.toString());
     }
   }
 
@@ -340,17 +331,29 @@ class SupaGetAndDelete {
 
   getUserPaymentMethods() async {
     String id = supabase.auth.currentUser!.id;
-    print(id);
     try {
       final response =
           await supabase.from('payment_methods').select().eq('user_id', id);
-      print(response);
       if (response.isEmpty) {
         final List<PaymentMethod> temp = [];
         return temp;
       } else {
         return List.generate(response.length,
             (index) => PaymentMethod.fromJson(response[index]));
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  getPaymentMethodById({required int id}) async {
+    try {
+      final response =
+          await supabase.from('payment_methods').select().eq('id', id);
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return PaymentMethod.fromJson(response[0]);
       }
     } catch (error) {
       print(error.toString());
@@ -371,6 +374,16 @@ class SupaGetAndDelete {
       print(error);
     }
     return null;
+  }
+
+  getCurrentUser() async {
+    final String id = supabase.auth.currentUser!.id;
+    try {
+      final response = await supabase.from('users').select().eq('id', id);
+      return UserModel.fromJson(response[0]);
+    } catch (error) {
+      print(error);
+    }
   }
 
   getAllusers() async {
@@ -401,6 +414,27 @@ class SupaGetAndDelete {
       }
     } catch (error) {
       print("------- error in Supabase function getUser --------");
+      print(error);
+    }
+    return null;
+  }
+
+  //---------------- get All Address by User ID -----------------------------
+  Future<Address?> getAllAddressbyUserID({required String userId}) async {
+    try {
+      final response = await supabase
+          .from('addresses')
+          .select()
+          .eq('user_id', '8bc48f85-ab08-4d48-8c17-310a602ea808');
+      print(response[0]);
+
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return Address.fromJson(response[0]);
+      }
+    } catch (error) {
+      print("------- error in Supabase function getAddress --------");
       print(error);
     }
     return null;

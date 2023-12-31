@@ -1,6 +1,7 @@
 import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/rating_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaAdd {
@@ -23,7 +24,7 @@ class SupaAdd {
     final String id = supabase.auth.currentUser!.id;
     bool add = true;
     try {
-      final response = await SupaGetAndDelete().getFavoriteProviders();
+      final response = await SupaGet().getFavoriteProviders();
       for (ProviderModel element in response) {
         if (element.id == providerId) {
           add = false;
@@ -38,5 +39,37 @@ class SupaAdd {
     } catch (error) {
       print(error.toString());
     }
+  }
+
+  addRating(Rating rating) async {
+    try {
+      await supabase.from('ratings').insert(rating.toJson());
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  //---------------- Add new Address -----------------------------
+  addNewAddressUser(
+      {required String userId,
+      required String address,
+      required String city,
+      required double latitude,
+      required double longitude,
+      required String addressTitle}) async {
+    try {
+      await supabase.from('addresses').insert({
+        'user_id': userId,
+        'address': address,
+        'city': city,
+        'latitude': latitude,
+        'longitude': longitude,
+        'address_title': addressTitle
+      });
+    } catch (error) {
+      print("------- error in Supabase function Add new Address User --------");
+      print(error);
+    }
+    return null;
   }
 }

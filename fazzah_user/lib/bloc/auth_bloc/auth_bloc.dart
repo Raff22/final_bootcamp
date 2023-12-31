@@ -63,13 +63,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         //---- get provider ----
         print('4');
         final ProviderModel? providerModel =
-            await SupaGetAndDelete().getProviderRahaf(
+            await SupaGet().getProviderRahaf(
           userId: currentUser.user!.id,
         );
         //---- get user ----
         print('5');
         final UserModel? userModel =
-            await SupaGetAndDelete().getUser(userId: currentUser.user!.id);
+            await SupaGet().getUser(userId: currentUser.user!.id);
         if (event.isProvider == true) {
           print('6');
           emit(OTPSuccessedProviderState(
@@ -112,13 +112,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         //---------------get provider -----------
         print('4');
         final ProviderModel? providerModel =
-            await SupaGetAndDelete().getProviderRahaf(
+            await SupaGet().getProviderRahaf(
           userId: currentUser.user!.id,
         );
         //---- get user ----
         print('5');
         final UserModel? userModel =
-            await SupaGetAndDelete().getUser(userId: currentUser.user!.id);
+            await SupaGet().getUser(userId: currentUser.user!.id);
 
         if (event.isProvider == true) {
           print('6');

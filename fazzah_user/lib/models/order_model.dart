@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Order {
   int? id;
   String? provider;
@@ -11,6 +9,7 @@ class Order {
   num? total;
   bool? isDone;
   int? paymentMethod;
+  int? address;
 
   Order(
       {this.id,
@@ -22,7 +21,8 @@ class Order {
       this.orderStatus,
       this.total,
       this.isDone,
-      this.paymentMethod});
+      this.paymentMethod,
+      this.address});
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -35,6 +35,7 @@ class Order {
     total = json['total'];
     isDone = json['is_done'];
     paymentMethod = json['payment_method'];
+    address = json['address'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +49,7 @@ class Order {
     data['total'] = total;
     data['is_done'] = isDone;
     data['payment_method'] = paymentMethod;
+    data['address'] = address;
     return data;
   }
 }
