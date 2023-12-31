@@ -5,7 +5,6 @@ class FavToggleEvent extends FavEvent {
   final String providerID;
 
   FavToggleEvent({required this.state, required this.providerID});
-
 }
 
 class RequestFavList extends FavEvent {}
