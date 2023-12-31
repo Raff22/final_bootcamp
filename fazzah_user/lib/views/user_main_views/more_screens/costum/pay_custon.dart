@@ -60,7 +60,8 @@ class PaymentCard extends StatelessWidget {
                     Text("${paymentinfo.cardname}" ?? "",
                         style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold)),
-                    Text(" تنتهي في  ${paymentinfo.cardNumber ?? ""} "),
+                    Text(
+                        " تنتهي في  ${paymentinfo.cardNumber ?? paymentinfo.email} "),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

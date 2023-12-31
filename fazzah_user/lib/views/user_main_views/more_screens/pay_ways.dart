@@ -40,6 +40,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("طرق الدفع"),
         leading: IconButton(
