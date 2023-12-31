@@ -5,6 +5,7 @@ import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
+import 'package:fazzah_user/views/booking_views/booking_widgets/contact_widget.dart';
 import 'package:fazzah_user/views/booking_views/tracking_view.dart';
 import 'package:fazzah_user/views/chat_views/chat_widgets/provider_chat_screen.dart';
 import 'package:fazzah_user/views/chat_views/chat_widgets/test_page.dart';

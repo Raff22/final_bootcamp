@@ -1,3 +1,4 @@
+import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/views/user_main_views/Favorate_screen.dart';
 import 'package:fazzah_user/views/user_main_views/home_view.dart';
@@ -7,9 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class NavBar extends StatefulWidget {
-  NavBar({super.key, required this.user, this.index = 0});
+  NavBar(
+      {super.key,
+      required this.user,
+      this.index = 0,
+      this.provider,
+      this.navshowRating = false});
   final UserModel user;
   int index;
+  ProviderModel? provider;
+  bool navshowRating;
+
   @override
   _NavBarState createState() => _NavBarState();
 }
@@ -24,7 +33,10 @@ class _NavBarState extends State<NavBar> {
   void initState() {
     _selectedIndex = widget.index;
     _widgetOptions = [
-      MainView(user: widget.user),
+      MainView(
+          user: widget.user,
+          ratedprovider: widget.provider,
+          showRating: widget.navshowRating),
       const FavorateScreen(),
       const OrderCartScreen(),
       MoreScreen(

@@ -1,4 +1,5 @@
 import 'package:fazzah_user/database/get_data.dart';
+import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
@@ -41,9 +42,20 @@ class SupaAdd {
     }
   }
 
-  addRating(Rating rating) async {
+  addRating(Rating rating, ProviderModel provider) async {
     try {
       await supabase.from('ratings').insert(rating.toJson());
+      List<Rating> ratings =
+          await SupaGet().getProviderRatings(providerId: provider.id!);
+      num rateAverage = 0;
+      for (Rating rating in ratings) {
+        if (rating.rate != null) {
+          rateAverage += rating.rate!;
+        }
+      }
+      rateAverage = rateAverage / ratings.length;
+      provider.rateAverage = rateAverage;
+      await SupabaseUpdate().updateProvider(provider);
     } catch (error) {
       print(error.toString());
     }

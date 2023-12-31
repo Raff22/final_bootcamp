@@ -14,14 +14,15 @@ class PaymentMethodWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String title = '';
-    if (method.name! == 'paypal' || method.name! == 'Paypal') {
+    if (method.name! == 'paypal' || method.name! == 'PayPal') {
       title = method.email!;
     } else if (method.name! == 'visa' || method.name! == 'Visa') {
-      title = method.cardNumber!.toString();
+      title = method.cardNumber!;
     }
     return ListTile(
       leading: Image.asset(paymentMap[method.name!]!, height: 36),
       title: TextWidget(text: title),
+      subtitle: TextWidget(text: method.expiresAt ?? ""),
       trailing: showAdd
           ? Container(
               padding: const EdgeInsets.all(8),

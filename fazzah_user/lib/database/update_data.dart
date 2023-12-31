@@ -66,6 +66,14 @@ class SupabaseUpdate {
   updateOrder(Order order, ProviderModel provider) async {
     try {
       await supabase.from('orders').update(order.toJson()).eq('id', order.id!);
+      await updateProvider(provider);
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  updateProvider(ProviderModel provider) async {
+    try {
       await supabase
           .from('providers')
           .update(provider.toJson())
