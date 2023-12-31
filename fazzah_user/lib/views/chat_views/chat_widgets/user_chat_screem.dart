@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserchatScreen extends StatelessWidget {
   UserchatScreen({super.key, required this.provider});
-  final UserModel provider;
+  final ProviderModel provider;
   final TextEditingController messageController = TextEditingController();
 
   @override
