@@ -44,18 +44,21 @@ class ProvidersScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state is BookingLoadingState) {
                     return const Center(
-                        child: CircularProgressIndicator(color: green));
+                        child: Center(
+                            child: CircularProgressIndicator(color: green)));
                   } else if (state is ShowAllProvidersState) {
-                    if (state.providersList.isEmpty) {
-                      return const NotFoundWidget();
+                    if (state.providers.isEmpty) {
+                      return const NotFoundWidget(
+                          message: "نعتذر، لا يوجد ما تبحث عنه حاليًا");
                     }
                     return SizedBox(
                       width: context.getWidth(),
                       height: context.getHeight(),
                       child: ListView.separated(
-                          itemCount: state.providersList.length,
+                          itemCount: state.providers.length,
                           itemBuilder: (context, index) => WorkerCard(
-                              providerInfo: state.providersList[index]),
+                              isFav: state.favs[index],
+                              providerInfo: state.providers[index]),
                           separatorBuilder: (BuildContext context, int index) {
                             return height20;
                           }),

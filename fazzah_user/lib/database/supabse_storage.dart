@@ -51,8 +51,7 @@ class SupaStorage {
     path += pathList[pathList.length - 1];
     try {
       await supabase.from('Fazzah_storage').remove([path]);
-      ProviderModel? temp =
-          await SupaGetAndDelete().getProvider(providerModel.id!);
+      ProviderModel? temp = await SupaGet().getProvider(providerModel.id!);
       temp!.providerImage = null;
       await SupabaseUpdate().updateProviderProfileImage(
           providerID: providerModel.id!, providerImage: temp.providerImage!);

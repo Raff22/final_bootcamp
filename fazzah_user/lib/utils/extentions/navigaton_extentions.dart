@@ -28,4 +28,11 @@ extension NavigatorExtension on BuildContext {
         MaterialPageRoute(builder: (context) => screen),
         ModalRoute.withName("/screen"));
   }
+
+    pushReplacement({required Widget screen}) {
+    Navigator.pushReplacement(
+        this,
+        MaterialPageRoute(builder: (context) => screen),
+        );
+  }
 }

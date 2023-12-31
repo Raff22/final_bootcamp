@@ -1,4 +1,4 @@
-import 'package:fazzah_user/database/get_data.dart';
+import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -36,5 +36,42 @@ class SupabaseUpdate {
       print('error in update supabase provider info ${error.toString()}');
     }
     return null;
+  }
+
+  //---------------- Update new Address -----------------------------
+  updateNewAddressUser(
+      {required int addresId,
+      required String userId,
+      required String address,
+      required String city,
+      required double latitude,
+      required double longitude,
+      required String addressTitle}) async {
+    try {
+      await supabase.from('addresses').update({
+        'user_id': userId,
+        'address': address,
+        'city': city,
+        'latitude': latitude,
+        'longitude': longitude,
+        'address_title': addressTitle
+      }).eq('id', addresId);
+    } catch (error) {
+      print("------- error in Supabase function Add new Address User --------");
+      print(error);
+    }
+    return null;
+  }
+
+  updateOrder(Order order, ProviderModel provider) async {
+    try {
+      await supabase.from('orders').update(order.toJson()).eq('id', order.id!);
+      await supabase
+          .from('providers')
+          .update(provider.toJson())
+          .eq('id', provider.id!);
+    } catch (error) {
+      print(error.toString());
+    }
   }
 }

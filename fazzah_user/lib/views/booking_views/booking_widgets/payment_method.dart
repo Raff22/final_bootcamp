@@ -6,38 +6,33 @@ import 'package:fazzah_user/models/payment_method.dart';
 import 'package:flutter/material.dart';
 
 class PaymentMethodWidget extends StatelessWidget {
-  const PaymentMethodWidget({
-    super.key,
-    required this.method,
-    required this.showOnTap,
-  });
+  const PaymentMethodWidget(
+      {super.key, required this.method, this.showAdd = true});
   final PaymentMethod method;
-  final bool showOnTap;
+  final bool showAdd;
 
   @override
   Widget build(BuildContext context) {
-    return getPaymentInfo();
-  }
-
-  Widget getPaymentInfo() {
     String title = '';
-    if (method.name! == 'paypal') {
+    if (method.name! == 'paypal' || method.name! == 'Paypal') {
       title = method.email!;
-    } else if (method.name! == 'visa') {
+    } else if (method.name! == 'visa' || method.name! == 'Visa') {
       title = method.cardNumber!.toString();
     }
     return ListTile(
       leading: Image.asset(paymentMap[method.name!]!, height: 36),
       title: TextWidget(text: title),
-      trailing: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-              color: green, borderRadius: BorderRadius.circular(10)),
-          child: const Icon(
-            Icons.add,
-            size: 20,
-            color: white,
-          )),
+      trailing: showAdd
+          ? Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: green, borderRadius: BorderRadius.circular(10)),
+              child: const Icon(
+                Icons.add,
+                size: 20,
+                color: white,
+              ))
+          : null,
     );
   }
 }

@@ -5,9 +5,10 @@ abstract class BookingState {}
 class BookingInitial extends BookingState {}
 
 class ShowAllProvidersState extends BookingState {
-  final List<ProviderModel> providersList;
+  final List<ProviderModel> providers;
+  final List<bool> favs;
 
-  ShowAllProvidersState({required this.providersList});
+  ShowAllProvidersState({required this.providers, required this.favs});
 }
 
 class ShowProviderRatingsState extends BookingState {
@@ -38,6 +39,14 @@ class ShowUserPaymentMethodsState extends BookingState {
       {required this.paymentMethodsList, required this.selectedPayments});
 }
 
+class ShowUserAddressesState extends BookingState {
+  final List<Address> addressesList;
+  final List<bool> selectedAddresses;
+
+  ShowUserAddressesState(
+      {required this.addressesList, required this.selectedAddresses});
+}
+
 class ShowSelectedHourState extends BookingState {
   final List<bool> newSelected;
 
@@ -48,4 +57,10 @@ class ShowProviderWorkingHoursState extends BookingState {
   final WorkingHours hours;
 
   ShowProviderWorkingHoursState({required this.hours});
+}
+
+class CreatedOrderSuccessfly extends BookingState {
+  final UserModel user;
+
+  CreatedOrderSuccessfly({required this.user});
 }

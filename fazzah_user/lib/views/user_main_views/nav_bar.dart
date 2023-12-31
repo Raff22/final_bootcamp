@@ -7,25 +7,29 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key, required this.user});
+  NavBar({super.key, required this.user, this.index = 0});
   final UserModel user;
+  int index;
   @override
   _NavBarState createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
   late final List<Widget> _widgetOptions;
   late UserModel currUser;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   @override
   void initState() {
+    _selectedIndex = widget.index;
     _widgetOptions = [
       MainView(user: widget.user),
       const FavorateScreen(),
       const OrderCartScreen(),
-      const MoreScreen()
+      MoreScreen(
+        user: widget.user,
+      )
     ];
     super.initState();
   }

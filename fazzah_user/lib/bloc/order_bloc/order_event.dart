@@ -1,39 +1,38 @@
+import 'package:fazzah_user/models/order_model.dart';
+import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/rating_model.dart';
+
 abstract class OrderEvent {}
 
-class RequestallProvidersEvent extends OrderEvent {}
+class RequestAllUserOrdersEvent extends OrderEvent {}
 
-class RequestProviderRatingsEvent extends OrderEvent {
-  final String providerId;
+class RequestAllProviderOrdersEvent extends OrderEvent {}
 
-  RequestProviderRatingsEvent({required this.providerId});
+class RequestOrderRelaitedInfoEvent extends OrderEvent {
+  final int paymentMethodID;
+  final int addressID;
+
+  RequestOrderRelaitedInfoEvent({
+    required this.paymentMethodID,
+    required this.addressID,
+  });
 }
 
-class RequestProvidersByidEvent extends OrderEvent {
-  final String id;
+class DeleteOrderEvent extends OrderEvent {
+  final int orderId;
 
-  RequestProvidersByidEvent({required this.id});
+  DeleteOrderEvent({required this.orderId});
 }
 
-class RequestProvidersByServiceEvent extends OrderEvent {
-  final String service;
+class PayingEvent extends OrderEvent {
+  Order order;
+  ProviderModel provider;
 
-  RequestProvidersByServiceEvent({required this.service});
+  PayingEvent({required this.order, required this.provider});
 }
 
-class SelectedServiceEvent extends OrderEvent {
-  final int index;
+class RatingAddingEvent extends OrderEvent {
+  final Rating rating;
 
-  SelectedServiceEvent({required this.index});
-}
-
-class SelectedHourEvent extends OrderEvent {
-  final int index;
-
-  SelectedHourEvent({required this.index});
-}
-
-class GetProviderHoursEvent extends OrderEvent {
-  final String providerId;
-
-  GetProviderHoursEvent({required this.providerId});
+  RatingAddingEvent({required this.rating});
 }

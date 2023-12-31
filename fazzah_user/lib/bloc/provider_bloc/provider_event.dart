@@ -40,3 +40,10 @@ class UpdateProviderAccountInfo extends ProviderEvent {
       this.nationality,
       this.job});
 }
+
+class GetProviderData extends ProviderEvent {
+  final String providerID;
+
+  GetProviderData({required this.providerID});
+
+}

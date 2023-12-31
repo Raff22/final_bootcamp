@@ -77,8 +77,8 @@ class ProviderServicesTabView extends StatelessWidget {
 }
 
 //---------------------------------آراء العملاء----------------------------------------
-class RatingWidget extends StatelessWidget {
-  const RatingWidget({
+class MyRatingWidget extends StatelessWidget {
+  const MyRatingWidget({
     super.key,
     required this.ratingInfo,
   });

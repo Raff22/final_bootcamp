@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/models/order_model.dart';
+import 'package:fazzah_user/models/payment_method.dart';
+import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
@@ -9,24 +11,25 @@ import 'package:fazzah_user/views/booking_views/provider_view_screen.dart';
 import 'package:fazzah_user/views/booking_views/providers_view.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_event.dart';
-import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WorkerCard extends StatelessWidget {
-  bool isFav = false;
-  WorkerCard({
+  const WorkerCard({
     super.key,
     required this.providerInfo,
+    required this.isFav,
   });
   final ProviderModel providerInfo;
+  final bool isFav;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         context.pushScreen(
-            screen: ProviderViewScreen(providerInfo: providerInfo));
+            screen:
+                ProviderViewScreen(isFav: isFav, providerInfo: providerInfo));
       },
       child: Container(
           height: context.getHeight(divide: 7),
@@ -39,22 +42,21 @@ class WorkerCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: SizedBox(
-                    height: context.getHeight(divide: 8.5),
-                    width: context.getWidth(divide: 4),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: (providerInfo.providerImage == null ||
-                              providerInfo.providerImage!.isEmpty)
-                          ? Image.asset('assets/images/Logo_provider.png',
-                              fit: BoxFit.fill)
-                          : CachedNetworkImage(
-                              imageUrl: providerInfo.providerImage!,
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(color: green),
-                              fit: BoxFit.fill),
-                    )),
+                borderRadius: BorderRadius.circular(10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: (providerInfo.providerImage == null ||
+                          providerInfo.providerImage!.isEmpty)
+                      ? Image.asset('assets/images/Logo_provider.png',
+                          width: 96, height: 96, fit: BoxFit.fill)
+                      : CachedNetworkImage(
+                          width: 96,
+                          height: 96,
+                          imageUrl: providerInfo.providerImage!,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(color: green),
+                          fit: BoxFit.fill),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 30, top: 15),
@@ -89,25 +91,6 @@ class WorkerCard extends StatelessWidget {
                     )
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 90),
-                child:
-                    BlocBuilder<FavBloc, FavState>(builder: (context, state) {
-                  bool isFav = false;
-                  if (state is FavSelected) {
-                    isFav = state.isFav;
-                  }
-                  return IconButton(
-                    onPressed: () {
-                      context.read<FavBloc>().add(FavToggleEvent());
-                    },
-                    icon: Icon(
-                      isFav ? Icons.favorite : Icons.favorite_border,
-                      color: Colors.red,
-                    ),
-                  );
-                }),
               ),
             ],
           )),
@@ -130,7 +113,8 @@ class WorkerCardorder extends StatelessWidget {
     return InkWell(
       onTap: () {
         context.pushScreen(
-            screen: ProviderViewScreen(providerInfo: providerInfo));
+            screen:
+                ProviderViewScreen(isFav: isFav, providerInfo: providerInfo));
       },
       child: Container(
           height: context.getHeight(divide: 7),
@@ -143,22 +127,21 @@ class WorkerCardorder extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: SizedBox(
-                    height: context.getHeight(divide: 8.5),
-                    width: context.getWidth(divide: 4),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: (providerInfo.providerImage == null ||
-                              providerInfo.providerImage!.isEmpty)
-                          ? Image.asset('assets/images/Logo_provider.png',
-                              fit: BoxFit.fill)
-                          : CachedNetworkImage(
-                              imageUrl: providerInfo.providerImage!,
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(color: green),
-                              fit: BoxFit.fill),
-                    )),
+                borderRadius: BorderRadius.circular(10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: (providerInfo.providerImage == null ||
+                          providerInfo.providerImage!.isEmpty)
+                      ? Image.asset('assets/images/Logo_provider.png',
+                          width: 96, height: 96, fit: BoxFit.fill)
+                      : CachedNetworkImage(
+                          width: 96,
+                          height: 96,
+                          imageUrl: providerInfo.providerImage!,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(color: green),
+                          fit: BoxFit.fill),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 30, top: 15),
@@ -193,25 +176,6 @@ class WorkerCardorder extends StatelessWidget {
                     )
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 90),
-                child:
-                    BlocBuilder<FavBloc, FavState>(builder: (context, state) {
-                  bool isFav = false;
-                  if (state is FavSelected) {
-                    isFav = state.isFav;
-                  }
-                  return IconButton(
-                    onPressed: () {
-                      context.read<FavBloc>().add(FavToggleEvent());
-                    },
-                    icon: Icon(
-                      isFav ? Icons.favorite : Icons.favorite_border,
-                      color: Colors.red,
-                    ),
-                  );
-                }),
               ),
             ],
           )),
@@ -321,7 +285,7 @@ class HomeScreenBotton extends StatelessWidget {
       height: context.getHeight(divide: 16),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: const BorderRadius.all(Radius.circular(11)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Center(
         child: Text(

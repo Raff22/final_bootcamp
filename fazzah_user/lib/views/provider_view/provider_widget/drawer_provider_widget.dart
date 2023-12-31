@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
@@ -13,6 +14,7 @@ import 'package:fazzah_user/views/provider_view/provider_wallet_view.dart';
 import 'package:fazzah_user/views/provider_view/provider_widget/drawer_widget/sub_provider_drawer_widget.dart';
 import 'package:fazzah_user/views/provider_view/provider_workin_time_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DrawerProviderWidget extends StatelessWidget {
   const DrawerProviderWidget({super.key, this.providerModel});
@@ -39,7 +41,6 @@ class DrawerProviderWidget extends StatelessWidget {
               children: [
                 Column(
                   children: [
-
                     // --------------- Image and Name Provider ------------------
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -100,11 +101,14 @@ class DrawerProviderWidget extends StatelessWidget {
                     ),
                     height40,
 
-                     //------------------- Provider Rating ---------------------
+                    //------------------- Provider Rating ---------------------
                     SubProviderDrawerWidget(
                       subTextView: 'اراء العملاء',
                       iconString: 'assets/images/star.png',
                       onPressed: () {
+                        context.read<BookingBloc>().add(
+                            RequestProviderRatingsEvent(
+                                providerId: providerModel!.id!));
                         context.pushScreen(
                             screen: ProviderRatingView(
                           providerModel: providerModel,
@@ -112,8 +116,8 @@ class DrawerProviderWidget extends StatelessWidget {
                       },
                     ),
                     height40,
-                    
-                     //------------------- Provider Wallet ---------------------
+
+                    //------------------- Provider Wallet ---------------------
                     SubProviderDrawerWidget(
                       subTextView: 'المحفظة',
                       iconString: 'assets/images/wallet.png',
@@ -125,8 +129,8 @@ class DrawerProviderWidget extends StatelessWidget {
                       },
                     ),
                     height40,
-                    
-                     //--------------- Provider Working Time ------------------- 
+
+                    //--------------- Provider Working Time -------------------
                     SubProviderDrawerWidget(
                       subTextView: 'اوقات العمل',
                       iconString: 'assets/images/work_time.png',

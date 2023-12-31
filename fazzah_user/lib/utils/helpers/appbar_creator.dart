@@ -7,17 +7,19 @@ AppBar createAppBar(
     {required BuildContext context,
     Widget? leading,
     String? title,
-    bool? centerTitle}) {
+    bool? centerTitle,
+    Widget? trailing}) {
   return AppBar(
     toolbarHeight: context.getHeight(divide: 13),
     leading: leading,
+    actions: [trailing ?? const Text("")],
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
       bottom: Radius.circular(15),
     )),
     foregroundColor: black,
     backgroundColor: lightGreen,
-    centerTitle: centerTitle,
+    centerTitle: true,
     title: TextWidget(
       text: title ?? "",
       textSize: 28,
