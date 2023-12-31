@@ -33,6 +33,7 @@ class PayingEvent extends OrderEvent {
 
 class RatingAddingEvent extends OrderEvent {
   final Rating rating;
+  final ProviderModel provider;
 
-  RatingAddingEvent({required this.rating});
+  RatingAddingEvent({required this.rating, required this.provider});
 }

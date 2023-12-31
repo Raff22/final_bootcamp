@@ -119,11 +119,13 @@ class OrderDetailsView extends StatelessWidget {
                             listener: (context, state) {
                               if (state is PaymentCompletedSuccessfully) {
                                 context.removeUnitl(
-                                    screen: NavBar(user: state.user, index: 2));
+                                    screen: NavBar(
+                                        user: state.user,
+                                        provider: provider,
+                                        navshowRating: true));
                                 showMessageDialog(
                                     context: context,
                                     message: "شكرا لك ، تم الدفع بنجاح.");
-                                    
                               }
                             },
                             child: ContainerWidget(

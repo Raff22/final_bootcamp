@@ -84,7 +84,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<RatingAddingEvent>((event, emit) async {
       emit(OrderLoadingState());
       try {
-        await SupaAdd().addRating(event.rating);
+        await SupaAdd().addRating(event.rating, event.provider);
         emit(RatingAddedSuccessfully());
       } catch (error) {
         emit(OrderErrorState(error: "حدث خطأ في النظام"));
