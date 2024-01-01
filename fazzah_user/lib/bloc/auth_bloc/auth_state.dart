@@ -11,7 +11,9 @@ class LoadingAuthOTPState extends AuthStatee {}
 
 class LoadingAuthLoginState extends AuthStatee {}
 
+class SignOutSuccessedState extends AuthStatee {}
 
+class DeleteAccountSuccessState extends AuthStatee {}
 
 class SignUpSuccessedUserState extends AuthStatee {}
 
@@ -54,11 +56,13 @@ class ErrorAuthSignupState extends AuthStatee {
 
   ErrorAuthSignupState({required this.message});
 }
+
 class ErrorAuthOTPState extends AuthStatee {
   final String message;
 
   ErrorAuthOTPState({required this.message});
 }
+
 class ErrorAuthLoginState extends AuthStatee {
   final String message;
 

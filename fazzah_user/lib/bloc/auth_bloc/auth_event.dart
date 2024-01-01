@@ -1,4 +1,3 @@
-
 abstract class AuthEvent {}
 
 class SignUpUserEvent extends AuthEvent {
@@ -72,4 +71,11 @@ class LoginEvent extends AuthEvent {
       {required this.email, required this.password, required this.isProvider});
 }
 
+class SignOutEvent extends AuthEvent {}
 
+class DeleteAccountEvent extends AuthEvent {
+  final String id;
+  final bool isProvider;
+
+  DeleteAccountEvent({required this.id, required this.isProvider});
+}

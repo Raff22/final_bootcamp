@@ -48,7 +48,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
             onPressed: () {
               context.read<PayBloc>().add(RequestallPaymentsEvent());
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.refresh,
               size: 25,
             ),
@@ -72,11 +72,11 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
             child: Container(
               width: context.getWidth(divide: 1.2),
               height: context.getHeight(divide: 16),
-              decoration: BoxDecoration(
-                color: const Color(0xffeff0eb),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              decoration: const BoxDecoration(
+                color: Color(0xffeff0eb),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
                   "اضف طريقة الدفع",
                   style: TextStyle(fontSize: 20, color: Colors.black),
@@ -165,17 +165,17 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('تاكيد الحذف '),
-                content: Text('هل انت متاكد من حذف البطاقه؟'),
+                title: const Text('تاكيد الحذف '),
+                content: const Text('هل انت متاكد من حذف البطاقه؟'),
                 actions: <Widget>[
                   TextButton(
-                    child: Text('الغاء'),
+                    child: const Text('الغاء'),
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the dialog
                     },
                   ),
                   TextButton(
-                    child: Text('حذف'),
+                    child: const Text('حذف'),
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the dialog
                       deletePaymentMethod(PaymentsList[index].id!);
@@ -206,10 +206,10 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                 //   decoration: const InputDecoration(labelText: 'الاسم'),
                 // ),
                 Padding(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   child: TextField(
                     controller: cardnameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: " الاسم",
                         border: OutlineInputBorder(
                             borderRadius:
@@ -223,10 +223,10 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                   //   decoration: const InputDecoration(labelText: 'رقم البطاقة'),
                   // ),
                   Padding(
-                    padding: EdgeInsets.all(1),
+                    padding: const EdgeInsets.all(1),
                     child: TextField(
                       controller: cardNumberController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'رقم البطاقة',
                           border: OutlineInputBorder(
                               borderRadius:
@@ -242,10 +242,10 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                   //       const InputDecoration(labelText: 'البريد الإلكتروني'),
                   // ),
                   Padding(
-                    padding: EdgeInsets.all(1),
+                    padding: const EdgeInsets.all(1),
                     child: TextField(
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'البريد الإلكتروني',
                           border: OutlineInputBorder(
                               borderRadius:
@@ -259,10 +259,10 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                 //       const InputDecoration(labelText: 'تاريخ الانتهاء'),
                 // ),
                 Padding(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 20),
                   child: TextField(
                     controller: expiresAtController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: 'تاريخ الانتهاء',
                         border: OutlineInputBorder(
                             borderRadius:
@@ -293,13 +293,16 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
       print('Error: User is not authenticated.');
       return;
     }
+    String last4Digits = cardNumberController.text.substring(
+        cardNumberController.text.length - 5,
+        cardNumberController.text.length - 1);
+    String encrypted = '****-****-****-$last4Digits';
 
     var paymentMethod = PaymentMethod(
       userId: id,
       name: selectedPaymentMethod,
       email: emailController.text,
-      cardNumber:
-          selectedPaymentMethod == 'Visa' ? cardNumberController.text : null,
+      cardNumber: selectedPaymentMethod == 'Visa' ? encrypted : null,
       expiresAt: expiresAtController.text,
       cardname: cardnameController.text,
     );

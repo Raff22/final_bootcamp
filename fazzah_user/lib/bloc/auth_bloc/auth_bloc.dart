@@ -62,8 +62,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
 
         //---- get provider ----
         print('4');
-        final ProviderModel? providerModel =
-            await SupaGet().getProviderRahaf(
+        final ProviderModel? providerModel = await SupaGet().getProviderRahaf(
           userId: currentUser.user!.id,
         );
         //---- get user ----
@@ -111,8 +110,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
 
         //---------------get provider -----------
         print('4');
-        final ProviderModel? providerModel =
-            await SupaGet().getProviderRahaf(
+        final ProviderModel? providerModel = await SupaGet().getProviderRahaf(
           userId: currentUser.user!.id,
         );
         //---- get user ----
@@ -138,7 +136,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthStatee> {
         emit(ErrorAuthLoginState(message: error.toString()));
       }
     });
-
-
+    on<SignOutEvent>((event, emit) async {
+      try {
+        await AuthSupabase().signOut();
+        emit(SignOutSuccessedState());
+      } catch (error) {
+        print('catch error ');
+        emit(ErrorAuthLoginState(message: error.toString()));
+      }
+    });
+    on<DeleteAccountEvent>((event, emit) async {
+      try {
+        await AuthSupabase()
+            .deletAccount(id: event.id, isProvider: event.isProvider);
+        emit(DeleteAccountSuccessState());
+      } catch (error) {
+        print('catch error ');
+        emit(ErrorAuthLoginState(message: error.toString()));
+      }
+    });
   }
 }

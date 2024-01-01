@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class PaymentCard extends StatelessWidget {
   final PaymentMethod paymentinfo;
   final VoidCallback onDelete;
-  PaymentCard({
+  const PaymentCard({
     Key? key,
     required this.paymentinfo,
     required this.onDelete,
@@ -84,7 +84,7 @@ class PaymentCard extends StatelessWidget {
                               fontSize: 14, fontWeight: FontWeight.bold)),
                       // lastFourDigits = cardNumber.substring(cardNumber.length - 4);
                       Text(
-                          " البطاقه تبدا في\n ${paymentinfo.name == "Visa" ? lastFourDigits : firstFourChars} "),
+                          " البطاقه تنتهي في\n ${paymentinfo.name == "Visa" ? lastFourDigits : firstFourChars} "),
 
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
