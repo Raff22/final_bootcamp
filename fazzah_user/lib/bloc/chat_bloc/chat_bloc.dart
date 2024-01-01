@@ -74,7 +74,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             element["from_user"] == toUserId &&
                 element["to_user"] == getCurrentUserId));
 
-// -- convert List<Map> to List<Message>
     final messages = allMesaages.map((items) =>
         items.map((item) => Message.fromJson(item, getCurrentUserId)).toList());
 

@@ -10,12 +10,6 @@ class ShowAllPaymentsState extends PayState {
   ShowAllPaymentsState({required this.isdonelist});
 }
 
-class ShowAllPaymentsPayState extends PayState {
-  final List<PaymentMethod> cardslist;
-
-  ShowAllPaymentsPayState({required this.cardslist});
-}
-
 class PayErrorState extends PayState {
   final String error;
 
@@ -23,15 +17,3 @@ class PayErrorState extends PayState {
 }
 
 class PayLoadingState extends PayState {}
-
-class ShowSelectedServiceState extends PayState {
-  final List<bool> newSelected;
-
-  ShowSelectedServiceState({required this.newSelected});
-}
-
-class ShowSelectedHourState extends PayState {
-  final List<bool> newSelected;
-
-  ShowSelectedHourState({required this.newSelected});
-}
