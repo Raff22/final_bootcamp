@@ -7,6 +7,7 @@ import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
+import 'package:fazzah_user/utils/helpers/show_message_green.dart';
 import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/pay_ways.dart';
 import 'package:flutter/material.dart';
@@ -43,17 +44,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     if (id != null) {
       try {
         UserModel updatedUser = UserModel(
-          id: id,
-          name: _nameController.text,
-          phoneNumber: _phoneController.text,
-        );
-
+            id: id,
+            name: _nameController.text,
+            phoneNumber: _phoneController.text,
+            email: widget.user!.email!);
         final response =
-            await supabase.from('users').upsert(updatedUser.toJson());
-        if (response.error == null &&
-            response.data != null &&
-            response.data.isNotEmpty) {
-          return UserModel.fromJson(response.data[0]);
+            await supabase.from('users').upsert(updatedUser.toJson()).select();
+        if (response.isNotEmpty) {
+          return UserModel.fromJson(response[0]);
         } else {
           throw Exception('Failed to update user.');
         }
@@ -108,7 +106,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           InkWell(
             onTap: () async {
               UserModel? updatedUser = await updateuser();
-              if (updatedUser != null) {}
+              if (updatedUser != null) {
+                showMessageDialog(
+                    context: context, message: 'حُدثت بياناتك بنجاح');
+              }
             },
             child: Container(
               width: context.getWidth(divide: 1.2),
@@ -121,33 +122,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 child: Text(
                   "حدث البيانات",
                   style: TextStyle(fontSize: 20, color: lightGreen),
-                ),
-              ),
-            ),
-          ),
-          height10,
-          InkWell(
-            onTap: () {
-              context.read<AuthBloc>().add(SignOutEvent());
-            },
-            child: BlocListener<AuthBloc, AuthStatee>(
-              listener: (context, state) {
-                if (state is SignOutSuccessedState) {
-                  context.removeUnitl(screen: LoginView());
-                }
-              },
-              child: Container(
-                width: context.getWidth(divide: 1.2),
-                height: context.getHeight(divide: 16),
-                decoration: const BoxDecoration(
-                  color: Color(0xffeff0eb),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: const Center(
-                  child: Text(
-                    "تسجيل الخروج",
-                    style: TextStyle(fontSize: 20, color: red),
-                  ),
                 ),
               ),
             ),
