@@ -1,16 +1,14 @@
+// ignore_for_file: must_be_immutable, camel_case_types
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/models/order_model.dart';
-import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/views/booking_views/provider_view_screen.dart';
 import 'package:fazzah_user/views/booking_views/providers_view.dart';
-import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
-import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

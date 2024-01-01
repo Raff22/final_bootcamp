@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:fazzah_user/bloc/order_bloc/order_bloc.dart';
 import 'package:fazzah_user/bloc/order_bloc/order_event.dart';
 import 'package:fazzah_user/bloc/order_bloc/order_state.dart';
