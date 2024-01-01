@@ -1,4 +1,5 @@
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/working_hours_model.dart';
 
 abstract class ProviderState {}
 
@@ -25,3 +26,17 @@ class ErrorUpdateProviderAccountState extends ProviderState {
 
   ErrorUpdateProviderAccountState({required this.errorMessage});
 }
+
+class ShowProviderTheirWorkingHours extends ProviderState {
+  final WorkingHours wHours;
+
+  ShowProviderTheirWorkingHours({required this.wHours});
+}
+
+class UpdateHourSwitchState extends ProviderState {
+  final List<bool> wHours;
+
+  UpdateHourSwitchState({required this.wHours});
+}
+
+class UpdatedProviderWorkingHoursSuccessState extends ProviderState {}

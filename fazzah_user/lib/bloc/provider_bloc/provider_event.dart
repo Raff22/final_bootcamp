@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/working_hours_model.dart';
 
 abstract class ProviderEvent {}
 
@@ -45,5 +46,22 @@ class GetProviderData extends ProviderEvent {
   final String providerID;
 
   GetProviderData({required this.providerID});
+}
 
+class GetProviderWorkingHoursEvent extends ProviderEvent {
+  final String providerID;
+
+  GetProviderWorkingHoursEvent({required this.providerID});
+}
+
+class UpdateProviderWorkingHours extends ProviderEvent {
+  final WorkingHours wHours;
+
+  UpdateProviderWorkingHours({required this.wHours});
+}
+
+class SelectHourSwitchEvent extends ProviderEvent {
+  final List<bool> wHours;
+
+  SelectHourSwitchEvent({required this.wHours});
 }
