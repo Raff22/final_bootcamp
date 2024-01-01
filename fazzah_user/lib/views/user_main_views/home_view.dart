@@ -91,9 +91,6 @@ class MainView extends StatelessWidget {
                         BlocBuilder<UserBloc, UserState>(
                           builder: (context, state) {
                             if (state is LastAddressTitleState) {
-                              print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                              print(state.addressTitle);
-                              print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                               return TextWidget(
                                 text: state.addressTitle,
                                 textColor: darkGrey,
