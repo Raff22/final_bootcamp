@@ -131,9 +131,6 @@ class DrawerProviderWidget extends StatelessWidget {
                       subTextView: 'المحفظة',
                       iconString: 'assets/images/wallet.png',
                       onPressed: () {
-                        context
-                            .read<WalletBloc>()
-                            .add(RequestallWalletmentsEvent());
                         context.pushScreen(
                             screen: ProviderWalletView(
                           providerModel: providerModel,

@@ -1,11 +1,7 @@
-import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
-import 'package:fazzah_user/bloc/payments_bloc/payments_event.dart';
 import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_bloc.dart';
 import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_event.dart';
 import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_state.dart';
 import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/provider_model.dart';
@@ -32,14 +28,14 @@ class ProviderWalletView extends StatelessWidget {
         body: SafeArea(
             child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 200, top: 20, bottom: 20),
+            const Padding(
+              padding: EdgeInsets.only(left: 200, top: 20, bottom: 20),
               child: Text("رصيدك الحالي", style: TextStyle(fontSize: 25)),
             ),
             BlocBuilder<WalletBloc, WalletState>(
               builder: (context, state) {
                 if (state is ShowAllWalletmentsState) {
-                  return Container();
+                  providerModel!.wallet = 0;
                 }
                 return Container(
                   width: 350,
@@ -50,13 +46,13 @@ class ProviderWalletView extends StatelessWidget {
                   child: Center(
                     child: Text(
                       "${providerModel!.wallet ?? ""} ريال",
-                      style: TextStyle(fontSize: 25, color: black),
+                      style: const TextStyle(fontSize: 25, color: black),
                     ),
                   ),
                 );
               },
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(30),
               child: ContainerWidget(
@@ -67,7 +63,7 @@ class ProviderWalletView extends StatelessWidget {
                   onPressed: () {
                     _showBottomSheet(context, providerModel);
                   },
-                  child: Center(
+                  child: const Center(
                       child: TextWidget(
                     text: " تحويل لحسابك البنكي",
                     textSize: 25,
@@ -101,7 +97,7 @@ void _showBottomSheet(BuildContext context, ProviderModel? providerModel) {
           ),
           child: Container(
             height: context.getHeight(divide: 2),
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Form(
               // Wrap your Column with a Form widget
               key: formKey,
@@ -109,7 +105,7 @@ void _showBottomSheet(BuildContext context, ProviderModel? providerModel) {
                 children: <Widget>[
                   TextFormField(
                     controller: nameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "الاسم",
                       border: OutlineInputBorder(),
                     ),
@@ -120,10 +116,10 @@ void _showBottomSheet(BuildContext context, ProviderModel? providerModel) {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TextFormField(
                     controller: ibanController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "حساب الايبان",
                       border: OutlineInputBorder(),
                     ),
@@ -134,10 +130,10 @@ void _showBottomSheet(BuildContext context, ProviderModel? providerModel) {
                       return null;
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TextFormField(
                     controller: bankNameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "اسم البنك",
                       border: OutlineInputBorder(),
                     ),
@@ -148,7 +144,7 @@ void _showBottomSheet(BuildContext context, ProviderModel? providerModel) {
                       return null;
                     },
                   ),
-                  SizedBox(height: 1),
+                  const SizedBox(height: 1),
                   Padding(
                     padding: const EdgeInsets.all(30),
                     child: ContainerWidget(
@@ -166,7 +162,7 @@ void _showBottomSheet(BuildContext context, ProviderModel? providerModel) {
                                 .add(RequestallWalletmentsEvent());
                           }
                         },
-                        child: Center(
+                        child: const Center(
                             child: TextWidget(
                           text: "تحويل لحسابك البنكي",
                           textSize: 25,
