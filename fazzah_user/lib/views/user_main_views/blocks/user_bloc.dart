@@ -48,7 +48,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     });
 
-    // ----------- dlete user addresses ---------------
+    // ----------- Get Last address user addresses ---------------
+    on<GetLastUserAddressEvent>((event, emit) async {
+      emit(LoadingState());
+      try {
+        final List<Address> addressList = await getAddress();
+        emit(LastAddressTitleState(addressList.last.addressTitle!));
+      } catch (error) {
+        print(error);
+        emit(ErrorState(error.toString()));
+      }
+    });
+
+    // ----------- delete user addresses ---------------
     on<DeleteUserAddressEvent>((event, emit) async {
       try {
         await SupabaseDelete().deleteUserAddress(addressId: event.addressID);

@@ -20,3 +20,9 @@ class ErrorState extends UserState {
   ErrorState(this.errorMessage);
 }
 
+class LastAddressTitleState extends UserState {
+  final String addressTitle;
+
+  LastAddressTitleState(this.addressTitle);
+}
+

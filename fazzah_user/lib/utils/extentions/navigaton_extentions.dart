@@ -18,8 +18,8 @@ extension NavigatorExtension on BuildContext {
   //   });
   // }
 
-  popScreen() {
-    Navigator.pop(this, "back");
+  popScreen({String? result}) {
+    Navigator.pop(this, result);
   }
 
   removeUnitl({required Widget screen}) {
@@ -29,10 +29,10 @@ extension NavigatorExtension on BuildContext {
         ModalRoute.withName("/screen"));
   }
 
-    pushReplacement({required Widget screen}) {
+  pushReplacement({required Widget screen}) {
     Navigator.pushReplacement(
-        this,
-        MaterialPageRoute(builder: (context) => screen),
-        );
+      this,
+      MaterialPageRoute(builder: (context) => screen),
+    );
   }
 }

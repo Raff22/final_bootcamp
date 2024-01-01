@@ -57,6 +57,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   late double latitude;
   late double longitude;
   TextEditingController addressTitle = TextEditingController();
+
   //---- initial values -----
   @override
   void initState() {
@@ -83,8 +84,8 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
           centerTitle: true,
           leading: IconButton(
               onPressed: () {
-                context.popScreen();
                 context.read<UserBloc>().add(GetAllUserAddressEvent());
+                context.popScreen(result: 'back');
               },
               icon: const Icon(Icons.arrow_back_ios_new_rounded))),
       body: SizedBox(

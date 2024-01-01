@@ -14,6 +14,9 @@ import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/helpers/name_formatter.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/rating_bottom_sheet.dart';
 import 'package:fazzah_user/views/booking_views/providers_view.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/user_bloc.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/user_event.dart';
+import 'package:fazzah_user/views/user_main_views/blocks/user_state.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/add_place.dart';
 import 'package:flutter/material.dart';
@@ -58,31 +61,51 @@ class MainView extends StatelessWidget {
               //-------------------- Add user Location ------------------
               InkWell(
                 onTap: () {
-                  //
                   final Address address = Address(
                       city: 'Riyadh',
                       address: 'RFHA7596,Al Hamra,Riyadh Principality,13216',
                       latitude: 24.774265,
                       longitude: 46.738586);
                   context.pushScreen(
-                      screen: AddPlaceScreen(
-                    user: user,
-                    address: address,
-                  ));
+                    screen: AddPlaceScreen(
+                      user: user,
+                      address: address,
+                    ),
+                    then: (p0) {
+                      if (p0 == "back") {
+                        context.read<UserBloc>().add(GetLastUserAddressEvent());
+                      }
+                    },
+                  );
                 },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.location_pin,
                         color: grey,
                       ),
                       width10,
-                      TextWidget(
-                        text: 'انقر هنا لإضافة عنوانك',
-                        textColor: darkGrey,
-                      )
+                      Wrap(direction: Axis.vertical, children: [
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            if (state is LastAddressTitleState) {
+                              print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                              print(state.addressTitle);
+                              print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                              return TextWidget(
+                                text: state.addressTitle,
+                                textColor: darkGrey,
+                              );
+                            }
+                            return const TextWidget(
+                              text: 'انقر لإضافة عنوان جديد',
+                              textColor: darkGrey,
+                            );
+                          },
+                        ),
+                      ])
                     ],
                   ),
                 ),

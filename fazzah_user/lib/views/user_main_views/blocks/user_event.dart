@@ -23,6 +23,11 @@ class GetAllUserAddressEvent extends UserEvent {
   GetAllUserAddressEvent();
 }
 
+
+class GetLastUserAddressEvent extends UserEvent {
+  GetLastUserAddressEvent();
+}
+
 class DeleteUserAddressEvent extends UserEvent {
   final int addressID;
   DeleteUserAddressEvent(this.addressID);
