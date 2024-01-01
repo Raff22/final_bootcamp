@@ -36,7 +36,7 @@ class PaymentCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        context.pushScreen(screen: PayWaysScreen());
+        context.pushScreen(screen: const PayWaysScreen());
       },
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -86,7 +86,7 @@ class PaymentCard extends StatelessWidget {
                       Text(
                           " البطاقه تبدا في\n ${paymentinfo.name == "Visa" ? lastFourDigits : firstFourChars} "),
 
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // Text(paymentinfo.email ?? "",
@@ -97,13 +97,13 @@ class PaymentCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Text("تنتهي في  ${paymentinfo.expiresAt ?? ""}",
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.bold)),
                 width32,
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: onDelete,
                 ),
               ],

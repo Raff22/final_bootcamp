@@ -65,3 +65,9 @@ class SelectHourSwitchEvent extends ProviderEvent {
 
   SelectHourSwitchEvent({required this.wHours});
 }
+
+class GetAddressByID extends ProviderEvent {
+  final int addressID;
+
+  GetAddressByID({required this.addressID});
+}

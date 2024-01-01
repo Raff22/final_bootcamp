@@ -112,7 +112,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             cityName = place.locality!;
             address = pinAddress;
             latitude = locatin.latitude;
-            longitude = locatin.latitude;
+            longitude = locatin.longitude;
             setState(() {});
           },
           //----------------------------------------------------------------------

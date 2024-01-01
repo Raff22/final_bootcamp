@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/constant/color.dart';

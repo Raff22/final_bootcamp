@@ -1,3 +1,4 @@
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
 
@@ -40,3 +41,9 @@ class UpdateHourSwitchState extends ProviderState {
 }
 
 class UpdatedProviderWorkingHoursSuccessState extends ProviderState {}
+
+class GetOrderAddressUserState extends ProviderState {
+  final Address address;
+
+  GetOrderAddressUserState({required this.address});
+}

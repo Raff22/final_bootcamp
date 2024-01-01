@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
 import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';

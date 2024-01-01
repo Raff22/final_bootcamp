@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fazzah_user/app_data/static_data.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';

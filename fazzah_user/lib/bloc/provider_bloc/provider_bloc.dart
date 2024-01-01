@@ -4,6 +4,7 @@ import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/database/supabse_storage.dart';
 import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/global/globals_data/globals_data.dart';
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,6 +88,14 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
         print(error.toString());
         emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
       }
+    });
+
+    //--------------- get address id --------------------
+    on<GetAddressByID>((event, emit) async {
+      final Address address =
+          await SupaGet().getAddressesById(id: event.addressID);
+
+      emit(GetOrderAddressUserState(address: address));
     });
   }
 }

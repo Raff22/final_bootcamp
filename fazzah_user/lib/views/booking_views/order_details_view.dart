@@ -15,13 +15,11 @@ import 'package:fazzah_user/utils/helpers/show_dialog_message.dart';
 import 'package:fazzah_user/utils/helpers/show_message_green.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/contact_widget.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/payment_method.dart';
-import 'package:fazzah_user/views/booking_views/booking_widgets/rating_bottom_sheet.dart';
 import 'package:fazzah_user/views/booking_views/booking_widgets/status_container.dart';
 import 'package:fazzah_user/views/chat_views/chat_widgets/user_chat_screem.dart';
 import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class OrderDetailsView extends StatelessWidget {
   const OrderDetailsView(
