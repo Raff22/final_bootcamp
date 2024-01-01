@@ -8,7 +8,6 @@ import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/user_bloc.dart';
-import 'package:fazzah_user/views/user_main_views/blocks/user_event.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/user_state.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/add_place.dart';
 import 'package:flutter/material.dart';

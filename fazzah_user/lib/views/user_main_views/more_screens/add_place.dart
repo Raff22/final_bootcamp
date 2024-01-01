@@ -13,7 +13,6 @@ import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/utils/helpers/show_dialog_message.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/user_bloc.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/user_event.dart';
-import 'package:fazzah_user/views/user_main_views/blocks/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -88,32 +87,36 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                 context.read<UserBloc>().add(GetAllUserAddressEvent());
               },
               icon: const Icon(Icons.arrow_back_ios_new_rounded))),
-      body: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: googlePlex,
-        markers: Set<Marker>.of(markers),
-        onMapCreated: (GoogleMapController controllerMap) {
-          _controller.complete(controllerMap);
-        },
+      body: SizedBox(
+        height: context.getHeight(divide: 1.70),
+        width: context.getWidth(),
+        child: GoogleMap(
+          mapType: MapType.normal,
+          initialCameraPosition: googlePlex,
+          markers: Set<Marker>.of(markers),
+          onMapCreated: (GoogleMapController controllerMap) {
+            _controller.complete(controllerMap);
+          },
 
-        //---------------------- Pin a marker in the map -----------------------
-        onTap: (locatin) async {
-          markers.add(Marker(
-              markerId: const MarkerId('New location'),
-              position: LatLng(locatin.latitude, locatin.longitude)));
+          //---------------------- Pin a marker in the map -----------------------
+          onTap: (locatin) async {
+            markers.add(Marker(
+                markerId: const MarkerId('New location'),
+                position: LatLng(locatin.latitude, locatin.longitude)));
 
-          List<Placemark> placemarks = await placemarkFromCoordinates(
-              locatin.latitude, locatin.longitude);
-          Placemark place = placemarks[0];
-          final pinAddress =
-              '${place.street},${place.subLocality},${place.subAdministrativeArea},${place.postalCode}';
-          cityName = place.locality!;
-          address = pinAddress;
-          latitude = locatin.latitude;
-          longitude = locatin.latitude;
-          setState(() {});
-        },
-        //----------------------------------------------------------------------
+            List<Placemark> placemarks = await placemarkFromCoordinates(
+                locatin.latitude, locatin.longitude);
+            Placemark place = placemarks[0];
+            final pinAddress =
+                '${place.street},${place.subLocality},${place.subAdministrativeArea},${place.postalCode}';
+            cityName = place.locality!;
+            address = pinAddress;
+            latitude = locatin.latitude;
+            longitude = locatin.latitude;
+            setState(() {});
+          },
+          //----------------------------------------------------------------------
+        ),
       ),
 
       //--------------------------- Bottom Sheet -------------------------------
