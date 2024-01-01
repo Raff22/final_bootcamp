@@ -19,6 +19,7 @@ class DeleteAccountWidget extends StatelessWidget {
             contentText: 'هل أنت متأكد من حذف الحساب ؟',
             onPressed: () {
               
+              
             });
       },
       child: const TextWidget(
