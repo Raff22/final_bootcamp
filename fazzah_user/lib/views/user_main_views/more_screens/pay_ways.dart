@@ -36,7 +36,6 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
     super.initState();
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
