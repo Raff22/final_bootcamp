@@ -107,7 +107,7 @@ class MyRatingWidget extends StatelessWidget {
                   color: lightGrey);
             }),
           ),
-          TextWidget(text: ratingInfo.comment!, textSize: 15),
+          TextWidget(text: ratingInfo.comment ?? "", textSize: 15),
         ],
       ),
       TextWidget(

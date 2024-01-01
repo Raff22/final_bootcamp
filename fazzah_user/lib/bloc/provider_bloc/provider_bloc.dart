@@ -5,6 +5,7 @@ import 'package:fazzah_user/database/supabse_storage.dart';
 import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/global/globals_data/globals_data.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
@@ -31,16 +32,17 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
 
     on<UpdateProviderAccountInfo>((event, emit) async {
       emit(LoadingUpdateProviderAccountState());
+      if (event.name != null && event.name!.isNotEmpty) {
+        event.provider.name = event.name!;
+      }
+      if (event.phoneNumber != null && event.phoneNumber!.isNotEmpty) {
+        event.provider.phoneNumber = event.phoneNumber!;
+      }
+      event.provider.nationality = event.nationality!;
+      event.provider.idNumber = event.nationalID!;
+      event.provider.job = event.job!;
       try {
-        await SupabaseUpdate().updateProviderAccountInfo(
-          providerID: event.providerID,
-          name: event.name,
-          nationalID: event.nationalID,
-          nationality: event.nationality,
-          phoneNumber: event.phoneNumber,
-          job: event.job,
-        );
-
+        await SupabaseUpdate().updateProvider(event.provider);
         emit(SuccessUpdateProviderAccountState());
       } catch (error) {
         print(error);
@@ -51,13 +53,38 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
     on<GetProviderData>((event, emit) async {
       emit(LoadingUpdateProviderAccountState());
       try {
-        final ProviderModel? providerModel =
-            await SupaGetAndDelete().getProviderRahaf(
+        final ProviderModel? providerModel = await SupaGet().getProviderRahaf(
           userId: event.providerID,
         );
         emit(SuccessUpdateProviderAccountState(providerModel: providerModel));
       } catch (error) {
         print(error);
+        emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
+      }
+    });
+
+    on<GetProviderWorkingHoursEvent>((event, emit) async {
+      emit(LoadingUpdateProviderAccountState());
+      try {
+        WorkingHours workHours = await SupaGet()
+            .getProviderWorkingHours(providerId: event.providerID);
+        emit(ShowProviderTheirWorkingHours(wHours: workHours));
+      } catch (error) {
+        print(error.toString());
+        emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
+      }
+    });
+
+    on<SelectHourSwitchEvent>((event, emit) async {
+      emit(UpdateHourSwitchState(wHours: event.wHours));
+    });
+
+    on<UpdateProviderWorkingHours>((event, emit) async {
+      try {
+        await SupabaseUpdate().updateWorkingHours(event.wHours);
+        emit(UpdatedProviderWorkingHoursSuccessState());
+      } catch (error) {
+        print(error.toString());
         emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
       }
     });

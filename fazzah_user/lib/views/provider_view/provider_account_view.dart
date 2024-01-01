@@ -9,6 +9,7 @@ import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/format_checkers/format_checks.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
@@ -20,15 +21,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProviderAccountView extends StatefulWidget {
+class ProviderAccountView extends StatelessWidget {
   ProviderAccountView({super.key, this.providerModel});
   ProviderModel? providerModel;
 
-  @override
-  State<ProviderAccountView> createState() => _ProviderAccountViewState();
-}
-
-class _ProviderAccountViewState extends State<ProviderAccountView> {
   TextEditingController nameController = TextEditingController();
 
   TextEditingController nationalIDController = TextEditingController();
@@ -40,17 +36,12 @@ class _ProviderAccountViewState extends State<ProviderAccountView> {
   TextEditingController jobController = TextEditingController();
 
   @override
-  void initState() {
-    nameController.text = widget.providerModel!.name!;
-    nationalIDController.text = widget.providerModel!.idNumber!;
-    phoneNumberController.text = widget.providerModel!.phoneNumber!;
-    nationalityController.text = widget.providerModel!.nationality!;
-    jobController.text = widget.providerModel!.job!;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    nameController.text = providerModel!.name!;
+    nationalIDController.text = providerModel!.idNumber!;
+    phoneNumberController.text = providerModel!.phoneNumber!;
+    nationalityController.text = providerModel!.nationality!;
+    jobController.text = providerModel!.job!;
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -58,7 +49,7 @@ class _ProviderAccountViewState extends State<ProviderAccountView> {
       child: Scaffold(
         appBar:
             createAppBar(context: context, title: 'حسابي', centerTitle: true),
-        drawer: DrawerProviderWidget(providerModel: widget.providerModel),
+        drawer: DrawerProviderWidget(providerModel: providerModel),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -77,23 +68,21 @@ class _ProviderAccountViewState extends State<ProviderAccountView> {
                         );
                       }
                       if (state is SuccessUploadedImageState) {
-                        widget.providerModel!.providerImage =
-                            state.providerImagePath;
+                        providerModel!.providerImage = state.providerImagePath;
                       }
                       return ClipOval(
                         child: ContainerWidget(
                           contanierBorderRadius: 0,
                           containerHeight: context.getWidth(divide: 3),
                           containerWidth: context.getWidth(divide: 3),
-                          child: widget.providerModel!.providerImage == null ||
-                                  widget.providerModel!.providerImage!.isEmpty
+                          child: providerModel!.providerImage == null ||
+                                  providerModel!.providerImage!.isEmpty
                               ? Image.asset(
                                   'assets/images/image_provider.png',
                                   fit: BoxFit.fill,
                                 )
                               : CachedNetworkImage(
-                                  imageUrl:
-                                      widget.providerModel!.providerImage!,
+                                  imageUrl: providerModel!.providerImage!,
                                   height: 100,
                                   width: 100,
                                   fit: BoxFit.fill,
@@ -110,8 +99,7 @@ class _ProviderAccountViewState extends State<ProviderAccountView> {
                       File image = await pickImageFromeGallery();
                       print(image.path);
                       context.read<ProviderBloc>().add(UploadProviderImageEvent(
-                          imageFile: image,
-                          providerModel: widget.providerModel));
+                          imageFile: image, providerModel: providerModel));
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +127,7 @@ class _ProviderAccountViewState extends State<ProviderAccountView> {
                           color: green,
                         ),
                       );
-                    } 
+                    }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -201,15 +189,20 @@ class _ProviderAccountViewState extends State<ProviderAccountView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             UpdateAccountWidget(
-                              providerModel: widget.providerModel!,
-                              name: nameController.text,
-                              phoneNumber: phoneNumberController.text,
-                              nationalID: nationalIDController.text,
-                              nationality: nationalityController.text,
-                              job: jobController.text,
+                              onPressed: () {
+                                context.read<ProviderBloc>().add(
+                                    UpdateProviderAccountInfo(
+                                        provider: providerModel!,
+                                        name: nameController.text,
+                                        nationalID: nationalIDController.text,
+                                        nationality: nationalityController.text,
+                                        phoneNumber: phoneNumberController.text,
+                                        job: jobController.text));
+                                context.popScreen();
+                              },
                             ),
                             DeleteAccountWidget(
-                              providerModel: widget.providerModel!,
+                              providerModel: providerModel!,
                             )
                           ],
                         ),

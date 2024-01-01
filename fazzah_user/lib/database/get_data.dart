@@ -7,7 +7,7 @@ import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SupaGetAndDelete {
+class SupaGet {
   final supabase = Supabase.instance.client;
 
   getProvider(String id) async {
@@ -88,19 +88,6 @@ class SupaGetAndDelete {
     } catch (error) {
       print(error.toString());
       return temp;
-    }
-  }
-
-  deleteFavorite(String providerId) async {
-    final String id = supabase.auth.currentUser!.id;
-    try {
-      await supabase
-          .from('favorites')
-          .delete()
-          .eq('user_id', id)
-          .eq('provider_id', providerId);
-    } catch (error) {
-      print(error.toString());
     }
   }
 
@@ -284,6 +271,19 @@ class SupaGetAndDelete {
     }
   }
 
+  getAddressesById({required int id}) async {
+    try {
+      final response = await supabase.from('addresses').select().eq('id', id);
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return Address.fromJson(response[0]);
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
   getProviderRatings({required String providerId}) async {
     try {
       final response =
@@ -326,6 +326,20 @@ class SupaGetAndDelete {
       } else {
         return List.generate(response.length,
             (index) => PaymentMethod.fromJson(response[index]));
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  getPaymentMethodById({required int id}) async {
+    try {
+      final response =
+          await supabase.from('payment_methods').select().eq('id', id);
+      if (response.isEmpty) {
+        return null;
+      } else {
+        return PaymentMethod.fromJson(response[0]);
       }
     } catch (error) {
       print(error.toString());

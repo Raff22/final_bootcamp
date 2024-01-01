@@ -1,6 +1,9 @@
 import 'package:fazzah_user/database/get_data.dart';
+import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/rating_model.dart';
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaAdd {
@@ -19,11 +22,24 @@ class SupaAdd {
     return null;
   }
 
+  Future<UserModel?> updateuser(UserModel user) async {
+    final String id = supabase.auth.currentUser!.id;
+    user.id = id;
+    try {
+      final response =
+          await supabase.from('users').upsert(user.toJson()).select();
+      return UserModel.fromJson(response[0]);
+    } catch (error) {
+      print(error.toString());
+    }
+    return null;
+  }
+
   addFavorite(String providerId) async {
     final String id = supabase.auth.currentUser!.id;
     bool add = true;
     try {
-      final response = await SupaGetAndDelete().getFavoriteProviders();
+      final response = await SupaGet().getFavoriteProviders();
       for (ProviderModel element in response) {
         if (element.id == providerId) {
           add = false;
@@ -40,7 +56,25 @@ class SupaAdd {
     }
   }
 
-  
+  addRating(Rating rating, ProviderModel provider) async {
+    try {
+      await supabase.from('ratings').insert(rating.toJson());
+      List<Rating> ratings =
+          await SupaGet().getProviderRatings(providerId: provider.id!);
+      num rateAverage = 0;
+      for (Rating rating in ratings) {
+        if (rating.rate != null) {
+          rateAverage += rating.rate!;
+        }
+      }
+      rateAverage = rateAverage / ratings.length;
+      provider.rateAverage = rateAverage;
+      await SupabaseUpdate().updateProvider(provider);
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
   //---------------- Add new Address -----------------------------
   addNewAddressUser(
       {required String userId,

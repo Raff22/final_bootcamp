@@ -1,3 +1,4 @@
+import 'package:fazzah_user/database/delete_data.dart';
 import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/database/supabase_add.dart';
 import 'package:fazzah_user/models/provider_model.dart';
@@ -18,7 +19,7 @@ class FavBloc extends Bloc<FavEvent, FavState> {
         } else {
           currentfav = false;
           emit(FavSelected(isFav: currentfav, id: event.providerID));
-          await SupaGetAndDelete().deleteFavorite(event.providerID);
+          await SupabaseDelete().deleteFavorite(event.providerID);
           add(RequestFavList());
         }
       },
@@ -26,8 +27,7 @@ class FavBloc extends Bloc<FavEvent, FavState> {
     on<RequestFavList>((event, emit) async {
       emit(FavoriteLoadingState());
       try {
-        final List<ProviderModel> favs =
-            await SupaGetAndDelete().getFavoriteProviders();
+        final List<ProviderModel> favs = await SupaGet().getFavoriteProviders();
         emit(ShowFavoritesState(favList: favs));
       } catch (error) {
         print(error.toString());

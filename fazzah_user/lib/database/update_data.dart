@@ -1,3 +1,6 @@
+import 'package:fazzah_user/models/order_model.dart';
+import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseUpdate {
@@ -59,5 +62,33 @@ class SupabaseUpdate {
       print(error);
     }
     return null;
+  }
+
+  updateOrder(Order order, ProviderModel provider) async {
+    try {
+      await supabase.from('orders').update(order.toJson()).eq('id', order.id!);
+      await updateProvider(provider);
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  updateWorkingHours(WorkingHours workHours) async {
+    try {
+      await supabase.from('working_hours').upsert(workHours.toJson());
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  updateProvider(ProviderModel provider) async {
+    try {
+      await supabase
+          .from('providers')
+          .update(provider.toJson())
+          .eq('id', provider.id!);
+    } catch (error) {
+      print(error.toString());
+    }
   }
 }
