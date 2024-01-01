@@ -32,16 +32,17 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
 
     on<UpdateProviderAccountInfo>((event, emit) async {
       emit(LoadingUpdateProviderAccountState());
+      if (event.name != null && event.name!.isNotEmpty) {
+        event.provider.name = event.name!;
+      }
+      if (event.phoneNumber != null && event.phoneNumber!.isNotEmpty) {
+        event.provider.phoneNumber = event.phoneNumber!;
+      }
+      event.provider.nationality = event.nationality!;
+      event.provider.idNumber = event.nationalID!;
+      event.provider.job = event.job!;
       try {
-        await SupabaseUpdate().updateProviderAccountInfo(
-          providerID: event.providerID,
-          name: event.name,
-          nationalID: event.nationalID,
-          nationality: event.nationality,
-          phoneNumber: event.phoneNumber,
-          job: event.job,
-        );
-
+        await SupabaseUpdate().updateProvider(event.provider);
         emit(SuccessUpdateProviderAccountState());
       } catch (error) {
         print(error);
