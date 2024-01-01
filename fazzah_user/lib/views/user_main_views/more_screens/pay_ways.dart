@@ -7,7 +7,7 @@ import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/views/user_main_views/more_screens/costum/pay_custon.dart';
+import 'package:fazzah_user/views/user_main_views/more_screens/costum/pay_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -192,6 +192,8 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
     );
   }
 
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Add this line
+
   void _showInfoInputDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -199,86 +201,96 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
         return AlertDialog(
           title: const Text('ادخل المعلومات'),
           content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                // TextField(
-                //   controller: cardnameController,
-                //   decoration: const InputDecoration(labelText: 'الاسم'),
-                // ),
-                Padding(
-                  padding: EdgeInsets.all(1),
-                  child: TextField(
-                    controller: cardnameController,
-                    decoration: InputDecoration(
-                        hintText: " الاسم",
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)))),
-                  ),
-                ),
-                height20,
-                if (selectedPaymentMethod == 'Visa')
-                  // TextField(
-                  //   controller: cardNumberController,
-                  //   decoration: const InputDecoration(labelText: 'رقم البطاقة'),
-                  // ),
+            child: Form(
+              key: _formKey,
+              child: ListBody(
+                children: <Widget>[
                   Padding(
                     padding: EdgeInsets.all(1),
-                    child: TextField(
-                      controller: cardNumberController,
+                    child: TextFormField(
+                      controller: cardnameController,
                       decoration: InputDecoration(
-                          hintText: 'رقم البطاقة',
+                          hintText: " الاسم",
                           border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)))),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'الرجاء ادخال الاسم';
+                        }
+                        return null;
+                      },
                     ),
                   ),
-                height20,
-                if (selectedPaymentMethod == 'PayPal' ||
-                    selectedPaymentMethod == 'ApplePay')
-                  // TextField(
-                  //   controller: emailController,
-                  //   decoration:
-                  //       const InputDecoration(labelText: 'البريد الإلكتروني'),
-                  // ),
+                  height20,
+                  if (selectedPaymentMethod == 'Visa')
+                    Padding(
+                      padding: EdgeInsets.all(1),
+                      child: TextFormField(
+                        controller: cardNumberController,
+                        decoration: InputDecoration(
+                            hintText: 'رقم البطاقة',
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)))),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'الرجاء ادخال رقم البطاقه ';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  height20,
+                  if (selectedPaymentMethod == 'PayPal' ||
+                      selectedPaymentMethod == 'ApplePay')
+                    Padding(
+                      padding: EdgeInsets.all(1),
+                      child: TextFormField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                            hintText: 'البريد الإلكتروني',
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)))),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'الرجاء ادخال البريد الالكتروني';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
                   Padding(
-                    padding: EdgeInsets.all(1),
-                    child: TextField(
-                      controller: emailController,
+                    padding: EdgeInsets.only(top: 20),
+                    child: TextFormField(
+                      controller: expiresAtController,
                       decoration: InputDecoration(
-                          hintText: 'البريد الإلكتروني',
+                          hintText: 'تاريخ الانتهاء',
                           border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)))),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'الرجاء ادخال تاريخ الانتهاء';
+                        }
+                        return null;
+                      },
                     ),
                   ),
-
-                // TextField(
-                //   controller: expiresAtController,
-                //   decoration:
-                //       const InputDecoration(labelText: 'تاريخ الانتهاء'),
-                // ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: TextField(
-                    controller: expiresAtController,
-                    decoration: InputDecoration(
-                        hintText: 'تاريخ الانتهاء',
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)))),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           actions: <Widget>[
             ElevatedButton(
               child: const Text('حفظ'),
               onPressed: () {
-                Navigator.of(context).pop();
-                _savePaymentMethod();
-                context.read<PayBloc>().add(RequestallPaymentsEvent());
+                if (_formKey.currentState!.validate()) {
+                  Navigator.of(context).pop();
+                  _savePaymentMethod();
+                  context.read<PayBloc>().add(RequestallPaymentsEvent());
+                }
               },
             ),
           ],

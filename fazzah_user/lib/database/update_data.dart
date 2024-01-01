@@ -91,4 +91,13 @@ class SupabaseUpdate {
       print(error.toString());
     }
   }
+
+  updateProviderWallet() async {
+    final String id = supabase.auth.currentUser!.id;
+    try {
+      await supabase.from('providers').update({'wallet': 0}).eq('id', id);
+    } catch (error) {
+      print(error.toString());
+    }
+  }
 }

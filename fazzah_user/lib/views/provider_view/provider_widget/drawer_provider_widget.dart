@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
 import 'package:fazzah_user/bloc/provider_bloc/provider_bloc.dart';
 import 'package:fazzah_user/bloc/provider_bloc/provider_event.dart';
+import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_bloc.dart';
+import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_event.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/container_widget.dart';
@@ -124,6 +126,9 @@ class DrawerProviderWidget extends StatelessWidget {
                       subTextView: 'المحفظة',
                       iconString: 'assets/images/wallet.png',
                       onPressed: () {
+                        context
+                            .read<WalletBloc>()
+                            .add(RequestallWalletmentsEvent());
                         context.pushScreen(
                             screen: ProviderWalletView(
                           providerModel: providerModel,
