@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, unused_field
+
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/views/user_main_views/Favorate_screen.dart';

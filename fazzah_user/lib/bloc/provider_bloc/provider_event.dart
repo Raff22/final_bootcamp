@@ -26,7 +26,7 @@ class UpdateProviderImageEvent extends ProviderEvent {
 }
 
 class UpdateProviderAccountInfo extends ProviderEvent {
-  final String providerID;
+  ProviderModel provider;
   final String? name;
   final String? nationalID;
   final String? phoneNumber;
@@ -34,7 +34,7 @@ class UpdateProviderAccountInfo extends ProviderEvent {
   final String? job;
 
   UpdateProviderAccountInfo(
-      {required this.providerID,
+      {required this.provider,
       this.name,
       this.nationalID,
       this.phoneNumber,
@@ -64,4 +64,10 @@ class SelectHourSwitchEvent extends ProviderEvent {
   final List<bool> wHours;
 
   SelectHourSwitchEvent({required this.wHours});
+}
+
+class GetAddressByID extends ProviderEvent {
+  final int addressID;
+
+  GetAddressByID({required this.addressID});
 }

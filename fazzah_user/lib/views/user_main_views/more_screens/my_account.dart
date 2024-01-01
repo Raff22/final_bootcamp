@@ -1,9 +1,17 @@
+import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
+import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
+import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
+import 'package:fazzah_user/constant/color.dart';
+import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
+import 'package:fazzah_user/utils/helpers/show_message_green.dart';
+import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/pay_ways.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen({super.key, this.user});
@@ -36,17 +44,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     if (id != null) {
       try {
         UserModel updatedUser = UserModel(
-          id: id,
-          name: _nameController.text,
-          phoneNumber: _phoneController.text,
-        );
-
+            id: id,
+            name: _nameController.text,
+            phoneNumber: _phoneController.text,
+            email: widget.user!.email!);
         final response =
-            await supabase.from('users').upsert(updatedUser.toJson());
-        if (response.error == null &&
-            response.data != null &&
-            response.data.isNotEmpty) {
-          return UserModel.fromJson(response.data[0]);
+            await supabase.from('users').upsert(updatedUser.toJson()).select();
+        if (response.isNotEmpty) {
+          return UserModel.fromJson(response[0]);
         } else {
           throw Exception('Failed to update user.');
         }
@@ -75,10 +80,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(30),
+            padding: const EdgeInsets.all(30),
             child: TextField(
               controller: _nameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.person, color: Colors.grey),
                 hintText: 'Name',
                 border: OutlineInputBorder(
@@ -87,10 +92,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(30),
+            padding: const EdgeInsets.all(30),
             child: TextField(
               controller: _phoneController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 suffixIcon: Icon(Icons.phone, color: Colors.grey),
                 hintText: 'Phone Number',
                 border: OutlineInputBorder(
@@ -101,19 +106,22 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           InkWell(
             onTap: () async {
               UserModel? updatedUser = await updateuser();
-              if (updatedUser != null) {}
+              if (updatedUser != null) {
+                showMessageDialog(
+                    context: context, message: 'حُدثت بياناتك بنجاح');
+              }
             },
             child: Container(
               width: context.getWidth(divide: 1.2),
               height: context.getHeight(divide: 16),
-              decoration: BoxDecoration(
-                color: const Color(0xffeff0eb),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              decoration: const BoxDecoration(
+                color: green,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
-              child: Center(
+              child: const Center(
                 child: Text(
                   "حدث البيانات",
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: TextStyle(fontSize: 20, color: lightGreen),
                 ),
               ),
             ),

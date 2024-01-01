@@ -1,6 +1,12 @@
+import 'package:fazzah_user/database/get_data.dart';
+import 'package:fazzah_user/models/provider_model.dart';
+import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/views/auth_views/onboarding_view/first_onboarding_view.dart';
+import 'package:fazzah_user/views/provider_view/provider_booking_requests_view.dart';
+import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LogoView extends StatefulWidget {
   const LogoView({super.key});
@@ -12,8 +18,27 @@ class LogoView extends StatefulWidget {
 class _LogoViewState extends State<LogoView> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3), () {
-      context.pushScreen(screen: const FirstOnboardingView());
+    Future.delayed(const Duration(seconds: 4), () async {
+      final supa = Supabase.instance.client;
+      final token = supa.auth.currentSession?.accessToken;
+      if (token != null) {
+        final isExpired = supa.auth.currentSession?.isExpired ?? false;
+        if (isExpired) {
+          await supa.auth.setSession(supa.auth.currentSession!.refreshToken!);
+        }
+        final String id = supa.auth.currentUser!.id;
+        final UserModel? user = await SupaGet().getUser(userId: id);
+        if (user != null) {
+          context.removeUnitl(screen: NavBar(user: user));
+        }
+        final ProviderModel? provider = await SupaGet().getProvider(id);
+        if (provider != null) {
+          context.removeUnitl(
+              screen: ProviderBookingRequestsView(providerModel: provider));
+        }
+      } else {
+        context.removeUnitl(screen: const FirstOnboardingView());
+      }
     });
     super.initState();
   }
@@ -26,83 +51,3 @@ class _LogoViewState extends State<LogoView> {
     );
   }
 }
-
-
-
-
-// import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-// import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-// import 'package:fazzah_user/views/auth_views/onboarding_view/first_onboarding_view.dart';
-// import 'package:flutter/material.dart';
-
-// class LogoView extends StatefulWidget {
-//   const LogoView({
-//     super.key,
-//   });
-
-//   @override
-//   State<LogoView> createState() => _LogoViewState();
-// }
-
-// class _LogoViewState extends State<LogoView> {
-//   double top = 300;
-//   bool text = false;
-
-//   @override
-//   void initState() {
-//     topPosition();
-//     super.initState();
-//   }
-
-//   topPosition() {
-//     Future.delayed(const Duration(milliseconds: 100), () {
-//       setState(() {
-//         top = 100;
-//       });
-//     });
-//     Future.delayed(const Duration(seconds: 2), () {
-//       setState(() {
-//         text = true;
-//       });
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Stack(children: [
-//           Container(
-//             height: context.getHeight(),
-//             width: context.getWidth(),
-//           ),
-//           Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               AnimatedPositioned(
-//                 top: top,
-//                 // left: MediaQuery.of(context).size.width * 0.25,
-//                 curve: Curves.elasticOut,
-//                 duration: const Duration(seconds: 2),
-//                 child: Image.asset(
-//                   "assets/images/Logo.png",
-//                 ),
-//               ),
-//               text
-//                   ? AnimatedPositioned(
-//                       top: top,
-//                       // left: MediaQuery.of(context).size.width * 0.25,
-//                       curve: Curves.easeIn,
-//                       duration: const Duration(seconds: 2),
-//                       child: Image.asset(
-//                         "assets/images/Text.png",
-//                       ),
-//                     )
-//                   : Container()
-//             ],
-//           )
-//         ]),
-//       ),
-//     );
-//   }
-// }

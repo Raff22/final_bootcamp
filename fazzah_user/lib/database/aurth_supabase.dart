@@ -129,4 +129,21 @@ class AuthSupabase {
       throw error.message;
     }
   }
+
+  signOut() async {
+    try {
+      await supabase.auth.signOut();
+    } on AuthException catch (e) {
+      throw AuthException(e.message);
+    }
+  }
+
+  deletAccount({required String id, required bool isProvider}) async {
+    if (isProvider == false) {
+      await supabase.from('users').delete().match({id: 'id'});
+    } else {
+      await supabase.from('providers').delete().match({id: 'id'});
+    }
+    await supabase.from('auth.users').delete().match({id: 'user-id'});
+  }
 }

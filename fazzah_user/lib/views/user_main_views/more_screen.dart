@@ -1,11 +1,15 @@
 // ignore_for_file: unnecessary_const
 
+import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
+import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
+import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
 import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/user_model.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
+import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/user_bloc.dart';
 import 'package:fazzah_user/views/user_main_views/blocks/user_event.dart';
 import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
@@ -116,13 +120,20 @@ class MoreScreen extends StatelessWidget {
                 ),
                 height20,
                 // ----------------------------------------
-                MoreSelectWidget(
-                  iconeImage: 'assets/images/7.png',
-                  textScreenName: 'تسجيل خروج',
-                  onPressd: () {
-                    // sign out
+                BlocListener<AuthBloc, AuthStatee>(
+                  listener: (context, state) {
+                    if (state is SignOutSuccessedState) {
+                      context.removeUnitl(screen: LoginView());
+                    }
                   },
-                  iconWidget: const Icon(Icons.arrow_forward_ios_rounded),
+                  child: MoreSelectWidget(
+                    iconeImage: 'assets/images/7.png',
+                    textScreenName: 'تسجيل خروج',
+                    onPressd: () {
+                      context.read<AuthBloc>().add(SignOutEvent());
+                    },
+                    iconWidget: const Icon(Icons.arrow_forward_ios_rounded),
+                  ),
                 ),
                 height20,
                 InkWell(
@@ -255,7 +266,7 @@ class NightMood extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: context.getWidth(divide: 1.1),
       height: context.getHeight(divide: 15),
       child: Column(

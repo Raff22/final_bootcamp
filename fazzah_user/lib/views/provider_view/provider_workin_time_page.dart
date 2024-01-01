@@ -10,7 +10,6 @@ import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/utils/helpers/loading_func.dart';
 import 'package:fazzah_user/utils/helpers/show_message_green.dart';
 import 'package:fazzah_user/views/provider_view/provider_widget/drawer_provider_widget.dart';
 import 'package:flutter/material.dart';

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class PaymentCard extends StatelessWidget {
   final PaymentMethod paymentinfo;
   final VoidCallback onDelete;
-  PaymentCard({
+  const PaymentCard({
     Key? key,
     required this.paymentinfo,
     required this.onDelete,
@@ -36,7 +36,7 @@ class PaymentCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        context.pushScreen(screen: PayWaysScreen());
+        context.pushScreen(screen: const PayWaysScreen());
       },
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -84,9 +84,9 @@ class PaymentCard extends StatelessWidget {
                               fontSize: 14, fontWeight: FontWeight.bold)),
                       // lastFourDigits = cardNumber.substring(cardNumber.length - 4);
                       Text(
-                          " البطاقه تبدا في\n ${paymentinfo.name == "Visa" ? lastFourDigits : firstFourChars} "),
+                          " البطاقه تنتهي في\n ${paymentinfo.name == "Visa" ? lastFourDigits : firstFourChars} "),
 
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // Text(paymentinfo.email ?? "",
@@ -97,13 +97,13 @@ class PaymentCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Text("تنتهي في  ${paymentinfo.expiresAt ?? ""}",
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.bold)),
                 width32,
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: onDelete,
                 ),
               ],

@@ -4,6 +4,7 @@ import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/database/supabse_storage.dart';
 import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/global/globals_data/globals_data.dart';
+import 'package:fazzah_user/models/address.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/working_hours_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,16 +33,17 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
 
     on<UpdateProviderAccountInfo>((event, emit) async {
       emit(LoadingUpdateProviderAccountState());
+      if (event.name != null && event.name!.isNotEmpty) {
+        event.provider.name = event.name!;
+      }
+      if (event.phoneNumber != null && event.phoneNumber!.isNotEmpty) {
+        event.provider.phoneNumber = event.phoneNumber!;
+      }
+      event.provider.nationality = event.nationality!;
+      event.provider.idNumber = event.nationalID!;
+      event.provider.job = event.job!;
       try {
-        await SupabaseUpdate().updateProviderAccountInfo(
-          providerID: event.providerID,
-          name: event.name,
-          nationalID: event.nationalID,
-          nationality: event.nationality,
-          phoneNumber: event.phoneNumber,
-          job: event.job,
-        );
-
+        await SupabaseUpdate().updateProvider(event.provider);
         emit(SuccessUpdateProviderAccountState());
       } catch (error) {
         print(error);
@@ -86,6 +88,14 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
         print(error.toString());
         emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
       }
+    });
+
+    //--------------- get address id --------------------
+    on<GetAddressByID>((event, emit) async {
+      final Address address =
+          await SupaGet().getAddressesById(id: event.addressID);
+
+      emit(GetOrderAddressUserState(address: address));
     });
   }
 }
