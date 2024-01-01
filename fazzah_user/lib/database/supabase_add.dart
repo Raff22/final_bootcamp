@@ -22,19 +22,6 @@ class SupaAdd {
     return null;
   }
 
-  Future<UserModel?> updateuser(UserModel user) async {
-    final String id = supabase.auth.currentUser!.id;
-    user.id = id;
-    try {
-      final response =
-          await supabase.from('users').upsert(user.toJson()).select();
-      return UserModel.fromJson(response[0]);
-    } catch (error) {
-      print(error.toString());
-    }
-    return null;
-  }
-
   addFavorite(String providerId) async {
     final String id = supabase.auth.currentUser!.id;
     bool add = true;
