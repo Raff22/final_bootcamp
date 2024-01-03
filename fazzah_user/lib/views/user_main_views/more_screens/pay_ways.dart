@@ -52,11 +52,11 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
               icon: const Icon(Icons.arrow_back_ios_new_rounded))),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 7),
           child: Column(
             children: [
               SizedBox(
-                  height: context.getHeight(divide: 2),
+                  height: context.getHeight(divide: 1.3),
                   width: context.getWidth(divide: 1),
                   child: buildUpcomingPaysTab(context)),
               const Spacer(),
@@ -123,7 +123,6 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                       _showInfoInputDialog(context);
                     },
                   ),
-                  // Add more payment options as needed
                 ],
               ),
             );
