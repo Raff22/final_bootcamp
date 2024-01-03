@@ -30,6 +30,7 @@ class ProviderOrderCard extends StatelessWidget {
         children: [
           ListTile(
             title: TextWidget(text: "${user.name}", textSize: 20),
+            subtitle: TextWidget(text: "${order.orderType}", textSize: 15),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

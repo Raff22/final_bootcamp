@@ -86,18 +86,15 @@ class _ProviderViewScreenState extends State<ProviderViewScreen>
                 ClipOval(
                   child: (widget.providerInfo.providerImage == null ||
                           widget.providerInfo.providerImage!.isEmpty)
-                      ? Image.asset(
-                          'assets/images/Logo_provider.png',
-                          height: 150,
-                          width: 150,
-                        )
+                      ? Image.asset('assets/images/Logo_provider.png',
+                          height: 150, width: 150, fit: BoxFit.fill)
                       : CachedNetworkImage(
                           imageUrl: widget.providerInfo.providerImage!,
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(color: green),
                           height: 150,
                           width: 150,
-                        ),
+                          fit: BoxFit.fill),
                 ),
                 TextWidget(text: "${widget.providerInfo.name}", textSize: 34),
                 TextWidget(
