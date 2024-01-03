@@ -52,7 +52,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
               icon: const Icon(Icons.arrow_back_ios_new_rounded))),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 7),
           child: Column(
             children: [
               SizedBox(
@@ -123,7 +123,6 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                       _showInfoInputDialog(context);
                     },
                   ),
-                  // Add more payment options as needed
                 ],
               ),
             );
