@@ -6,8 +6,8 @@ import 'package:fazzah_user/views/chat_views/chat_widgets/chat_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class providerchattest extends StatelessWidget {
-  providerchattest({super.key, required this.user});
+class Providerchattest extends StatelessWidget {
+  Providerchattest({super.key, required this.user});
   final UserModel user;
   final TextEditingController messageController = TextEditingController();
 

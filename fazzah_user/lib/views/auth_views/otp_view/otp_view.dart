@@ -20,7 +20,6 @@ import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timer_button/timer_button.dart';
-// import 'package:otp_timer_button/otp_timer_button.dart';
 
 class OtpView extends StatelessWidget {
   OtpView({
@@ -113,20 +112,6 @@ class OtpView extends StatelessWidget {
                     height10,
 
                     //--------------------- Resend OTP -----------------------
-                    // OtpTimerButton(
-                    //   onPressed: () {
-                    //     snackBarMassage(
-                    //         context: context,
-                    //         snackBarText:
-                    //             'تم ارسال رمز التحقق  مرة أخرى الى البريد الإلكتروني ${widget.email}');
-
-                    //     context.read<AuthBloc>().add(ResendOTPEvent(
-                    //           email: widget.email,
-                    //         ));
-                    //   },
-                    //   text: const Text('Resend OTP'),
-                    //   duration: 30,
-                    // ),
                     TimerButton(
                       color: coldGreen,
                       activeTextStyle: const TextStyle(color: black),

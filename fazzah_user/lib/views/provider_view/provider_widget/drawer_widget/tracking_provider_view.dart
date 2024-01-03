@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const String apiKey = "AIzaSyCxG2JVkBRSSqemCC4AnvDooRir872l3No";
 
 class TrackingView extends StatefulWidget {
   const TrackingView({
