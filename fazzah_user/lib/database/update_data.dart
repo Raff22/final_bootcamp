@@ -95,7 +95,12 @@ class SupabaseUpdate {
   updateProviderWallet() async {
     final String id = supabase.auth.currentUser!.id;
     try {
-      await supabase.from('providers').update({'wallet': 0}).eq('id', id);
+      final response = await supabase
+          .from('providers')
+          .update({'wallet': 0})
+          .eq('id', id)
+          .select();
+      return response[0]['wallet'];
     } catch (error) {
       print(error.toString());
     }
