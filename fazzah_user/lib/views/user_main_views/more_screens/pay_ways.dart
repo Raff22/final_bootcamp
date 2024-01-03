@@ -56,7 +56,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
           child: Column(
             children: [
               SizedBox(
-                  height: context.getHeight(divide: 1.3),
+                  height: context.getHeight(divide: 2),
                   width: context.getWidth(divide: 1),
                   child: buildUpcomingPaysTab(context)),
               const Spacer(),
