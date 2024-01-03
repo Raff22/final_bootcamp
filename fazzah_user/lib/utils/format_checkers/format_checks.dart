@@ -16,4 +16,8 @@ class FormatCheck {
   bool checkNationalId(String nationalId) {
     return nationalId.length == 10;
   }
+
+  bool cardNumberCheck(String num) {
+    return num.length == 16;
+  }
 }

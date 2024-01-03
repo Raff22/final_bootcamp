@@ -6,6 +6,7 @@ import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/models/payment_method.dart';
 import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
+import 'package:fazzah_user/utils/format_checkers/format_checks.dart';
 import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
 import 'package:fazzah_user/views/user_main_views/more_screens/costum/pay_custom.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -43,47 +45,43 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
           context: context,
           title: ' طرق الدفع',
           centerTitle: true,
-          trailing: IconButton(
-            onPressed: () {
-              context.read<PayBloc>().add(RequestallPaymentsEvent());
-            },
-            icon: const Icon(
-              Icons.refresh,
-              size: 25,
-            ),
-          ),
           leading: IconButton(
               onPressed: () {
                 context.popScreen();
               },
               icon: const Icon(Icons.arrow_back_ios_new_rounded))),
-      body: Column(
-        children: [
-          const SizedBox(height: 100),
-          SizedBox(
-              height: context.getHeight(divide: 2),
-              width: context.getWidth(divide: 1),
-              child: buildUpcomingPaysTab(context)),
-          InkWell(
-            onTap: () {
-              _showPaymentBottomSheet(context);
-            },
-            child: Container(
-              width: context.getWidth(divide: 1.2),
-              height: context.getHeight(divide: 16),
-              decoration: const BoxDecoration(
-                color: Color(0xffeff0eb),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              child: const Center(
-                child: Text(
-                  "اضف طريقة الدفع",
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            children: [
+              SizedBox(
+                  height: context.getHeight(divide: 2),
+                  width: context.getWidth(divide: 1),
+                  child: buildUpcomingPaysTab(context)),
+              const Spacer(),
+              InkWell(
+                onTap: () {
+                  _showPaymentBottomSheet(context);
+                },
+                child: Container(
+                  width: context.getWidth(divide: 1.2),
+                  height: context.getHeight(divide: 16),
+                  decoration: const BoxDecoration(
+                    color: green,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "اضف طريقة الدفع",
+                      style: TextStyle(fontSize: 20, color: lightGreen),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -187,11 +185,11 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
           );
         },
       ),
-      separatorBuilder: (BuildContext context, int index) => height20,
+      separatorBuilder: (BuildContext context, int index) => height16,
     );
   }
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Add this line
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Add this line
 
   void _showInfoInputDialog(BuildContext context) {
     showDialog(
@@ -205,10 +203,10 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
               child: ListBody(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.all(1),
+                    padding: const EdgeInsets.all(1),
                     child: TextFormField(
                       controller: cardnameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: " الاسم",
                           border: OutlineInputBorder(
                               borderRadius:
@@ -224,10 +222,10 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                   height20,
                   if (selectedPaymentMethod == 'Visa')
                     Padding(
-                      padding: EdgeInsets.all(1),
+                      padding: const EdgeInsets.all(1),
                       child: TextFormField(
                         controller: cardNumberController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: 'رقم البطاقة',
                             border: OutlineInputBorder(
                                 borderRadius:
@@ -235,6 +233,9 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'الرجاء ادخال رقم البطاقه ';
+                          }
+                          if (!FormatCheck().cardNumberCheck(value)) {
+                            return ' الرجاء ادخال رقم البطاقة المكون من ١٦ رقم ';
                           }
                           return null;
                         },
@@ -244,10 +245,10 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                   if (selectedPaymentMethod == 'PayPal' ||
                       selectedPaymentMethod == 'ApplePay')
                     Padding(
-                      padding: EdgeInsets.all(1),
+                      padding: const EdgeInsets.all(1),
                       child: TextFormField(
                         controller: emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: 'البريد الإلكتروني',
                             border: OutlineInputBorder(
                                 borderRadius:
@@ -261,10 +262,10 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                       ),
                     ),
                   Padding(
-                    padding: EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 20),
                     child: TextFormField(
                       controller: expiresAtController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'تاريخ الانتهاء',
                           border: OutlineInputBorder(
                               borderRadius:
@@ -288,7 +289,7 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
                 if (_formKey.currentState!.validate()) {
                   Navigator.of(context).pop();
                   _savePaymentMethod();
-                  context.read<PayBloc>().add(RequestallPaymentsEvent());
+                  // x
                 }
               },
             ),
@@ -304,12 +305,16 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
       print('Error: User is not authenticated.');
       return;
     }
-    String last4Digits = cardNumberController.text.substring(
-        cardNumberController.text.length - 5,
-        cardNumberController.text.length - 1);
-    String encrypted = '****-****-****-$last4Digits';
+    String last4Digits = cardNumberController.text.isNotEmpty
+        ? cardNumberController.text.substring(
+            cardNumberController.text.length - 5,
+            cardNumberController.text.length - 1)
+        : "";
+    String encrypted = cardNumberController.text.isNotEmpty
+        ? '****-****-****-$last4Digits'
+        : "";
 
-    var paymentMethod = PaymentMethod(
+    PaymentMethod paymentMethod = PaymentMethod(
       userId: id,
       name: selectedPaymentMethod,
       email: emailController.text,
@@ -319,13 +324,11 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
     );
 
     try {
-      final response =
-          await supabase.from('payment_methods').insert(paymentMethod.toJson());
+      final response = await supabase
+          .from('payment_methods')
+          .insert(paymentMethod.toJson())
+          .select();
 
-      if (response.error != null) {
-        print('Error when inserting: ${response.error!.message}');
-        return;
-      }
       context.read<PayBloc>().add(RequestallPaymentsEvent());
 
       print('Payment method added successfully');
@@ -346,11 +349,6 @@ class _PayWaysScreenState extends State<PayWaysScreen> {
           .from('payment_methods')
           .delete()
           .eq('id', paymentMethodId);
-
-      if (response.error != null) {
-        print('Error when deleting: ${response.error!.message}');
-        return;
-      }
 
       print('Payment method deleted successfully');
       // Refresh the list of payment methods
