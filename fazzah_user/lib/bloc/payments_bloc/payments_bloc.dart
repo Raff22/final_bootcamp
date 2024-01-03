@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PayBloc extends Bloc<PayEvent, PayState> {
   PayBloc() : super(PayInitial()) {
     on<RequestallPaymentsEvent>((event, emit) async {
-      emit(PayLoadingState());
+      // emit(PayLoadingState());
       try {
         // final List<ProviderModel> providers =
         //     await SupaGetAndDelete().getAllProviders();
