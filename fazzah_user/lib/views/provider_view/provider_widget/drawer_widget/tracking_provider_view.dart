@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class TrackingView extends StatefulWidget {
   const TrackingView({
     super.key,
@@ -110,7 +109,14 @@ class _TrackingViewState extends State<TrackingView> {
                   children: [
                     // -------- Call user -----------
                     SmallSquareForContactAndMessage(
-                        icon: Icons.phone, onpressed: () {}),
+                        icon: Icons.phone,
+                        onpressed: () async {
+                          Uri uri =
+                              Uri.parse('tel:${widget.user.phoneNumber!}');
+                          if (!await launchUrl(uri)) {
+                            debugPrint('Could not launch $uri');
+                          }
+                        }),
 
                     // -------- Meassage user -----------
                     SmallSquareForContactAndMessage(

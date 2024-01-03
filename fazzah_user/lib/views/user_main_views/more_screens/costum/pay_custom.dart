@@ -50,7 +50,7 @@ class PaymentCard extends StatelessWidget {
               color: const Color(0xffeff0eb),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Row(
                 children: [
                   ClipRRect(
