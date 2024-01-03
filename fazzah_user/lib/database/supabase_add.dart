@@ -56,6 +56,8 @@ class SupaAdd {
       }
       rateAverage = rateAverage / ratings.length;
       provider.rateAverage = rateAverage;
+      provider.ratesNumber = provider.ratesNumber ?? 0;
+      provider.ratesNumber = provider.ratesNumber! + 1;
       await SupabaseUpdate().updateProvider(provider);
     } catch (error) {
       print(error.toString());
