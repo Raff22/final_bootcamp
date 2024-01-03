@@ -151,7 +151,9 @@ class MainView extends StatelessWidget {
                     kdmatWedget(
                         img: "assets/images/electric.png", text: "كهرباء"),
                     SizedBox(width: 10),
-                    kdmatWedget(img: "assets/images/imgg1.png", text: "تركيب"),
+                    kdmatWedget(
+                        img: "assets/images/filling.png", text: "تركيب"),
+                    kdmatWedget(img: "assets/images/paint.png", text: "دهان "),
                   ],
                 ),
               ),

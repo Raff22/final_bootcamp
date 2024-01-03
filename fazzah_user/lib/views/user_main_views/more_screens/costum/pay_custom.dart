@@ -37,14 +37,12 @@ class PaymentCard extends StatelessWidget {
     }
 
     return InkWell(
-      onTap: () {
-        context.pushScreen(screen: const PayWaysScreen());
-      },
+      onTap: () {},
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Container(
             height: context.getHeight(divide: 10),
-            width: context.getWidth(divide: 1.1),
+            width: context.getWidth(divide: 1.2),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: const Color(0xffeff0eb),
