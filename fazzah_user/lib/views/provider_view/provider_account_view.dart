@@ -97,7 +97,6 @@ class ProviderAccountView extends StatelessWidget {
                   InkWell(
                     onTap: () async {
                       File image = await pickImageFromeGallery();
-                      print(image.path);
                       context.read<ProviderBloc>().add(UploadProviderImageEvent(
                           imageFile: image, providerModel: providerModel));
                     },

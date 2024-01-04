@@ -14,6 +14,7 @@ import 'package:fazzah_user/views/chat_views/chat_widgets/provider_chat_screen.d
 import 'package:fazzah_user/views/provider_view/provider_widget/drawer_widget/tracking_provider_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProviderOrderCard extends StatelessWidget {
   const ProviderOrderCard({super.key, required this.order, required this.user});
@@ -45,7 +46,14 @@ class ProviderOrderCard extends StatelessWidget {
                                   )));
                     }),
                 width20,
-                ContactWidget(icon: Icons.phone, onpressed: () {}),
+                ContactWidget(
+                    icon: Icons.phone,
+                    onpressed: () async {
+                      Uri uri = Uri.parse('tel:${user.phoneNumber!}');
+                      if (!await launchUrl(uri)) {
+                        debugPrint('Could not launch $uri');
+                      }
+                    }),
               ],
             ),
           ),
@@ -157,6 +165,7 @@ class ProviderOrderCard extends StatelessWidget {
                                       containerHeight: 48,
                                       containerColor: green,
                                       onPressed: () async {
+
                                         context.read<ProviderBloc>().add(
                                             GetAddressByID(
                                                 addressID: order.address!));
@@ -184,3 +193,5 @@ class ProviderOrderCard extends StatelessWidget {
     );
   }
 }
+
+

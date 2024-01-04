@@ -23,7 +23,6 @@ import 'package:fazzah_user/views/provider_view/provider_widget/drawer_widget/su
 import 'package:fazzah_user/views/provider_view/provider_workin_time_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DrawerProviderWidget extends StatelessWidget {
   const DrawerProviderWidget({super.key, this.providerModel});
@@ -135,6 +134,8 @@ class DrawerProviderWidget extends StatelessWidget {
                             screen: ProviderWalletView(
                           providerModel: providerModel,
                         ));
+                        context.read<WalletBloc>().add(
+                            RequestallWalletFirstEvent(id: providerModel!.id!));
                       },
                     ),
                     height40,

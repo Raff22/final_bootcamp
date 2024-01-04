@@ -7,18 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PayBloc extends Bloc<PayEvent, PayState> {
   PayBloc() : super(PayInitial()) {
     on<RequestallPaymentsEvent>((event, emit) async {
-      // emit(PayLoadingState());
       try {
-        // final List<ProviderModel> providers =
-        //     await SupaGetAndDelete().getAllProviders();
-
         final List<PaymentMethod> isdone =
             await SupaGet().getUserPaymentMethods();
-        // print("providers $providers");
 
         emit(ShowAllPaymentsState(isdonelist: isdone));
       } catch (error) {
-        print(error.toString());
         emit(PayErrorState(error: "حدث خطأ في النظام"));
       }
     });

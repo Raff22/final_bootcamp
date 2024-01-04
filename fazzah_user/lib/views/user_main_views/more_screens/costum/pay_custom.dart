@@ -1,10 +1,7 @@
-import 'package:fazzah_user/constant/color.dart';
 import 'package:fazzah_user/constant/layout.dart';
 import 'package:fazzah_user/global/global_widget/text_widget.dart';
 import 'package:fazzah_user/models/payment_method.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
 import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/views/user_main_views/more_screens/pay_ways.dart';
 import 'package:flutter/material.dart';
 
 class PaymentCard extends StatelessWidget {
@@ -48,7 +45,7 @@ class PaymentCard extends StatelessWidget {
               color: const Color(0xffeff0eb),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Row(
                 children: [
                   ClipRRect(
@@ -83,18 +80,6 @@ class PaymentCard extends StatelessWidget {
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold))
                               : const Text(""),
-                          // lastFourDigits = cardNumber.substring(cardNumber.length - 4);
-                          // Text(
-                          //     " البطاقه تنتهي في\n ${paymentinfo.name == "Visa" ? lastFourDigits : firstFourChars} "),
-
-                          // const Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          // Text(paymentinfo.email ?? "",
-                          //     style: const TextStyle(
-                          //         fontSize: 20, fontWeight: FontWeight.bold)),
-                          //   ],
-                          // ),
                           Row(
                             children: [
                               const TextWidget(text: 'البطاقة تنتهي في '),
@@ -108,10 +93,6 @@ class PaymentCard extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  // Text("تنتهي في  ${paymentinfo.expiresAt ?? ""}",
-                  //     style: const TextStyle(
-                  //         fontSize: 14, fontWeight: FontWeight.bold)),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.delete),

@@ -3,7 +3,6 @@ import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
-import 'package:fazzah_user/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaAdd {
@@ -55,7 +54,7 @@ class SupaAdd {
         }
       }
       rateAverage = rateAverage / ratings.length;
-      provider.rateAverage = rateAverage;
+      provider.rateAverage = double.parse(rateAverage.toStringAsFixed(1));
       provider.ratesNumber = provider.ratesNumber ?? 0;
       provider.ratesNumber = provider.ratesNumber! + 1;
       await SupabaseUpdate().updateProvider(provider);

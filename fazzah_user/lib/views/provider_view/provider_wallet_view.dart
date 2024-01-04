@@ -35,7 +35,7 @@ class ProviderWalletView extends StatelessWidget {
             BlocBuilder<WalletBloc, WalletState>(
               builder: (context, state) {
                 if (state is ShowAllWalletmentsState) {
-                  providerModel!.wallet = 0;
+                  providerModel!.wallet = state.newWallet;
                 }
                 return Container(
                   width: 350,

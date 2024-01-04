@@ -54,7 +54,7 @@ class _ProviderChatState extends State<ProviderChat> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => providerchattest(
+                            builder: (context) => Providerchattest(
                                   user: state.users[index],
                                 )));
                   },

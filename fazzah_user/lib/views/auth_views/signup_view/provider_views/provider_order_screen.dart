@@ -11,12 +11,12 @@ class ProviderOrderScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          mainScreenAppbar(title: "الطلبات"),
+          const mainScreenAppbar(title: "الطلبات"),
           ElevatedButton(
               onPressed: () {
                 context.pushScreen(screen: const ProviderChat());
               },
-              child: Text("orders"))
+              child: const Text("orders"))
         ],
       ),
     );

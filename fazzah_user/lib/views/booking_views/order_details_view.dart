@@ -20,6 +20,7 @@ import 'package:fazzah_user/views/chat_views/chat_widgets/user_chat_screem.dart'
 import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsView extends StatelessWidget {
   const OrderDetailsView(
@@ -82,7 +83,15 @@ class OrderDetailsView extends StatelessWidget {
                                 ));
                               }),
                           width20,
-                          ContactWidget(icon: Icons.phone, onpressed: () {}),
+                          ContactWidget(
+                              icon: Icons.phone,
+                              onpressed: () async {
+                                Uri uri =
+                                    Uri.parse('tel:${provider.phoneNumber!}');
+                                if (!await launchUrl(uri)) {
+                                  debugPrint('Could not launch $uri');
+                                }
+                              }),
                         ],
                       ),
                     ),

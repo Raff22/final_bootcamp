@@ -28,6 +28,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<RequestProviderRatingsEvent>((event, emit) async {
       emit(BookingLoadingState());
       try {
@@ -38,11 +39,13 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<SelectedServiceEvent>((event, emit) async {
       List<bool> selected = List.generate(services.length, (index) => false);
       selected[event.index] = true;
       emit(ShowSelectedServiceState(newSelected: selected));
     });
+
     on<GetProviderHoursEvent>((event, emit) async {
       emit(BookingLoadingState());
       try {
@@ -53,11 +56,13 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<SelectedHourEvent>((event, emit) async {
       List<bool> selected = List.generate(hours.length, (index) => false);
       selected[event.index] = true;
       emit(ShowSelectedHourState(newSelected: selected));
     });
+
     on<RequestProvidersByNameEvent>((event, emit) async {
       emit(BookingLoadingState());
       try {
@@ -70,6 +75,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<RequestProvidersByServiceEvent>((event, emit) async {
       emit(BookingLoadingState());
       try {
@@ -82,6 +88,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<RequestUserPaymentMethodsEvent>((event, emit) async {
       print("here in RequestUserPaymentMethodsEvent");
       try {
@@ -94,6 +101,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<RequestUserAddressesEvent>((event, emit) async {
       try {
         final List<Address> addies = await SupaGet().getUserAddresses();
@@ -104,6 +112,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<SelectPaymentMethodEvent>((event, emit) async {
       try {
         final List<PaymentMethod> methods =
@@ -116,6 +125,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<SelectAddressEvent>((event, emit) async {
       try {
         final List<Address> addies = await SupaGet().getUserAddresses();
@@ -127,6 +137,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         emit(BookingErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<CreateOrderEvent>((event, emit) async {
       final selectedServiceIndex =
           event.servicesSelected.indexWhere((element) => element == true);

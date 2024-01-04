@@ -3,7 +3,6 @@ import 'package:fazzah_user/database/get_data.dart';
 import 'package:fazzah_user/models/message_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/user_model.dart';
-import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'chat_event.dart';
