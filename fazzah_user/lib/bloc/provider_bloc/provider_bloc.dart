@@ -17,16 +17,14 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
       if (profileImage == null || profileImage!.isEmpty) {
         profileImage = await SupaStorage().uploadProviderImage(
             file: event.imageFile, providerModel: event.providerModel!);
-        print(':::::::::::::::::::::::::::::;');
-        print(profileImage);
+
         emit(SuccessUploadedImageState(providerImagePath: profileImage!));
       } else {
         profileImage = await SupaStorage().updateProviderImage(
             file: event.imageFile,
             providerModel: event.providerModel!,
             path: profileImage!);
-        print(':::::::::::::::::::::::::::::;');
-        print(profileImage);
+
         emit(SuccessUploadedImageState(providerImagePath: profileImage!));
       }
     });
@@ -46,7 +44,6 @@ class ProviderBloc extends Bloc<ProviderEvent, ProviderState> {
         await SupabaseUpdate().updateProvider(event.provider);
         emit(SuccessUpdateProviderAccountState());
       } catch (error) {
-        print(error);
         emit(ErrorUpdateProviderAccountState(errorMessage: error.toString()));
       }
     });

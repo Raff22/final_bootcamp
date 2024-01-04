@@ -3,7 +3,6 @@ import 'package:fazzah_user/database/update_data.dart';
 import 'package:fazzah_user/models/order_model.dart';
 import 'package:fazzah_user/models/provider_model.dart';
 import 'package:fazzah_user/models/rating_model.dart';
-import 'package:fazzah_user/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaAdd {

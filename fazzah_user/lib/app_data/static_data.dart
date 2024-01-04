@@ -26,16 +26,6 @@ List<String> hours = [
   "٧ مساءًا"
 ];
 
-List workerslist = [
-  // WorkerCard(
-  //   name: " نور احمد",
-  //   rate: "4.5",
-  //   ratenum: "(100 تقييم)",
-  //   profileimg: "assets/images/personimg.png",
-  //   peice: "100-150",
-  // ),
-];
-
 List<String> months = [
   'January',
   'February',

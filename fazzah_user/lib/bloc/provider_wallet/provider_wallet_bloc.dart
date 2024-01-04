@@ -12,7 +12,6 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
       emit(WalletLoadingState());
       try {
         final num res = await SupabaseUpdate().updateProviderWallet();
-        // print("providers $providers");
 
         emit(ShowAllWalletmentsState(newWallet: res));
       } catch (error) {
@@ -20,11 +19,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         emit(WalletErrorState(error: "حدث خطأ في النظام"));
       }
     });
+
     on<RequestallWalletFirstEvent>((event, emit) async {
       emit(WalletLoadingState());
       try {
         final ProviderModel res = await SupaGet().getProvider(event.id);
-        // print("providers $providers");
 
         emit(ShowAllWalletmentsState(newWallet: res.wallet ?? 0));
       } catch (error) {
