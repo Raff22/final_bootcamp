@@ -165,6 +165,7 @@ class ProviderOrderCard extends StatelessWidget {
                                       containerHeight: 48,
                                       containerColor: green,
                                       onPressed: () async {
+
                                         context.read<ProviderBloc>().add(
                                             GetAddressByID(
                                                 addressID: order.address!));
@@ -192,3 +193,5 @@ class ProviderOrderCard extends StatelessWidget {
     );
   }
 }
+
+

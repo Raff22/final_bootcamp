@@ -33,6 +33,7 @@ class _TrackingViewState extends State<TrackingView> {
   late double latitude;
   late double longitude;
   late LatLng userDestination;
+
   @override
   void initState() {
     latitude = widget.address.latitude!;
@@ -43,8 +44,6 @@ class _TrackingViewState extends State<TrackingView> {
 
   //----------------------------------------------------------------------------
   final Completer<GoogleMapController> _controller = Completer();
-
-  //----------------------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
