@@ -48,6 +48,13 @@ class LoginView extends StatelessWidget {
               ),
               child: BlocBuilder<IsProviderCubit, bool>(
                 builder: (context, stateUser) {
+                  if (stateUser == true) {
+                    emailController.text = 'wiqykexu@pelagius.net';
+                    passwordController.text = '1234567';
+                  } else if (stateUser == false) {
+                    emailController.text = 'bewepob849@ubinert.com';
+                    passwordController.text = '123456';
+                  }
                   // stateUser if is true is provider and if it false is user
                   return Form(
                     key: _formField,
