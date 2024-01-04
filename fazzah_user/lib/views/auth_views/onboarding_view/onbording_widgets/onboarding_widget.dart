@@ -1,9 +1,4 @@
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/views/auth_views/onboarding_view/onbording_widgets/dot_onboarding_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class OnboardingWidget extends StatelessWidget {
   const OnboardingWidget(

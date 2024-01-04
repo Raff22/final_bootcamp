@@ -1,10 +1,4 @@
-import 'package:fazzah_user/bloc/chat_bloc/chat_bloc.dart';
-import 'package:fazzah_user/models/message_model.dart';
-import 'package:fazzah_user/models/user_model.dart';
-import 'package:fazzah_user/views/chat_views/chat_widgets/chat_bubble.dart';
-import 'package:fazzah_user/views/chat_views/chat_widgets/chat_textfield.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class Providerchattest extends StatelessWidget {
   Providerchattest({super.key, required this.user});

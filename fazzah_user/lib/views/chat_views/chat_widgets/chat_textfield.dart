@@ -1,6 +1,4 @@
-import 'package:fazzah_user/bloc/chat_bloc/chat_bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class ChatTextField extends StatelessWidget {
   const ChatTextField({
@@ -17,7 +15,7 @@ class ChatTextField extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 12, left: 12, right: 12, bottom: 20),
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: const BoxDecoration(color: Colors.white),
       child: TextField(
         minLines: 1,
         maxLines: 4,

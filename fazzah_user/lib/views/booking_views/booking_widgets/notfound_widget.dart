@@ -1,7 +1,4 @@
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class NotFoundWidget extends StatelessWidget {
   const NotFoundWidget({
@@ -18,7 +15,7 @@ class NotFoundWidget extends StatelessWidget {
         'assets/images/Electrician-pana 1.png',
         width: context.getWidth(divide: 2),
       ),
-       TextWidget(
+      TextWidget(
         text: message,
         textColor: green,
         textSize: 25,

@@ -1,7 +1,5 @@
 // ignore_for_file: must_be_immutable
-
-import 'package:fazzah_user/constant/color.dart';
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class OtpTextField extends StatelessWidget {
   OtpTextField({super.key, required this.pin});

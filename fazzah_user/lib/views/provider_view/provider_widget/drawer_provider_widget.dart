@@ -1,28 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
-import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
-import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
-import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
-import 'package:fazzah_user/bloc/provider_bloc/provider_bloc.dart';
-import 'package:fazzah_user/bloc/provider_bloc/provider_event.dart';
-import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_bloc.dart';
-import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_event.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/container_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/provider_model.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
-import 'package:fazzah_user/views/provider_view/provider_account_view.dart';
-import 'package:fazzah_user/views/provider_view/provider_booking_requests_view.dart';
-import 'package:fazzah_user/views/provider_view/provider_rateing_view.dart';
-import 'package:fazzah_user/views/provider_view/provider_wallet_view.dart';
-import 'package:fazzah_user/views/provider_view/provider_widget/drawer_widget/sub_provider_drawer_widget.dart';
-import 'package:fazzah_user/views/provider_view/provider_workin_time_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class DrawerProviderWidget extends StatelessWidget {
   const DrawerProviderWidget({super.key, this.providerModel});

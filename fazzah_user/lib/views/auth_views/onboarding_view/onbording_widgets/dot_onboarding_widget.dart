@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class DotOnboardingWidget extends StatelessWidget {
   const DotOnboardingWidget(

@@ -1,25 +1,4 @@
-// ignore_for_file: must_be_immutable
-import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
-import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
-import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
-import 'package:fazzah_user/bloc/visible_password_cubit/visible_password_cubit.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/container_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_form_field_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/utils/format_checkers/format_checks.dart';
-import 'package:fazzah_user/utils/helpers/loading_func.dart';
-import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
-import 'package:fazzah_user/views/auth_views/auth_widget/login_or_sign_up_widget.dart';
-import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
-import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
-import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
-import 'package:fazzah_user/views/auth_views/otp_view/otp_view.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class SignupProviderView extends StatelessWidget {
   SignupProviderView({super.key, required this.isProvider});

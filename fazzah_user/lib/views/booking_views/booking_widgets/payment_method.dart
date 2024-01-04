@@ -1,9 +1,4 @@
-import 'package:fazzah_user/app_data/static_data.dart';
-import 'package:fazzah_user/constant/color.dart';
-
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/payment_method.dart';
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class PaymentMethodWidget extends StatelessWidget {
   const PaymentMethodWidget(

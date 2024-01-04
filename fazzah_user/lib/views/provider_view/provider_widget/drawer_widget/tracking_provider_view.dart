@@ -1,20 +1,5 @@
 // ignore_for_file: file_names, use_build_context_synchronously
-
-import 'dart:async';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/container_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/address.dart';
-import 'package:fazzah_user/models/user_model.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
-import 'package:fazzah_user/views/chat_views/chat_widgets/provider_chat_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class TrackingView extends StatefulWidget {
   const TrackingView({

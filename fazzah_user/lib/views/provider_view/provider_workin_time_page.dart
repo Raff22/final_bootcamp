@@ -1,19 +1,4 @@
-import 'package:fazzah_user/app_data/static_data.dart';
-import 'package:fazzah_user/bloc/provider_bloc/provider_bloc.dart';
-import 'package:fazzah_user/bloc/provider_bloc/provider_event.dart';
-import 'package:fazzah_user/bloc/provider_bloc/provider_state.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/container_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/provider_model.dart';
-import 'package:fazzah_user/models/working_hours_model.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/utils/helpers/show_message_green.dart';
-import 'package:fazzah_user/views/provider_view/provider_widget/drawer_provider_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class ProviderWorkTimePage extends StatelessWidget {
   const ProviderWorkTimePage({super.key, required this.providerModel});

@@ -1,8 +1,4 @@
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/views/auth_views/onboarding_view/onbording_widgets/onboarding_widget.dart';
-import 'package:fazzah_user/views/auth_views/onboarding_view/onbording_widgets/row_below_onboarding.dart';
-import 'package:fazzah_user/views/auth_views/onboarding_view/third_onboarding_view.dart';
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class SecondOnboardingView extends StatelessWidget {
   const SecondOnboardingView({super.key});

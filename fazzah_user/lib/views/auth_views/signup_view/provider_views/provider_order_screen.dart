@@ -1,7 +1,4 @@
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/views/auth_views/signup_view/provider_views/provider_chat.dart';
-import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class ProviderOrderScreen extends StatelessWidget {
   const ProviderOrderScreen({super.key});
