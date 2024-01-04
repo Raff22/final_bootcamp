@@ -17,6 +17,8 @@ import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart'
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
