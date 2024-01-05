@@ -1,5 +1,4 @@
-import 'package:fazzah_user/constant/color.dart';
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class ContactWidget extends StatelessWidget {
   const ContactWidget({

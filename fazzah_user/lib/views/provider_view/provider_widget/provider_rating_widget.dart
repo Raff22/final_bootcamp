@@ -1,9 +1,4 @@
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/provider_model.dart';
-import 'package:fazzah_user/models/rating_model.dart';
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class RatingAverageWidget extends StatelessWidget {
   const RatingAverageWidget({

@@ -1,14 +1,4 @@
-import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/models/provider_model.dart';
-import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
-import 'package:fazzah_user/views/booking_views/booking_widgets/provider_view_widgets.dart';
-import 'package:fazzah_user/views/provider_view/provider_widget/drawer_provider_widget.dart';
-import 'package:fazzah_user/views/provider_view/provider_widget/provider_rating_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class ProviderRatingView extends StatelessWidget {
   const ProviderRatingView({super.key, this.providerModel});

@@ -1,14 +1,4 @@
-import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/search_bar.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/views/booking_views/booking_widgets/notfound_widget.dart';
-import 'package:fazzah_user/views/user_main_views/coustom_wedgets/user_wedgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class ProvidersScreen extends StatelessWidget {
   const ProvidersScreen({super.key});

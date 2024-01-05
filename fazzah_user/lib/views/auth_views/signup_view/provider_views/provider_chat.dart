@@ -1,7 +1,4 @@
-import 'package:fazzah_user/bloc/chat_bloc/chat_bloc.dart';
-import 'package:fazzah_user/views/auth_views/signup_view/provider_views/chat_test.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class ProviderChat extends StatefulWidget {
   const ProviderChat({super.key});

@@ -1,26 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fazzah_user/bloc/order_bloc/order_bloc.dart';
-import 'package:fazzah_user/bloc/order_bloc/order_event.dart';
-import 'package:fazzah_user/bloc/order_bloc/order_state.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/container_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/order_model.dart';
-import 'package:fazzah_user/models/provider_model.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/utils/helpers/show_dialog_message.dart';
-import 'package:fazzah_user/utils/helpers/show_message_green.dart';
-import 'package:fazzah_user/views/booking_views/booking_widgets/contact_widget.dart';
-import 'package:fazzah_user/views/booking_views/booking_widgets/payment_method.dart';
-import 'package:fazzah_user/views/booking_views/booking_widgets/status_container.dart';
-import 'package:fazzah_user/views/chat_views/chat_widgets/user_chat_screem.dart';
-import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class OrderDetailsView extends StatelessWidget {
   const OrderDetailsView(

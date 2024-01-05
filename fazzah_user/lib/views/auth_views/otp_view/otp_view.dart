@@ -1,25 +1,5 @@
 // ignore_for_file: must_be_immutable
-
-import 'package:fazzah_user/bloc/auth_bloc/auth_bloc.dart';
-import 'package:fazzah_user/bloc/auth_bloc/auth_event.dart';
-import 'package:fazzah_user/bloc/auth_bloc/auth_state.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/container_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/utils/helpers/loading_func.dart';
-import 'package:fazzah_user/utils/helpers/snackbar_mess.dart';
-import 'package:fazzah_user/views/auth_views/auth_widget/logo_widget.dart';
-import 'package:fazzah_user/views/auth_views/auth_widget/title_view.dart';
-import 'package:fazzah_user/views/auth_views/login_view/login_view.dart';
-import 'package:fazzah_user/views/auth_views/otp_view/otp_widget/otp_text_field.dart';
-import 'package:fazzah_user/views/provider_view/provider_booking_requests_view.dart';
-import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:timer_button/timer_button.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class OtpView extends StatelessWidget {
   OtpView({

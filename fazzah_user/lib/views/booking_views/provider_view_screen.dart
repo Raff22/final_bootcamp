@@ -1,24 +1,6 @@
-// ignore_for_file: must_be_immutable
+import 'package:fazzah_user/utils/imports.dart';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fazzah_user/bloc/booking/booking_bloc.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/container_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/provider_model.dart';
-import 'package:fazzah_user/models/rating_model.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/views/booking_views/booking_details_view.dart';
-import 'package:fazzah_user/views/booking_views/booking_widgets/provider_view_widgets.dart';
-import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_bloc.dart';
-import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_event.dart';
-import 'package:fazzah_user/views/user_main_views/blocks/fav_bloc/fav_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
+// ignore: must_be_immutable
 class ProviderViewScreen extends StatefulWidget {
   ProviderViewScreen(
       {super.key, required this.providerInfo, required this.isFav});

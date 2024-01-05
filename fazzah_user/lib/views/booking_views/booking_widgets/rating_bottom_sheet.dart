@@ -1,23 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:fazzah_user/bloc/order_bloc/order_bloc.dart';
-import 'package:fazzah_user/bloc/order_bloc/order_event.dart';
-import 'package:fazzah_user/bloc/order_bloc/order_state.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/constant/layout.dart';
-import 'package:fazzah_user/global/global_widget/container_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/provider_model.dart';
-import 'package:fazzah_user/models/rating_model.dart';
-import 'package:fazzah_user/models/user_model.dart';
-import 'package:fazzah_user/utils/extentions/navigaton_extentions.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/utils/helpers/loading_func.dart';
-import 'package:fazzah_user/utils/helpers/show_message_green.dart';
-import 'package:fazzah_user/views/user_main_views/nav_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class RatingBottomSheet extends StatelessWidget {
   RatingBottomSheet({

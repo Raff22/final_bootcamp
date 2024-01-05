@@ -1,15 +1,4 @@
-import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_bloc.dart';
-import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_event.dart';
-import 'package:fazzah_user/bloc/provider_wallet/provider_wallet_state.dart';
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/global/global_widget/container_widget.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/models/provider_model.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:fazzah_user/utils/helpers/appbar_creator.dart';
-import 'package:fazzah_user/views/provider_view/provider_widget/drawer_provider_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class ProviderWalletView extends StatelessWidget {
   const ProviderWalletView({super.key, this.providerModel});

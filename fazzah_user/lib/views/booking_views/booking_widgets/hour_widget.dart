@@ -1,6 +1,4 @@
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class HourWidget extends StatelessWidget {
   const HourWidget({

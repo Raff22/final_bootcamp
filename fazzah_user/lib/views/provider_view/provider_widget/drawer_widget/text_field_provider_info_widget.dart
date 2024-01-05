@@ -1,12 +1,8 @@
-// ignore_for_file: must_be_immutable
+import 'package:fazzah_user/utils/imports.dart';
 
-import 'package:fazzah_user/constant/color.dart';
-import 'package:fazzah_user/global/global_widget/text_widget.dart';
-import 'package:fazzah_user/utils/extentions/size_extentions.dart';
-import 'package:flutter/material.dart';
-
+// ignore: must_be_immutable
 class TextFieldProviderInfoWidget extends StatelessWidget {
-   TextFieldProviderInfoWidget(
+  TextFieldProviderInfoWidget(
       {super.key,
       required this.labelText,
       required this.controllerText,

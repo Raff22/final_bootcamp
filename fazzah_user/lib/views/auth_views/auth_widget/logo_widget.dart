@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:fazzah_user/utils/imports.dart';
 
 class LogoWidget extends StatelessWidget {
   const LogoWidget({super.key, required this.pathImage});
