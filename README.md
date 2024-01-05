@@ -39,8 +39,8 @@ Run main in Fazzah_user/lib/main.dart
 
 ## Authors
 
-Raffal Abu Eshey
-Rahaf Alqahtani
+Raffal Abu Eshey, 
+Rahaf Alqahtani, 
 Faisal Alshamari
 
 
